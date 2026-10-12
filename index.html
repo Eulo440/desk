@@ -788,7 +788,7 @@ const CHANGES_BOOTSTRAP = [
 ];
 // END CHANGES_BOOTSTRAP
 const BOOTSTRAP = {
- "as_of": "2026-10-12T18:07:02-05:00",
+ "as_of": "2026-10-12T18:12:10-05:00",
  "autonomy": true,
  "equity_usd_est": 660.56,
  "free_usd": 129.42,
@@ -916,21 +916,21 @@ const BOOTSTRAP = {
   {
    "symbol": "SOL",
    "stance": "FLAT",
-   "mark_hint": 105.75,
+   "mark_hint": 105.86,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
   {
    "symbol": "BTC",
    "stance": "FLAT",
-   "mark_hint": 81783.41,
+   "mark_hint": 81835.78,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
   {
    "symbol": "ETH",
    "stance": "FLAT",
-   "mark_hint": 2449.33,
+   "mark_hint": 2455.0,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
@@ -1297,17 +1297,14 @@ const BOOTSTRAP = {
    "source": "coinbase-v4-loop",
    "msg": "v4 cycle 17:43 CT: no PASS (BTC/ETH DOWN, no aligned breakout, overextended); flat, no open orders; equity $660.56"
   },
-  "17:57 CT pulse, no actions"
+  "17:57 CT pulse, no actions",
+  "18:12 CT pulse, no actions"
  ],
  "starting_equity_usd": 664.09,
  "session_started_at": "2026-10-07T23:38:00-05:00",
  "win_rate": 0.5,
  "win_rate_note": "1W/1L since reset (XLE +$1.90 vs reset, XLU −$0.445; pre-reset T002 BTC −$2.42 archived)",
  "equity_history": [
-  {
-   "t": "2026-10-12T03:50:44-05:00",
-   "equity": 660.56
-  },
   {
    "t": "2026-10-12T04:14:24-05:00",
    "equity": 660.56
@@ -1494,6 +1491,10 @@ const BOOTSTRAP = {
   },
   {
    "t": "2026-10-12T18:07:02-05:00",
+   "equity": 660.56
+  },
+  {
+   "t": "2026-10-12T18:12:10-05:00",
    "equity": 660.56
   }
  ],
@@ -3838,7 +3839,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T12:57:18-05:00",
-   "last_update": "2026-10-12T18:09:18-05:00",
+   "last_update": "2026-10-12T18:14:50-05:00",
    "start_bankroll_usd": 664.14,
    "equity": 225.97,
    "cash_usd": 225.97,
@@ -3863,7 +3864,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 4.22,
     "ratio": 0.3402,
-    "implied_daily_pct": -22.56,
+    "implied_daily_pct": -22.542,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -3872,19 +3873,19 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 133
    },
-   "cycles": 2397,
+   "cycles": 2400,
    "decisions": {
-    "SKIP": 179877,
+    "SKIP": 180121,
     "ENTER": 133
    },
    "top_skip_reasons": {
-    "benched": 103187,
-    "missing_data": 63294,
-    "liquidity": 4471,
-    "no_pair": 3910,
+    "benched": 103364,
+    "missing_data": 63349,
+    "liquidity": 4477,
+    "no_pair": 3911,
     "too_young": 3643,
     "quote_asset": 250,
-    "mcap": 227,
+    "mcap": 228,
     "too_old": 159
    },
    "data_issues": {
@@ -3924,7 +3925,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "rugs": 2,
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "perps_10x": {
    "mode": "PAPER",
@@ -3940,7 +3941,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:09:20-05:00",
+   "last_update": "2026-10-12T18:14:20-05:00",
    "start_bankroll_usd": 100.0,
    "equity": 110.78,
    "cash_usd": 110.78,
@@ -3959,8 +3960,8 @@ const BOOTSTRAP = {
    "pace": {
     "days": 4.89,
     "ratio": 1.1078,
-    "implied_daily_pct": 2.117,
-    "annualized_multiple": 2092.335,
+    "implied_daily_pct": 2.115,
+    "annualized_multiple": 2079.885,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -3968,13 +3969,13 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 21
    },
-   "cycles": 6585,
+   "cycles": 6590,
    "decisions": {
-    "SKIP": 6613,
+    "SKIP": 6618,
     "ORDER": 22
    },
    "top_skip_reasons": {
-    "no_5m_breakout": 3471,
+    "no_5m_breakout": 3476,
     "no_trend_15m": 2297,
     "overextended_vs_ema20": 328,
     "position_open": 285,
@@ -4010,7 +4011,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "liquidations": 0,
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "options_lotto": {
    "mode": "PAPER",
@@ -4026,7 +4027,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T20:19:03-05:00",
-   "last_update": "2026-10-12T18:09:05-05:00",
+   "last_update": "2026-10-12T18:14:05-05:00",
    "start_bankroll_usd": 8000.0,
    "equity": 6558.0,
    "cash_usd": 6558.0,
@@ -4060,7 +4061,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 3.91,
     "ratio": 0.8197,
-    "implied_daily_pct": -4.956,
+    "implied_daily_pct": -4.952,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4069,7 +4070,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 23
    },
-   "cycles": 4414,
+   "cycles": 4419,
    "decisions": {
     "ENTER": 23,
     "SKIP": 399
@@ -4154,7 +4155,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "crypto_momentum": {
    "mode": "PAPER",
@@ -4170,7 +4171,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:05:17-05:00",
+   "last_update": "2026-10-12T18:10:05-05:00",
    "start_bankroll_usd": 100.0,
    "equity": 95.73,
    "cash_usd": 95.73,
@@ -4203,7 +4204,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 9
    },
-   "cycles": 1343,
+   "cycles": 1344,
    "decisions": {
     "SKIP": 3164,
     "ENTER": 9
@@ -4243,7 +4244,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "pm_longshots": {
    "mode": "PAPER",
@@ -4277,14 +4278,14 @@ const BOOTSTRAP = {
     {
      "symbol": "Sevilla wins [Sevilla]",
      "side": "YES",
-     "value_usd": 2.16,
-     "upnl_usd": -0.14
+     "value_usd": 2.04,
+     "upnl_usd": -0.26
     },
     {
      "symbol": "Will the price of Bitcoin be above $86,000 on October 13?",
      "side": "YES",
-     "value_usd": 0.25,
-     "upnl_usd": -1.99
+     "value_usd": 0.15,
+     "upnl_usd": -2.08
     },
     {
      "symbol": "Will LASK Linz win on 2026-10-14?",
@@ -4295,8 +4296,8 @@ const BOOTSTRAP = {
     {
      "symbol": "Will the price of Bitcoin be above $88,000 on October 14?",
      "side": "YES",
-     "value_usd": 0.36,
-     "upnl_usd": -1.91
+     "value_usd": 0.31,
+     "upnl_usd": -1.97
     },
     {
      "symbol": "Clayface Rotten Tomatoes score? [Above 90]",
@@ -4320,12 +4321,12 @@ const BOOTSTRAP = {
    "benched": true,
    "benched_note": "benched as a signal source (playbook v3.9 #6); open positions run off, no new entries",
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:01:00-05:00",
+   "last_update": "2026-10-12T18:11:00-05:00",
    "start_bankroll_usd": 100.0,
-   "equity": 60.11,
+   "equity": 59.84,
    "cash_usd": 46.37,
-   "net_pnl_usd": -39.89,
-   "net_pnl_pct": -39.89,
+   "net_pnl_usd": -40.16,
+   "net_pnl_pct": -40.16,
    "realized_pnl_usd": -28.81,
    "trades": 10,
    "wins": 0,
@@ -4333,7 +4334,7 @@ const BOOTSTRAP = {
    "win_rate": 0.0,
    "avg_win_usd": null,
    "avg_loss_usd": -2.881,
-   "max_drawdown_pct": 39.89,
+   "max_drawdown_pct": 40.16,
    "open_positions": [
     {
      "id": "PL0016",
@@ -4376,7 +4377,7 @@ const BOOTSTRAP = {
      "symbol": "Sevilla wins [Sevilla]",
      "side": "BUY YES",
      "entry": 0.09,
-     "last": 0.09,
+     "last": 0.085,
      "qty": 24,
      "ends": "2026-10-18T22:00"
     },
@@ -4385,7 +4386,7 @@ const BOOTSTRAP = {
      "symbol": "Will the price of Bitcoin be above $86,000 on Oc",
      "side": "BUY Yes",
      "entry": 0.09,
-     "last": 0.0105,
+     "last": 0.0065,
      "qty": 23.36,
      "ends": "2026-10-13T16:00"
     },
@@ -4403,7 +4404,7 @@ const BOOTSTRAP = {
      "symbol": "Will the price of Bitcoin be above $88,000 on Oc",
      "side": "BUY Yes",
      "entry": 0.038,
-     "last": 0.0065,
+     "last": 0.0055,
      "qty": 56.14,
      "ends": "2026-10-14T16:00"
     },
@@ -4437,8 +4438,8 @@ const BOOTSTRAP = {
    },
    "pace": {
     "days": 4.89,
-    "ratio": 0.6011,
-    "implied_daily_pct": -9.893,
+    "ratio": 0.5984,
+    "implied_daily_pct": -9.968,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4447,7 +4448,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 10
    },
-   "cycles": 707,
+   "cycles": 708,
    "decisions": {
     "SKIP": 24812,
     "ENTER": 20,
@@ -4465,13 +4466,13 @@ const BOOTSTRAP = {
    },
    "data_issues": {
     "api.elections.kalshi.com": {
-     "count": 270,
-     "last": "2026-10-12T18:01:00-05:00",
+     "count": 271,
+     "last": "2026-10-12T18:11:00-05:00",
      "last_err": "ReadTimeout"
     },
     "gamma-api.polymarket.com": {
-     "count": 201,
-     "last": "2026-10-12T18:01:00-05:00",
+     "count": 202,
+     "last": "2026-10-12T18:11:00-05:00",
      "last_err": "ReadTimeout"
     },
     "clob.polymarket.com": {
@@ -4499,7 +4500,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "pm_favorites": {
    "mode": "PAPER",
@@ -4516,7 +4517,7 @@ const BOOTSTRAP = {
      "symbol": "US x Yemen ceasefire continues through October 12?",
      "side": "YES",
      "value_usd": 14.65,
-     "upnl_usd": 0.44
+     "upnl_usd": 0.45
     },
     {
      "symbol": "Will FC Bayern München win on 2026-10-13?",
@@ -4527,8 +4528,8 @@ const BOOTSTRAP = {
     {
      "symbol": "Will the price of Bitcoin be above $86,000 on October 13?",
      "side": "NO",
-     "value_usd": 15.2,
-     "upnl_usd": 0.84
+     "value_usd": 15.26,
+     "upnl_usd": 0.91
     },
     {
      "symbol": "Will Club Brugge KV win on 2026-10-13?",
@@ -4552,12 +4553,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:01:00-05:00",
+   "last_update": "2026-10-12T18:11:00-05:00",
    "start_bankroll_usd": 100.0,
-   "equity": 98.13,
+   "equity": 98.2,
    "cash_usd": 10.89,
-   "net_pnl_usd": -1.87,
-   "net_pnl_pct": -1.87,
+   "net_pnl_usd": -1.8,
+   "net_pnl_pct": -1.8,
    "realized_pnl_usd": -3.19,
    "trades": 15,
    "wins": 14,
@@ -4581,7 +4582,7 @@ const BOOTSTRAP = {
      "symbol": "US x Yemen ceasefire continues through October 1",
      "side": "BUY Yes",
      "entry": 0.969,
-     "last": 0.999,
+     "last": 0.9995,
      "qty": 14.66,
      "ends": "2026-10-12T23:59"
     },
@@ -4599,7 +4600,7 @@ const BOOTSTRAP = {
      "symbol": "Will the price of Bitcoin be above $86,000 on Oc",
      "side": "BUY No",
      "entry": 0.93,
-     "last": 0.9895,
+     "last": 0.9935,
      "qty": 15.36,
      "ends": "2026-10-13T16:00"
     },
@@ -4626,16 +4627,16 @@ const BOOTSTRAP = {
     "venues": "Polymarket (500 mkts) + Kalshi (3000 mkts)",
     "resolved": 15,
     "avg_time_to_resolution_h": 36.5,
-    "eligible_last_cycle": 3,
+    "eligible_last_cycle": 2,
     "rules": "rules_v3 since 2026-10-12T16:07:26-05:00",
     "resting_bids": null,
     "rule": "90-95c, <=72h, 15%/bet"
    },
    "pace": {
     "days": 4.89,
-    "ratio": 0.9813,
-    "implied_daily_pct": -0.385,
-    "annualized_multiple": 0.245,
+    "ratio": 0.982,
+    "implied_daily_pct": -0.37,
+    "annualized_multiple": 0.258,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -4643,30 +4644,30 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 15
    },
-   "cycles": 707,
+   "cycles": 708,
    "decisions": {
-    "SKIP": 17175,
+    "SKIP": 17185,
     "ENTER": 21
    },
    "top_skip_reasons": {
-    "v2_event_today": 5783,
-    "max_open_or_cycle_limit": 4631,
-    "v2_spread_too_wide": 2205,
-    "v2_event_underway": 1887,
-    "already_traded_market": 1382,
-    "event_already_held": 1286,
+    "v2_event_today": 5785,
+    "max_open_or_cycle_limit": 4633,
+    "v2_spread_too_wide": 2207,
+    "v2_event_underway": 1888,
+    "already_traded_market": 1384,
+    "event_already_held": 1287,
     "favorites_rule_v2": 21,
     "insufficient_size_at_best_ask": 1
    },
    "data_issues": {
     "api.elections.kalshi.com": {
-     "count": 270,
-     "last": "2026-10-12T18:01:00-05:00",
+     "count": 271,
+     "last": "2026-10-12T18:11:00-05:00",
      "last_err": "ReadTimeout"
     },
     "gamma-api.polymarket.com": {
-     "count": 201,
-     "last": "2026-10-12T18:01:00-05:00",
+     "count": 202,
+     "last": "2026-10-12T18:11:00-05:00",
      "last_err": "ReadTimeout"
     },
     "clob.polymarket.com": {
@@ -4694,7 +4695,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "stock_momentum": {
    "mode": "PAPER",
@@ -4717,7 +4718,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T20:19:03-05:00",
-   "last_update": "2026-10-12T18:05:05-05:00",
+   "last_update": "2026-10-12T18:10:05-05:00",
    "start_bankroll_usd": 8000.0,
    "equity": 8107.1,
    "cash_usd": 4800.0,
@@ -4753,8 +4754,8 @@ const BOOTSTRAP = {
    "pace": {
     "days": 3.91,
     "ratio": 1.0134,
-    "implied_daily_pct": 0.341,
-    "annualized_multiple": 3.461,
+    "implied_daily_pct": 0.34,
+    "annualized_multiple": 3.457,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -4762,7 +4763,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 0
    },
-   "cycles": 1060,
+   "cycles": 1061,
    "decisions": {
     "SKIP": 87
    },
@@ -4796,7 +4797,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "meta_allocator": {
    "mode": "PAPER",
@@ -4825,7 +4826,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:05:05-05:00",
+   "last_update": "2026-10-12T18:10:05-05:00",
    "start_bankroll_usd": 100.0,
    "equity": 85.91,
    "cash_usd": 0.36,
@@ -4861,15 +4862,15 @@ const BOOTSTRAP = {
     "last_rebalance": "2026-10-12T16:05:05-05:00",
     "rebalances": 125,
     "switch_costs_usd": 9.06699,
-    "eligible": "perps_10x +0.0568, pm_favorites +0.0575",
+    "eligible": "perps_10x +0.0568, pm_favorites +0.0578",
     "kill_switched": "memecoin_sniper, pm_longshots, options_lotto, perp_compounder",
-    "subs_tracked": 9,
+    "subs_tracked": 10,
     "status": "allocating"
    },
    "pace": {
     "days": 4.89,
     "ratio": 0.8591,
-    "implied_daily_pct": -3.061,
+    "implied_daily_pct": -3.059,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4878,7 +4879,7 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 72
    },
-   "cycles": 1344,
+   "cycles": 1345,
    "decisions": {},
    "top_skip_reasons": {},
    "data_issues": {},
@@ -4901,7 +4902,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "perp_compounder": {
    "mode": "PAPER",
@@ -4911,8 +4912,8 @@ const BOOTSTRAP = {
     {
      "symbol": "BTC",
      "side": "SHORT 30x",
-     "value_usd": 360.13,
-     "upnl_usd": 76.6
+     "value_usd": 364.97,
+     "upnl_usd": 81.43
     }
    ],
    "label": "High-leverage perp compounder (X post style) - PAPER",
@@ -4924,12 +4925,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T21:41:21-05:00",
-   "last_update": "2026-10-12T18:09:05-05:00",
+   "last_update": "2026-10-12T18:14:05-05:00",
    "start_bankroll_usd": 664.14,
-   "equity": 634.5,
+   "equity": 639.34,
    "cash_usd": 278.58,
-   "net_pnl_usd": -29.64,
-   "net_pnl_pct": -4.46,
+   "net_pnl_usd": -24.8,
+   "net_pnl_pct": -3.73,
    "realized_pnl_usd": -97.77,
    "trades": 66,
    "wins": 21,
@@ -4944,7 +4945,7 @@ const BOOTSTRAP = {
      "symbol": "BTC",
      "side": "SHORT",
      "entry": 82824.31674000001,
-     "last": 82078.5,
+     "last": 82031.4,
      "stop": 84263.654439,
      "tp": 79420.237322,
      "liq": 85201.71956,
@@ -4964,10 +4965,10 @@ const BOOTSTRAP = {
     "source": "https://x.com/0xTenzo/status/[num]"
    },
    "pace": {
-    "days": 3.85,
-    "ratio": 0.9554,
-    "implied_daily_pct": -1.178,
-    "annualized_multiple": 0.013,
+    "days": 3.86,
+    "ratio": 0.9627,
+    "implied_daily_pct": -0.982,
+    "annualized_multiple": 0.027,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -4975,20 +4976,20 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 66
    },
-   "cycles": 7365,
+   "cycles": 7375,
    "decisions": {
-    "SKIP": 14661,
+    "SKIP": 14681,
     "ENTER": 67
    },
    "top_skip_reasons": {
-    "big_already_open": 3615,
+    "big_already_open": 3625,
     "board_flat": 3280,
     "no_5m_breakout": 1769,
     "board_lean_too_weak_for_big": 1660,
     "position_open": 1561,
     "coin_not_aligned_15m_and_1h": 1339,
     "v2_scalp_coin_excluded": 850,
-    "coin_cooldown": 174
+    "v3_scalps_off": 175
    },
    "data_issues": {
     "www.okx.com": {
@@ -5017,7 +5018,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "liquidations": 0,
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "whale_copy": {
    "mode": "PAPER",
@@ -5033,7 +5034,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T22:32:45-05:00",
-   "last_update": "2026-10-12T18:09:08-05:00",
+   "last_update": "2026-10-12T18:14:23-05:00",
    "start_bankroll_usd": 664.14,
    "equity": 603.76,
    "cash_usd": 603.76,
@@ -5066,7 +5067,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 3.82,
     "ratio": 0.9091,
-    "implied_daily_pct": -2.466,
+    "implied_daily_pct": -2.464,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -5075,7 +5076,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 7
    },
-   "cycles": 5608,
+   "cycles": 5615,
    "decisions": {
     "SKIP": 273,
     "ENTER": 7
@@ -5126,7 +5127,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   },
   "kalshi_btc": {
    "mode": "PAPER",
@@ -5215,12 +5216,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-12T18:06:25-05:00",
-   "last_update": "2026-10-12T18:09:08-05:00",
+   "last_update": "2026-10-12T18:14:47-05:00",
    "start_bankroll_usd": 664.0,
-   "equity": 597.45,
+   "equity": 617.2,
    "cash_usd": 325.18,
-   "net_pnl_usd": -66.55,
-   "net_pnl_pct": -10.02,
+   "net_pnl_usd": -46.8,
+   "net_pnl_pct": -7.05,
    "realized_pnl_usd": 0,
    "trades": 0,
    "wins": 0,
@@ -5235,7 +5236,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T81999.99",
      "side": "no",
      "entry": 0.72,
-     "last": 0.44,
+     "last": 0.55,
      "qty": 44,
      "cost_usd": 32.31,
      "opened": "2026-10-12T18:06:28-05:00"
@@ -5245,7 +5246,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T81899.99",
      "side": "no",
      "entry": 0.64,
-     "last": 0.32,
+     "last": 0.42,
      "qty": 50,
      "cost_usd": 32.81,
      "opened": "2026-10-12T18:06:30-05:00"
@@ -5255,7 +5256,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82099.99",
      "side": "no",
      "entry": 0.78,
-     "last": 0.58,
+     "last": 0.67,
      "qty": 41,
      "cost_usd": 32.48,
      "opened": "2026-10-12T18:06:31-05:00"
@@ -5265,7 +5266,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82299.99",
      "side": "no",
      "entry": 0.87,
-     "last": 0.77,
+     "last": 0.85,
      "qty": 36,
      "cost_usd": 31.61,
      "opened": "2026-10-12T18:06:44-05:00"
@@ -5275,7 +5276,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T80499.99",
      "side": "no",
      "entry": 0.17,
-     "last": 0.13,
+     "last": 0.14,
      "qty": 173,
      "cost_usd": 31.12,
      "opened": "2026-10-12T18:06:48-05:00"
@@ -5285,7 +5286,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82199.99",
      "side": "no",
      "entry": 0.82,
-     "last": 0.69,
+     "last": 0.77,
      "qty": 38,
      "cost_usd": 31.56,
      "opened": "2026-10-12T18:07:00-05:00"
@@ -5295,7 +5296,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T83249.99",
      "side": "yes",
      "entry": 0.16,
-     "last": 0.17,
+     "last": 0.16,
      "qty": 178,
      "cost_usd": 30.16,
      "opened": "2026-10-12T18:07:47-05:00"
@@ -5305,7 +5306,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T83499.99",
      "side": "yes",
      "entry": 0.12,
-     "last": 0.13,
+     "last": 0.12,
      "qty": 230,
      "cost_usd": 29.31,
      "opened": "2026-10-12T18:07:49-05:00"
@@ -5325,7 +5326,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T80999.99",
      "side": "no",
      "entry": 0.25,
-     "last": 0.21,
+     "last": 0.22,
      "qty": 116,
      "cost_usd": 30.53,
      "opened": "2026-10-12T18:08:03-05:00"
@@ -5335,7 +5336,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T82999.99",
      "side": "yes",
      "entry": 0.2,
-     "last": 0.23,
+     "last": 0.21,
      "qty": 1,
      "cost_usd": 0.22,
      "opened": "2026-10-12T18:08:18-05:00"
@@ -5345,52 +5346,52 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T80749.99",
      "side": "no",
      "entry": 0.18,
-     "last": 0.17,
+     "last": 0.18,
      "qty": 151,
      "cost_usd": 28.75,
      "opened": "2026-10-12T18:09:06-05:00"
     }
    ],
    "extras": {
-    "markets_tracked": 537,
+    "markets_tracked": 536,
     "edge_threshold": 0.04,
-    "spot": 82000.47,
+    "spot": 81931.24,
     "spot_src": {
-     "coinbase": 82003.97,
-     "kraken": 81995.2,
-     "bitstamp": 82000.47
+     "coinbase": 81932.45,
+     "kraken": 81919.6,
+     "bitstamp": 81931.24
     },
-    "vol60_ann_pct": 50.4,
-    "vol240_ann_pct": 37.8,
-    "blend_ann_pct": 44.5,
+    "vol60_ann_pct": 54.5,
+    "vol240_ann_pct": 39.2,
+    "blend_ann_pct": 47.4,
     "n_rets": 299,
-    "quotes_evaluated": 175,
+    "quotes_evaluated": 163,
     "markets_by_series": {
      "KXBTCD": 268,
      "KXBTC": 268,
-     "KXBTC15M": 1
+     "KXBTC15M": 0
     },
-    "n_edge_ge_thr": 14,
+    "n_edge_ge_thr": 16,
     "best_edge": {
-     "ticker": "KXBTCD-26OCT1317-T83499.99",
+     "ticker": "KXBTCD-26OCT1317-T80749.99",
      "series": "KXBTCD",
-     "side": "yes",
-     "fair": 0.2044,
-     "ask": 0.13,
-     "edge_net": 0.0664,
-     "depth": 2732.65,
-     "tte_s": 78655,
-     "spot": 82000.47,
-     "strike": 83499.99,
+     "side": "no",
+     "fair": 0.2734,
+     "ask": 0.19,
+     "edge_net": 0.0726,
+     "depth": 2596.0,
+     "tte_s": 78315,
+     "spot": 81931.24,
+     "strike": 80749.99,
      "type": "greater",
      "cap": null
     },
-    "median_edge": -0.0257
+    "median_edge": -0.0234
    },
    "pace": {
     "days": 0.04,
-    "ratio": 0.8998,
-    "implied_daily_pct": -92.071,
+    "ratio": 0.9295,
+    "implied_daily_pct": -82.694,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -5399,7 +5400,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 0
    },
-   "cycles": 11,
+   "cycles": 33,
    "decisions": {},
    "top_skip_reasons": {},
    "data_issues": {},
@@ -5422,7 +5423,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:09:21-05:00"
+   "updated_at": "2026-10-12T18:14:51-05:00"
   }
  },
  "reset": {
@@ -5670,7 +5671,7 @@ const BOOTSTRAP = {
    "summary": "v4 0 PASS; wakes=0"
   },
   "guard": {
-   "at": "2026-10-12T18:00:01-05:00",
+   "at": "2026-10-12T18:10:01-05:00",
    "summary": "guard 1 RH positions checked; wakes=0"
   },
   "dashboard": {
