@@ -1,315 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<meta http-equiv="refresh" content="300" />
 <title>Salary Desk</title>
-<link rel="icon" href="data:," />
 <style>
-  :root {
-    --bg: #05070c;
-    --bg2: #0a0e16;
-    --panel: #0f1520;
-    --panel2: #141c2a;
-    --border: #1e2a3d;
-    --border2: #2a3a52;
-    --text: #e6edf7;
-    --muted: #8494ad;
-    --dim: #556578;
-    --green: #2ee59d;
-    --green-dim: rgba(46, 229, 157, 0.14);
-    --red: #ff5c6c;
-    --red-dim: rgba(255, 92, 108, 0.14);
-    --amber: #f0c674;
-    --amber-dim: rgba(240, 198, 116, 0.12);
-    --blue: #5cb3ff;
-    --blue-dim: rgba(92, 179, 255, 0.12);
-    --purple: #c792ea;
-    --cyan: #4fd1c5;
-    --mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, Menlo, Consolas, monospace;
-    --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-    --radius: 10px;
-    --shadow: 0 6px 32px rgba(0,0,0,0.5);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.4;
-  }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 12px 14px 28px; }
-  .pos { color: var(--green); } .neg { color: var(--red); } .neu { color: var(--amber); }
-  table.htab { width:100%; border-collapse:collapse; font-size:0.78rem; font-variant-numeric:tabular-nums; margin:4px 0 6px; }
-  table.htab th { text-align:right; font-weight:500; color:var(--dim); font-size:0.66rem; padding:2px 4px; }
-  table.htab td { text-align:right; padding:3px 4px; border-top:1px solid rgba(127,127,127,.15); white-space:nowrap; }
-  table.htab th:first-child, table.htab td:first-child { text-align:left; }
-  .noopen { color:var(--dim); font-size:0.8rem; margin:4px 0; }
-  .zero { color: var(--muted); }
-
-  /* ===== simple header ===== */
-  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin: 2px 2px 10px; }
-  .top h1 { font-size: 0.95rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-  .top .live { font-family: var(--mono); font-size: 0.72rem; color: var(--dim); }
-  .top .live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: var(--dim); vertical-align: 1px; }
-  .top .live.ok::before { background: var(--green); box-shadow: 0 0 8px var(--green); }
-  .top .live.off::before { background: var(--amber); }
-
-  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
-  .card h2 { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-
-  /* ===== 1. summary ===== */
-  .sum-head { text-align: center; padding: 2px 0 12px; border-bottom: 1px solid var(--border); }
-  .sum-hero { font-family: var(--mono); font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-top: 4px; color: var(--text); }
-  .sum-hero-sub { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
-  .sum-hero-sub b { color: var(--text); font-weight: 650; }
-  .sum-main { text-align: center; padding: 12px 0 12px; border-bottom: 1px solid var(--border); }
-  .sum-lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
-  .sum-big { font-family: var(--mono); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-top: 4px; }
-  .sum-pct { font-family: var(--mono); font-size: 1.05rem; font-weight: 650; }
-  .sum-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding-top: 12px; }
-  .sum-cell { text-align: center; padding: 0 6px; }
-  .sum-cell + .sum-cell { border-left: 1px solid var(--border); }
-  .sum-val { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; margin-top: 2px; white-space: nowrap; }
-  .sum-val small { font-size: 0.8rem; font-weight: 600; }
-  .sum-note { font-size: 0.72rem; color: var(--dim); font-family: var(--mono); margin-top: 1px; }
-
-  /* ===== 2. venues ===== */
-  .venues { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; }
-  .venues .card { margin-bottom: 0; min-width: 0; }
-  .venue-cb h2 { color: var(--cyan); }
-  .venue-rh h2 { color: var(--amber); }
-  .hold { list-style: none; }
-  .hold li { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(30,42,61,0.7); }
-  .hold .sym { font-weight: 700; font-size: 0.95rem; min-width: 0; overflow-wrap: anywhere; }
-  .hold .sub { display: block; font-family: var(--mono); font-size: 0.72rem; color: var(--dim); font-weight: 400; margin-top: 1px; }
-  .hold .side-long { color: var(--green); } .hold .side-short { color: var(--red); }
-  .hold .pl { text-align: right; font-family: var(--mono); font-size: 0.92rem; font-weight: 650; white-space: nowrap; }
-  .hold .pl small { display: block; font-size: 0.74rem; font-weight: 500; }
-  .cashline { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(30,42,61,0.7); font-size: 0.9rem; color: var(--muted); }
-  .cashline b { font-family: var(--mono); color: var(--text); font-weight: 600; }
-  .allcash { padding: 10px 0; font-size: 0.95rem; color: var(--muted); border-bottom: 1px solid rgba(30,42,61,0.7); }
-  .allcash b { font-family: var(--mono); color: var(--text); }
-  .vtotal { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding-top: 10px; font-size: 0.88rem; font-weight: 700; }
-  .vtotal .v { font-family: var(--mono); text-align: right; white-space: nowrap; }
-  .vtotal .v small { display: block; font-size: 0.74rem; font-weight: 500; }
-  .vtotal .veq { font-family: var(--mono); white-space: nowrap; }
-  .vtotal .veq b { color: var(--text); font-weight: 750; }
-  .vtotal .vname { color: var(--muted); font-weight: 600; margin-right: 4px; font-family: var(--sans, inherit); }
-  .vnote { font-size: 0.72rem; color: var(--dim); margin-top: 2px; }
-  .stamp { font-family: var(--mono); font-size: 0.72rem; margin-top: 8px; overflow-wrap: anywhere; }
-  .stamp.dim { color: var(--dim); }
-  .alertline { font-family: var(--mono); font-size: 0.72rem; color: var(--red); margin-top: 3px; overflow-wrap: anywhere; }
-
-  /* ===== 3. recent strategy changes ===== */
-  .changes { list-style: none; }
-  .changes li { padding: 8px 0; border-bottom: 1px solid rgba(30,42,61,0.7); }
-  .changes li:last-child { border-bottom: none; }
-  .changes .when { font-family: var(--mono); font-size: 0.72rem; color: var(--dim); }
-  .changes .vtag { font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0 6px; border-radius: 4px; border: 1px solid var(--border2); margin-left: 6px; }
-  .vtag.coinbase { color: var(--cyan); } .vtag.robinhood { color: var(--amber); } .vtag.paper { color: var(--purple); } .vtag.desk { color: var(--blue); }
-  .changes .txt { font-size: 0.88rem; color: var(--text); margin-top: 2px; line-height: 1.4; }
-  .changes .who { color: var(--dim); font-size: 0.74rem; }
-  .foot { font-family: var(--mono); font-size: 0.7rem; color: var(--dim); margin: 6px 2px 0; }
-
-  @media (max-width: 600px) {
-    .wrap { padding: 8px 8px 24px; }
-    .card { padding: 12px 10px; }
-    .venues { gap: 8px; }
-    .sum-hero { font-size: 2.5rem; }
-    .sum-big { font-size: 1.7rem; }
-    .sum-val { font-size: 1.1rem; }
-    .hold .sym { font-size: 0.9rem; }
-    .hold .pl { font-size: 0.86rem; }
-    .vtotal { font-size: 0.8rem; align-items: flex-end; }
-    .vtotal .veq { white-space: normal; min-width: 0; }
-    .vtotal .veq .vname { display: block; margin-right: 0; }
-    .sum-hero-sub { font-size: 0.74rem; }
-  }
-  /* narrow screens: let the (unchanged) paper-experiment tables scroll inside their card instead of widening the page */
-  @media (max-width: 600px) { .xp-grid > * { min-width: 0; } .xp-open { overflow-x: auto; } }
-  @media (max-width: 330px) {
-    .venues { grid-template-columns: minmax(0, 1fr); }
-  }
-
-  /* ===== kept verbatim for the PAPER EXPERIMENTS panel ===== */
-  table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-  th {
-    text-align: left; padding: 7px 10px; font-size: 0.6rem; text-transform: uppercase;
-    letter-spacing: 0.05em; color: var(--dim); font-weight: 600; border-bottom: 1px solid var(--border);
-  }
-  td {
-    padding: 8px 10px; border-bottom: 1px solid rgba(30,42,61,0.7);
-    font-family: var(--mono); font-size: 0.74rem; vertical-align: middle;
-  }
-  tr:last-child td { border-bottom: none; }
-  .empty-state {
-    padding: 18px 14px; text-align: center;
-    font-family: var(--mono); font-size: 0.72rem; color: var(--dim);
-  }
-  .empty-state strong { color: var(--muted); display: block; margin-bottom: 4px; }
-
-  /* ===== PAPER EXPERIMENTS panel (simple cards, Oct 8 2026) ===== */
-  .xp-divider { border: 0; border-top: 2px dashed var(--border2); margin: 22px 0 14px; }
-  .xp-section { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px 14px; min-width: 0; }
-  .xp-head { display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap; margin-bottom: 10px; }
-  .xp-head h2 { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); }
-  .xp-badge { font-family: var(--mono); font-size: 0.68rem; padding: 2px 8px; border-radius: 999px;
-    background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(240,198,116,0.35); }
-  .xp-upd { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); margin-left: auto; }
-  .xp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
-  .xp-grid > * { min-width: 0; }
-  .xp-card { background: var(--panel2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 12px; min-width: 0; }
-  .xp-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin: 0; }
-  .xp-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.4; margin: 3px 0 10px; }
-  .xp-kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; margin-bottom: 10px; }
-  .xp-kv div { font-size: 0.68rem; color: var(--dim); min-width: 0; }
-  .xp-kv b { display: block; font-family: var(--mono); font-size: 0.86rem; color: var(--text); font-weight: 700;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .xp-kv b.pos { color: var(--green); } .xp-kv b.neg { color: var(--red); }
-  .xp-kv b.xp-wrap { white-space: normal; overflow: visible; }
-  .xp-open { font-size: 0.68rem; color: var(--dim); border-top: 1px solid var(--border); padding-top: 8px; }
-  .xp-open ul { list-style: none; margin: 4px 0 0; padding: 0; }
-  .xp-open li { display: flex; gap: 8px; align-items: baseline; font-family: var(--mono); font-size: 0.74rem;
-    color: var(--muted); padding: 2px 0; min-width: 0; }
-  .xp-open .ps { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
-  .xp-open .pv, .xp-open .pu { flex: 0 0 auto; white-space: nowrap; }
-  .xp-open .pu.pos { color: var(--green); } .xp-open .pu.neg { color: var(--red); }
-  .xp-open .none { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); margin-left: 4px; }
-  @media (max-width: 600px) {
-    .xp-grid { grid-template-columns: minmax(0, 1fr); }
-    .xp-kv { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .xp-upd { margin-left: 0; }
-  }
-
-  .caps-section { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-  @media (max-width:820px){ .caps-section { grid-template-columns:1fr; } }
-  .caps-card h2 { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-  .caps-card .pill { font-family:var(--mono); font-size:0.62rem; color:var(--amber); border:1px solid var(--border); border-radius:999px; padding:2px 8px; }
-  .caps-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
-  .cap-item { background:var(--panel2,#141c2a); border:1px solid var(--border); border-radius:8px; padding:8px 10px; }
-  .cap-item .cl { font-size:0.68rem; color:var(--dim); letter-spacing:0.02em; }
-  .cap-item .cv { font-family:var(--mono); font-size:0.85rem; margin-top:2px; }
-  .caps-note { margin-top:8px; font-family:var(--mono); font-size:0.62rem; color:var(--dim); line-height:1.45; }
-  .caps-note.warn { color:var(--amber); }
-  .caps-note.hot { color:var(--red); }
+:root{--bg:#0b0f14;--card:#141a22;--line:#222b36;--tx:#e8edf3;--mu:#8a96a6;--up:#22c55e;--dn:#ef4444;--ac:#60a5fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.35 -apple-system,system-ui,Segoe UI,Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:14px 14px 30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+h2{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);font-weight:600}
+.big{font-size:44px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.mid{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.stats{display:flex;gap:18px;margin-top:6px;font-size:18px;font-weight:700;flex-wrap:wrap}
+.lab{display:block;font-size:12px;color:var(--mu);font-weight:500}
+.up{color:var(--up)}.dn{color:var(--dn)}.mu{color:var(--mu)}
+.bar{height:12px;background:#0d1219;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:14px 0 6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--up));min-width:3px}
+.status{margin-top:10px;font-size:15px;font-weight:600}
+.hold{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:16px}
+.hold b{font-weight:700}.flat{color:var(--mu);font-size:18px;font-weight:700;padding-top:6px}
+.xp{display:grid;grid-template-columns:14px 1fr auto auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:15px}
+.xp .p{font-weight:700;text-align:right;min-width:70px}.xp .q{text-align:right;min-width:58px;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--up)}.dot.off{background:#64748b}
+svg{display:block;width:100%;height:auto;margin-top:12px}
+.leg{display:flex;gap:14px;font-size:12px;color:var(--mu);margin-top:4px}.leg i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}
+footer{text-align:center;color:var(--mu);font-size:12px;margin-top:6px}
 </style>
 <meta name="robots" content="noindex,nofollow,noarchive" />
 <meta name="referrer" content="no-referrer" />
 <meta http-equiv="refresh" content="300" />
 <link rel="icon" href="data:," />
 <style id="mobile-patch">
-/* mobile-patch: injected only by mobile/serve_private.py; applies at <=600px so desktop is unchanged.
-   Oct 8 2026 simplify: the new summary / two-column venues / changes layout is responsive inside
-   live-dashboard.html itself. The rules below keep the PAPER EXPERIMENTS panel exactly as it was on the phone. */
-@media (max-width: 600px) {
-  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  .xp-extras { overflow-wrap: anywhere; }
-  .xp-grid { grid-template-columns: minmax(0, 1fr) !important; }
-  /* let grid children shrink so wide tables scroll inside instead of widening the page */
-  .wrap, .xp-card, .xp-section, .venues > *, .card { min-width: 0; max-width: 100%; }
-  .xp-kv { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* tables scroll sideways instead of squashing */
-  table { display: block; width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  th, td { white-space: nowrap; }
-  td { font-size: 0.8rem; }
-  th { font-size: 0.72rem; }
-  /* keep small text readable (>= ~11.5px) */
-  .xp-sub, .xp-badge, .xp-upd, .xp-pace, .xp-extras, .xp-open, .xp-open table, .xp-kv div, .xp-pill,
-  .empty-state {
-    font-size: 0.74rem !important;
-  }
-  .xp-upd { margin-left: 0; }
-}
+/* simple dashboard ships its own mobile-first CSS; legacy patch retired (see mobile.css.pre-simple.bak) */
 
 </style>
-</head>
-<body>
-<div class="wrap">
-  <header class="top">
-    <h1>Salary Desk</h1>
-    <span class="live" id="liveStat">loading…</span>
-  </header>
-
-  <!-- 1. SUMMARY -->
-  <section class="card" id="summary">
-    <div class="sum-head">
-      <div class="sum-lbl">Total equity</div>
-      <div class="sum-hero" id="sumEq">—</div>
-      <div class="sum-hero-sub" id="sumEqSub"></div>
-    </div>
-    <div class="sum-main">
-      <div class="sum-lbl" id="sumTotLbl">Total P&amp;L · since Oct 7 reset</div>
-      <div class="sum-big" id="sumTot">—</div>
-      <div class="sum-pct" id="sumTotPct">—</div>
-    </div>
-    <div class="sum-row">
-      <div class="sum-cell">
-        <div class="sum-lbl">Last week</div>
-        <div class="sum-val" id="sumWk">—</div>
-        <div class="sum-note" id="sumWkNote">—</div>
-      </div>
-      <div class="sum-cell">
-        <div class="sum-lbl">Last month</div>
-        <div class="sum-val" id="sumMo">—</div>
-        <div class="sum-note" id="sumMoNote">—</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. VENUES -->
-  <section class="venues">
-    <div class="card venue-cb">
-      <h2>Coinbase</h2>
-      <div id="cbBody"></div>
-    </div>
-    <div class="card venue-rh">
-      <h2>Robinhood</h2>
-      <div id="rhBody"></div>
-    </div>
-  </section>
-
-
-  <!-- 2b. CAPS v3 Max Throughput (dollars from live sleeve equity in JS) -->
-  <section class="caps-section" id="capsSection">
-    <div class="card caps-card venue-cb">
-      <h2>Coinbase CAPS <span class="pill" id="cbCapsPill">v3 Max Throughput</span></h2>
-      <div class="caps-grid" id="cbCapsGrid"></div>
-      <div class="caps-note" id="cbCapsNote"></div>
-      <div class="caps-note warn" id="cbFutNote"></div>
-    </div>
-    <div class="card caps-card venue-rh">
-      <h2>Robinhood CAPS <span class="pill" id="rhCapsPill">v3 Max Throughput</span></h2>
-      <div class="caps-grid" id="rhCapsGrid"></div>
-      <div class="caps-note" id="rhCapsNote"></div>
-      <div class="caps-note hot" id="regimeNote"></div>
-    </div>
-  </section>
-
-  <!-- 3. RECENT STRATEGY CHANGES -->
-  <section class="card">
-    <h2>Recent strategy changes</h2>
-    <ul class="changes" id="changes"><li class="txt">—</li></ul>
-  </section>
-  <div class="foot" id="foot"></div>
-
-  <!-- ===== PAPER EXPERIMENTS (simple cards; reads desk-state.json "experiments") ===== -->
-  <hr class="xp-divider">
-  <section class="xp-section" id="xpSection">
-    <div class="xp-head">
-      <h2>PAPER EXPERIMENTS</h2>
-      <span class="xp-badge">PAPER ONLY · no real money</span>
-      <span class="xp-upd" id="xpUpd">—</span>
-    </div>
-    <div class="xp-grid" id="xpGrid">
-      <div class="empty-state">No experiments section in desk-state.json yet.</div>
-    </div>
-  </section>
-</div>
-
+</head><body><main>
+<section class="card" id="overall">
+ <h2>Desk</h2>
+ <div class="big" id="tot">—</div>
+ <div class="stats"><span><span class="lab">Total P&amp;L</span><span id="pnl">—</span></span><span><span class="lab">Today</span><span id="today">—</span></span></div>
+ <div class="bar"><i id="barFill" style="width:0"></i></div>
+ <div class="row mu" style="font-size:13px"><span id="barTxt">—</span><span>$1M by Oct 7, 2027</span></div>
+ <svg id="chart" viewBox="0 0 340 150" preserveAspectRatio="none" aria-label="Desk value vs on-track path"></svg>
+ <div class="leg"><span><i style="background:var(--ac)"></i>Desk value</span><span><i style="background:#f59e0b"></i>On-track path (log scale)</span></div>
+ <div class="status" id="status">—</div>
+</section>
+<section class="card"><h2>Coinbase</h2>
+ <div class="row"><span class="mid" id="cbVal">—</span><span class="mid" id="cbPnl" style="font-size:20px">—</span></div>
+ <div id="cbHold"></div></section>
+<section class="card"><h2>Robinhood</h2>
+ <div class="row"><span class="mid" id="rhVal">—</span><span class="mid" id="rhPnl" style="font-size:20px">—</span></div>
+ <div id="rhHold"></div></section>
+<section class="card"><h2>Paper bots <span style="text-transform:none;letter-spacing:0">· current version</span></h2><div id="xp"></div></section>
+<footer id="foot">—</footer>
+</main>
 <script>
+// SIMPLE_EXTRAS: epochs, on-track path, desk history (filled by embed-bootstrap.py / build_pages.py)
+const SIMPLE_EXTRAS = {"epochs": {"perps_10x": {"v": "v3", "start": "2026-10-12T15:54:00-05:00", "sb": 110.7774}, "options_lotto": {"v": "v4", "start": "2026-10-12T15:54:00-05:00", "sb": 6558.0}, "memecoin_sniper": {"v": "v4", "start": "2026-10-12T15:54:00-05:00", "sb": 214.3329}, "perp_compounder": {"v": "v2", "start": "2026-10-12T15:54:00-05:00", "sb": 588.8336}, "whale_copy": {"v": "v2", "start": "2026-10-12T15:54:00-05:00", "sb": 603.7643}, "pm_favorites": {"v": "v3", "start": "2026-10-12T15:54:00-05:00", "sb": 98.0503}, "pm_longshots": {"v": "v2", "start": "2026-10-07T20:53:29-05:00", "sb": 100.0}, "crypto_momentum": {"v": "v2", "start": "2026-10-07T20:53:29-05:00", "sb": 100.0}, "stock_momentum": {"v": "v3", "start": "2026-10-08T20:19:03-05:00", "sb": 8000.0}, "meta_allocator": {"v": "v3", "start": "2026-10-12T15:54:00-05:00", "sb": 85.6297}, "kalshi_btc": {"v": "v1", "start": "2026-10-12T18:05:00-05:00", "sb": 664.0}}, "names": {"memecoin_sniper": "Meme coin sniper", "perps_10x": "10x perps", "options_lotto": "Options lotto", "crypto_momentum": "Crypto momentum", "pm_longshots": "Prediction longshots", "pm_favorites": "Prediction favorites", "stock_momentum": "Stock momentum", "meta_allocator": "Toolbelt (best-of fund)", "perp_compounder": "High-leverage perps", "whale_copy": "Whale copy-trader", "kalshi_btc": "Kalshi BTC mispricing"}, "path": {"base": 1455.92, "rate_pct": 2.6366, "pts": [["2026-10-08T11:34:00-05:00", 1455.92], ["2026-10-08T15:00:00-05:00", 1494.31], ["2026-10-09T15:00:00-05:00", 1533.71], ["2026-10-12T15:00:00-05:00", 1574.14], ["2026-10-13T15:00:00-05:00", 1615.65], ["2026-10-14T15:00:00-05:00", 1658.25], ["2026-10-15T15:00:00-05:00", 1701.97], ["2026-10-16T15:00:00-05:00", 1746.84], ["2026-10-19T15:00:00-05:00", 1792.9], ["2026-10-20T15:00:00-05:00", 1840.17], ["2026-10-21T15:00:00-05:00", 1888.69], ["2026-10-22T15:00:00-05:00", 1938.48], ["2026-10-23T15:00:00-05:00", 1989.59], ["2026-10-26T15:00:00-05:00", 2042.05], ["2026-10-27T15:00:00-05:00", 2095.89], ["2026-10-28T15:00:00-05:00", 2151.15], ["2026-10-29T15:00:00-05:00", 2207.87], ["2026-10-30T15:00:00-05:00", 2266.08], ["2026-11-02T15:00:00-06:00", 2325.83], ["2026-11-03T15:00:00-06:00", 2387.15], ["2026-11-04T15:00:00-06:00", 2450.09], ["2026-11-05T15:00:00-06:00", 2514.69], ["2026-11-06T15:00:00-06:00", 2580.99], ["2026-11-09T15:00:00-06:00", 2649.04], ["2026-11-10T15:00:00-06:00", 2718.89], ["2026-11-11T15:00:00-06:00", 2790.57], ["2026-11-12T15:00:00-06:00", 2864.15], ["2026-11-13T15:00:00-06:00", 2939.67], ["2026-11-16T15:00:00-06:00", 3017.17], ["2026-11-17T15:00:00-06:00", 3096.72], ["2026-11-18T15:00:00-06:00", 3178.37], ["2026-11-19T15:00:00-06:00", 3262.17], ["2026-11-20T15:00:00-06:00", 3348.18], ["2026-11-23T15:00:00-06:00", 3436.46], ["2026-11-24T15:00:00-06:00", 3527.07], ["2026-11-25T15:00:00-06:00", 3620.06], ["2026-11-27T15:00:00-06:00", 3715.51], ["2026-11-30T15:00:00-06:00", 3813.47], ["2026-12-01T15:00:00-06:00", 3914.02], ["2026-12-02T15:00:00-06:00", 4017.21], ["2026-12-03T15:00:00-06:00", 4123.13], ["2026-12-04T15:00:00-06:00", 4231.84], ["2026-12-07T15:00:00-06:00", 4343.42], ["2026-12-08T15:00:00-06:00", 4457.94], ["2026-12-09T15:00:00-06:00", 4575.47], ["2026-12-10T15:00:00-06:00", 4696.11], ["2026-12-11T15:00:00-06:00", 4819.93], ["2026-12-14T15:00:00-06:00", 4947.01], ["2026-12-15T15:00:00-06:00", 5077.44], ["2026-12-16T15:00:00-06:00", 5211.31], ["2026-12-17T15:00:00-06:00", 5348.72], ["2026-12-18T15:00:00-06:00", 5489.74], ["2026-12-21T15:00:00-06:00", 5634.48], ["2026-12-22T15:00:00-06:00", 5783.04], ["2026-12-23T15:00:00-06:00", 5935.52], ["2026-12-24T15:00:00-06:00", 6092.01], ["2026-12-28T15:00:00-06:00", 6252.63], ["2026-12-29T15:00:00-06:00", 6417.49], ["2026-12-30T15:00:00-06:00", 6586.69], ["2026-12-31T15:00:00-06:00", 6760.36], ["2027-01-04T15:00:00-06:00", 6938.6], ["2027-01-05T15:00:00-06:00", 7121.54], ["2027-01-06T15:00:00-06:00", 7309.31], ["2027-01-07T15:00:00-06:00", 7502.03], ["2027-01-08T15:00:00-06:00", 7699.83], ["2027-01-11T15:00:00-06:00", 7902.84], ["2027-01-12T15:00:00-06:00", 8111.21], ["2027-01-13T15:00:00-06:00", 8325.07], ["2027-01-14T15:00:00-06:00", 8544.56], ["2027-01-15T15:00:00-06:00", 8769.85], ["2027-01-19T15:00:00-06:00", 9001.08], ["2027-01-20T15:00:00-06:00", 9238.4], ["2027-01-21T15:00:00-06:00", 9481.98], ["2027-01-22T15:00:00-06:00", 9731.98], ["2027-01-25T15:00:00-06:00", 9988.57], ["2027-01-26T15:00:00-06:00", 10251.93], ["2027-01-27T15:00:00-06:00", 10522.23], ["2027-01-28T15:00:00-06:00", 10799.66], ["2027-01-29T15:00:00-06:00", 11084.4], ["2027-02-01T15:00:00-06:00", 11376.65], ["2027-02-02T15:00:00-06:00", 11676.61], ["2027-02-03T15:00:00-06:00", 11984.48], ["2027-02-04T15:00:00-06:00", 12300.46], ["2027-02-05T15:00:00-06:00", 12624.77], ["2027-02-08T15:00:00-06:00", 12957.64], ["2027-02-09T15:00:00-06:00", 13299.28], ["2027-02-10T15:00:00-06:00", 13649.92], ["2027-02-11T15:00:00-06:00", 14009.82], ["2027-02-12T15:00:00-06:00", 14379.2], ["2027-02-16T15:00:00-06:00", 14758.32], ["2027-02-17T15:00:00-06:00", 15147.44], ["2027-02-18T15:00:00-06:00", 15546.82], ["2027-02-19T15:00:00-06:00", 15956.72], ["2027-02-22T15:00:00-06:00", 16377.44], ["2027-02-23T15:00:00-06:00", 16809.24], ["2027-02-24T15:00:00-06:00", 17252.44], ["2027-02-25T15:00:00-06:00", 17707.31], ["2027-02-26T15:00:00-06:00", 18174.18], ["2027-03-01T15:00:00-06:00", 18653.36], ["2027-03-02T15:00:00-06:00", 19145.18], ["2027-03-03T15:00:00-06:00", 19649.96], ["2027-03-04T15:00:00-06:00", 20168.05], ["2027-03-05T15:00:00-06:00", 20699.8], ["2027-03-08T15:00:00-06:00", 21245.57], ["2027-03-09T15:00:00-06:00", 21805.73], ["2027-03-10T15:00:00-06:00", 22380.66], ["2027-03-11T15:00:00-06:00", 22970.74], ["2027-03-12T15:00:00-06:00", 23576.39], ["2027-03-15T15:00:00-05:00", 24198.0], ["2027-03-16T15:00:00-05:00", 24836.01], ["2027-03-17T15:00:00-05:00", 25490.83], ["2027-03-18T15:00:00-05:00", 26162.92], ["2027-03-19T15:00:00-05:00", 26852.73], ["2027-03-22T15:00:00-05:00", 27560.73], ["2027-03-23T15:00:00-05:00", 28287.4], ["2027-03-24T15:00:00-05:00", 29033.22], ["2027-03-25T15:00:00-05:00", 29798.71], ["2027-03-29T15:00:00-05:00", 30584.38], ["2027-03-30T15:00:00-05:00", 31390.77], ["2027-03-31T15:00:00-05:00", 32218.42], ["2027-04-01T15:00:00-05:00", 33067.89], ["2027-04-02T15:00:00-05:00", 33939.75], ["2027-04-05T15:00:00-05:00", 34834.61], ["2027-04-06T15:00:00-05:00", 35753.05], ["2027-04-07T15:00:00-05:00", 36695.72], ["2027-04-08T15:00:00-05:00", 37663.24], ["2027-04-09T15:00:00-05:00", 38656.26], ["2027-04-12T15:00:00-05:00", 39675.47], ["2027-04-13T15:00:00-05:00", 40721.56], ["2027-04-14T15:00:00-05:00", 41795.22], ["2027-04-15T15:00:00-05:00", 42897.19], ["2027-04-16T15:00:00-05:00", 44028.22], ["2027-04-19T15:00:00-05:00", 45189.06], ["2027-04-20T15:00:00-05:00", 46380.51], ["2027-04-21T15:00:00-05:00", 47603.38], ["2027-04-22T15:00:00-05:00", 48858.49], ["2027-04-23T15:00:00-05:00", 50146.69], ["2027-04-26T15:00:00-05:00", 51468.86], ["2027-04-27T15:00:00-05:00", 52825.88], ["2027-04-28T15:00:00-05:00", 54218.69], ["2027-04-29T15:00:00-05:00", 55648.22], ["2027-04-30T15:00:00-05:00", 57115.44], ["2027-05-03T15:00:00-05:00", 58621.34], ["2027-05-04T15:00:00-05:00", 60166.95], ["2027-05-05T15:00:00-05:00", 61753.31], ["2027-05-06T15:00:00-05:00", 63381.49], ["2027-05-07T15:00:00-05:00", 65052.61], ["2027-05-10T15:00:00-05:00", 66767.78], ["2027-05-11T15:00:00-05:00", 68528.18], ["2027-05-12T15:00:00-05:00", 70334.99], ["2027-05-13T15:00:00-05:00", 72189.44], ["2027-05-14T15:00:00-05:00", 74092.78], ["2027-05-17T15:00:00-05:00", 76046.31], ["2027-05-18T15:00:00-05:00", 78051.34], ["2027-05-19T15:00:00-05:00", 80109.24], ["2027-05-20T15:00:00-05:00", 82221.4], ["2027-05-21T15:00:00-05:00", 84389.25], ["2027-05-24T15:00:00-05:00", 86614.25], ["2027-05-25T15:00:00-05:00", 88897.92], ["2027-05-26T15:00:00-05:00", 91241.8], ["2027-05-27T15:00:00-05:00", 93647.47], ["2027-05-28T15:00:00-05:00", 96116.58], ["2027-06-01T15:00:00-05:00", 98650.79], ["2027-06-02T15:00:00-05:00", 101251.81], ["2027-06-03T15:00:00-05:00", 103921.41], ["2027-06-04T15:00:00-05:00", 106661.4], ["2027-06-07T15:00:00-05:00", 109473.63], ["2027-06-08T15:00:00-05:00", 112360.01], ["2027-06-09T15:00:00-05:00", 115322.49], ["2027-06-10T15:00:00-05:00", 118363.07], ["2027-06-11T15:00:00-05:00", 121483.83], ["2027-06-14T15:00:00-05:00", 124686.87], ["2027-06-15T15:00:00-05:00", 127974.36], ["2027-06-16T15:00:00-05:00", 131348.53], ["2027-06-17T15:00:00-05:00", 134811.66], ["2027-06-21T15:00:00-05:00", 138366.1], ["2027-06-22T15:00:00-05:00", 142014.25], ["2027-06-23T15:00:00-05:00", 145758.59], ["2027-06-24T15:00:00-05:00", 149601.66], ["2027-06-25T15:00:00-05:00", 153546.05], ["2027-06-28T15:00:00-05:00", 157594.44], ["2027-06-29T15:00:00-05:00", 161749.57], ["2027-06-30T15:00:00-05:00", 166014.25], ["2027-07-01T15:00:00-05:00", 170391.38], ["2027-07-02T15:00:00-05:00", 174883.91], ["2027-07-06T15:00:00-05:00", 179494.89], ["2027-07-07T15:00:00-05:00", 184227.45], ["2027-07-08T15:00:00-05:00", 189084.78], ["2027-07-09T15:00:00-05:00", 194070.18], ["2027-07-12T15:00:00-05:00", 199187.03], ["2027-07-13T15:00:00-05:00", 204438.79], ["2027-07-14T15:00:00-05:00", 209829.01], ["2027-07-15T15:00:00-05:00", 215361.36], ["2027-07-16T15:00:00-05:00", 221039.57], ["2027-07-19T15:00:00-05:00", 226867.49], ["2027-07-20T15:00:00-05:00", 232849.07], ["2027-07-21T15:00:00-05:00", 238988.36], ["2027-07-22T15:00:00-05:00", 245289.52], ["2027-07-23T15:00:00-05:00", 251756.81], ["2027-07-26T15:00:00-05:00", 258394.62], ["2027-07-27T15:00:00-05:00", 265207.44], ["2027-07-28T15:00:00-05:00", 272199.89], ["2027-07-29T15:00:00-05:00", 279376.71], ["2027-07-30T15:00:00-05:00", 286742.74], ["2027-08-02T15:00:00-05:00", 294302.99], ["2027-08-03T15:00:00-05:00", 302062.57], ["2027-08-04T15:00:00-05:00", 310026.74], ["2027-08-05T15:00:00-05:00", 318200.89], ["2027-08-06T15:00:00-05:00", 326590.57], ["2027-08-09T15:00:00-05:00", 335201.44], ["2027-08-10T15:00:00-05:00", 344039.35], ["2027-08-11T15:00:00-05:00", 353110.28], ["2027-08-12T15:00:00-05:00", 362420.37], ["2027-08-13T15:00:00-05:00", 371975.93], ["2027-08-16T15:00:00-05:00", 381783.44], ["2027-08-17T15:00:00-05:00", 391849.52], ["2027-08-18T15:00:00-05:00", 402181.01], ["2027-08-19T15:00:00-05:00", 412784.9], ["2027-08-20T15:00:00-05:00", 423668.38], ["2027-08-23T15:00:00-05:00", 434838.8], ["2027-08-24T15:00:00-05:00", 446303.74], ["2027-08-25T15:00:00-05:00", 458070.97], ["2027-08-26T15:00:00-05:00", 470148.45], ["2027-08-27T15:00:00-05:00", 482544.37], ["2027-08-30T15:00:00-05:00", 495267.12], ["2027-08-31T15:00:00-05:00", 508325.31], ["2027-09-01T15:00:00-05:00", 521727.8], ["2027-09-02T15:00:00-05:00", 535483.65], ["2027-09-03T15:00:00-05:00", 549602.19], ["2027-09-07T15:00:00-05:00", 564092.98], ["2027-09-08T15:00:00-05:00", 578965.84], ["2027-09-09T15:00:00-05:00", 594230.83], ["2027-09-10T15:00:00-05:00", 609898.3], ["2027-09-13T15:00:00-05:00", 625978.85], ["2027-09-14T15:00:00-05:00", 642483.39], ["2027-09-15T15:00:00-05:00", 659423.08], ["2027-09-16T15:00:00-05:00", 676809.41], ["2027-09-17T15:00:00-05:00", 694654.14], ["2027-09-20T15:00:00-05:00", 712969.36], ["2027-09-21T15:00:00-05:00", 731767.48], ["2027-09-22T15:00:00-05:00", 751061.24], ["2027-09-23T15:00:00-05:00", 770863.69], ["2027-09-24T15:00:00-05:00", 791188.25], ["2027-09-27T15:00:00-05:00", 812048.69], ["2027-09-28T15:00:00-05:00", 833459.14], ["2027-09-29T15:00:00-05:00", 855434.09], ["2027-09-30T15:00:00-05:00", 877988.43], ["2027-10-01T15:00:00-05:00", 901137.44], ["2027-10-04T15:00:00-05:00", 924896.8], ["2027-10-05T15:00:00-05:00", 949282.59], ["2027-10-06T15:00:00-05:00", 974311.34], ["2027-10-07T15:00:00-05:00", 1000000.0]]}, "hist": [["2026-10-07T23:38:00-05:00", 953.61], ["2026-10-08T08:43:00-05:00", 955.8], ["2026-10-08T09:17:04-05:00", 955.9], ["2026-10-08T09:50:04-05:00", 956.19], ["2026-10-08T10:21:04-05:00", 955.98], ["2026-10-08T10:53:05-05:00", 1456.21], ["2026-10-08T11:25:04-05:00", 1456.14], ["2026-10-08T11:58:03-05:00", 1456.42], ["2026-10-08T12:28:03-05:00", 1456.82], ["2026-10-08T12:59:02-05:00", 1456.91], ["2026-10-08T13:30:03-05:00", 1456.63], ["2026-10-08T14:03:03-05:00", 1456.84], ["2026-10-08T14:36:02-05:00", 1456.94], ["2026-10-08T21:29:09-05:00", 1456.79], ["2026-10-08T22:22:13-05:00", 1456.79], ["2026-10-08T22:57:54-05:00", 1456.79], ["2026-10-08T23:51:36-05:00", 1456.79], ["2026-10-09T08:30:03-05:00", 1456.65], ["2026-10-09T09:01:02-05:00", 1456.61], ["2026-10-09T09:33:05-05:00", 1456.52], ["2026-10-09T10:06:03-05:00", 1456.56], ["2026-10-09T10:39:03-05:00", 1456.56], ["2026-10-09T11:13:02-05:00", 1456.65], ["2026-10-09T11:47:03-05:00", 1456.71], ["2026-10-09T12:19:03-05:00", 1456.71], ["2026-10-09T12:51:02-05:00", 1456.77], ["2026-10-09T13:23:02-05:00", 1456.8], ["2026-10-09T13:53:03-05:00", 1456.77], ["2026-10-09T14:24:02-05:00", 1456.83], ["2026-10-09T14:56:02-05:00", 1456.74], ["2026-10-09T15:37:20-05:00", 1456.85], ["2026-10-09T16:18:33-05:00", 1456.81], ["2026-10-09T16:58:31-05:00", 1456.85], ["2026-10-09T17:34:33-05:00", 1456.85], ["2026-10-09T18:13:48-05:00", 1456.85], ["2026-10-09T18:45:05-05:00", 1456.85], ["2026-10-09T19:32:18-05:00", 1456.85], ["2026-10-09T20:12:53-05:00", 1456.85], ["2026-10-09T20:49:37-05:00", 1456.85], ["2026-10-09T21:33:08-05:00", 1456.85], ["2026-10-09T22:17:31-05:00", 1456.85], ["2026-10-09T23:03:43-05:00", 1456.85], ["2026-10-09T23:51:26-05:00", 1456.85], ["2026-10-10T00:32:49-05:00", 1456.85], ["2026-10-10T01:15:01-05:00", 1456.85], ["2026-10-10T02:02:54-05:00", 1456.85], ["2026-10-10T02:48:56-05:00", 1456.85], ["2026-10-10T03:19:21-05:00", 1456.85], ["2026-10-10T03:50:46-05:00", 1456.85], ["2026-10-10T04:21:40-05:00", 1456.85], ["2026-10-10T05:01:54-05:00", 1456.85], ["2026-10-10T05:42:51-05:00", 1456.85], ["2026-10-10T06:13:52-05:00", 1456.85], ["2026-10-10T06:51:15-05:00", 1456.85], ["2026-10-10T07:34:09-05:00", 1456.85], ["2026-10-10T08:06:40-05:00", 1456.85], ["2026-10-10T08:43:42-05:00", 1456.85], ["2026-10-10T09:14:07-05:00", 1456.85], ["2026-10-10T09:50:35-05:00", 1456.85], ["2026-10-10T10:34:11-05:00", 1456.85], ["2026-10-10T11:16:13-05:00", 1456.85], ["2026-10-10T12:06:25-05:00", 1456.85], ["2026-10-10T12:43:07-05:00", 1456.85], ["2026-10-10T13:17:35-05:00", 1456.85], ["2026-10-10T14:04:29-05:00", 1456.85], ["2026-10-10T14:35:06-05:00", 1456.85], ["2026-10-10T15:16:36-05:00", 1456.85], ["2026-10-10T15:47:35-05:00", 1456.85], ["2026-10-10T16:30:18-05:00", 1456.85], ["2026-10-10T18:52:52-05:00", 1456.0], ["2026-10-10T19:35:00-05:00", 1457.16], ["2026-10-10T21:29:00-05:00", 1456.17], ["2026-10-11T03:32:51-05:00", 1447.51], ["2026-10-11T06:42:00-05:00", 1444.27], ["2026-10-12T04:25:46-05:00", 1453.27], ["2026-10-12T05:10:04-05:00", 1453.27], ["2026-10-12T05:40:55-05:00", 1453.27], ["2026-10-12T06:26:23-05:00", 1453.27], ["2026-10-12T06:56:41-05:00", 1453.27], ["2026-10-12T07:57:50-05:00", 1453.27], ["2026-10-12T08:30:02-05:00", 1453.64], ["2026-10-12T09:02:02-05:00", 1453.47], ["2026-10-12T09:38:15-05:00", 1453.71], ["2026-10-12T10:13:03-05:00", 1453.7], ["2026-10-12T10:48:02-05:00", 1453.75], ["2026-10-12T11:28:56-05:00", 1453.85], ["2026-10-12T11:59:57-05:00", 1453.97], ["2026-10-12T12:30:02-05:00", 1453.98], ["2026-10-12T13:00:26-05:00", 1453.99], ["2026-10-12T13:34:02-05:00", 1453.93], ["2026-10-12T14:08:48-05:00", 1454.03], ["2026-10-12T14:40:03-05:00", 1454.06], ["2026-10-12T15:19:55-05:00", 1454.24], ["2026-10-12T15:50:55-05:00", 1454.24], ["2026-10-12T16:35:16-05:00", 1454.24], ["2026-10-12T17:21:03-05:00", 1454.24], ["2026-10-12T17:56:02-05:00", 1454.24], ["2026-10-12T18:15:10-05:00", 1454.24]]};
+// END SIMPLE_EXTRAS
 const CHANGES_BOOTSTRAP = [
  {
   "ts": "2026-10-07T14:12:00-05:00",
@@ -788,7 +539,7 @@ const CHANGES_BOOTSTRAP = [
 ];
 // END CHANGES_BOOTSTRAP
 const BOOTSTRAP = {
- "as_of": "2026-10-12T18:12:10-05:00",
+ "as_of": "2026-10-12T18:15:10-05:00",
  "autonomy": true,
  "equity_usd_est": 660.56,
  "free_usd": 129.42,
@@ -916,21 +667,21 @@ const BOOTSTRAP = {
   {
    "symbol": "SOL",
    "stance": "FLAT",
-   "mark_hint": 105.86,
+   "mark_hint": 106.01,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
   {
    "symbol": "BTC",
    "stance": "FLAT",
-   "mark_hint": 81835.78,
+   "mark_hint": 81930.63,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
   {
    "symbol": "ETH",
    "stance": "FLAT",
-   "mark_hint": 2455.0,
+   "mark_hint": 2459.05,
    "kill": null,
    "note": "FLAT · Oct 8–9 pass ended 8 AM CT Fri · no new entries until Risk Gate issues next pass"
   },
@@ -1306,10 +1057,6 @@ const BOOTSTRAP = {
  "win_rate_note": "1W/1L since reset (XLE +$1.90 vs reset, XLU −$0.445; pre-reset T002 BTC −$2.42 archived)",
  "equity_history": [
   {
-   "t": "2026-10-12T04:14:24-05:00",
-   "equity": 660.56
-  },
-  {
    "t": "2026-10-12T04:25:46-05:00",
    "equity": 660.56
   },
@@ -1495,6 +1242,10 @@ const BOOTSTRAP = {
   },
   {
    "t": "2026-10-12T18:12:10-05:00",
+   "equity": 660.56
+  },
+  {
+   "t": "2026-10-12T18:15:10-05:00",
    "equity": 660.56
   }
  ],
@@ -3839,7 +3590,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T12:57:18-05:00",
-   "last_update": "2026-10-12T18:14:50-05:00",
+   "last_update": "2026-10-12T18:16:51-05:00",
    "start_bankroll_usd": 664.14,
    "equity": 225.97,
    "cash_usd": 225.97,
@@ -3864,7 +3615,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 4.22,
     "ratio": 0.3402,
-    "implied_daily_pct": -22.542,
+    "implied_daily_pct": -22.535,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -3873,15 +3624,15 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 133
    },
-   "cycles": 2400,
+   "cycles": 2401,
    "decisions": {
-    "SKIP": 180121,
+    "SKIP": 180198,
     "ENTER": 133
    },
    "top_skip_reasons": {
-    "benched": 103364,
-    "missing_data": 63349,
-    "liquidity": 4477,
+    "benched": 103406,
+    "missing_data": 63367,
+    "liquidity": 4493,
     "no_pair": 3911,
     "too_young": 3643,
     "quote_asset": 250,
@@ -3925,7 +3676,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "rugs": 2,
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:05-05:00"
   },
   "perps_10x": {
    "mode": "PAPER",
@@ -3941,7 +3692,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:14:20-05:00",
+   "last_update": "2026-10-12T18:16:20-05:00",
    "start_bankroll_usd": 100.0,
    "equity": 110.78,
    "cash_usd": 110.78,
@@ -3961,7 +3712,7 @@ const BOOTSTRAP = {
     "days": 4.89,
     "ratio": 1.1078,
     "implied_daily_pct": 2.115,
-    "annualized_multiple": 2079.885,
+    "annualized_multiple": 2074.816,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -3969,13 +3720,13 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 21
    },
-   "cycles": 6590,
+   "cycles": 6595,
    "decisions": {
-    "SKIP": 6618,
+    "SKIP": 6623,
     "ORDER": 22
    },
    "top_skip_reasons": {
-    "no_5m_breakout": 3476,
+    "no_5m_breakout": 3481,
     "no_trend_15m": 2297,
     "overextended_vs_ema20": 328,
     "position_open": 285,
@@ -4011,7 +3762,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "liquidations": 0,
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "options_lotto": {
    "mode": "PAPER",
@@ -4027,7 +3778,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T20:19:03-05:00",
-   "last_update": "2026-10-12T18:14:05-05:00",
+   "last_update": "2026-10-12T18:17:05-05:00",
    "start_bankroll_usd": 8000.0,
    "equity": 6558.0,
    "cash_usd": 6558.0,
@@ -4059,9 +3810,9 @@ const BOOTSTRAP = {
     "status": "waiting for market open (next 2026-10-13T08:30-05:00)"
    },
    "pace": {
-    "days": 3.91,
+    "days": 3.92,
     "ratio": 0.8197,
-    "implied_daily_pct": -4.952,
+    "implied_daily_pct": -4.95,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4070,7 +3821,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 23
    },
-   "cycles": 4419,
+   "cycles": 4422,
    "decisions": {
     "ENTER": 23,
     "SKIP": 399
@@ -4155,7 +3906,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "crypto_momentum": {
    "mode": "PAPER",
@@ -4171,7 +3922,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:10:05-05:00",
+   "last_update": "2026-10-12T18:15:05-05:00",
    "start_bankroll_usd": 100.0,
    "equity": 95.73,
    "cash_usd": 95.73,
@@ -4195,7 +3946,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 4.89,
     "ratio": 0.9573,
-    "implied_daily_pct": -0.889,
+    "implied_daily_pct": -0.888,
     "annualized_multiple": 0.038,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4204,7 +3955,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 9
    },
-   "cycles": 1344,
+   "cycles": 1345,
    "decisions": {
     "SKIP": 3164,
     "ENTER": 9
@@ -4244,7 +3995,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "pm_longshots": {
    "mode": "PAPER",
@@ -4439,7 +4190,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 4.89,
     "ratio": 0.5984,
-    "implied_daily_pct": -9.968,
+    "implied_daily_pct": -9.965,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4500,7 +4251,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "pm_favorites": {
    "mode": "PAPER",
@@ -4695,7 +4446,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "stock_momentum": {
    "mode": "PAPER",
@@ -4718,7 +4469,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T20:19:03-05:00",
-   "last_update": "2026-10-12T18:10:05-05:00",
+   "last_update": "2026-10-12T18:15:05-05:00",
    "start_bankroll_usd": 8000.0,
    "equity": 8107.1,
    "cash_usd": 4800.0,
@@ -4752,10 +4503,10 @@ const BOOTSTRAP = {
     "data_note": "Nasdaq daily + CBOE delayed quotes"
    },
    "pace": {
-    "days": 3.91,
+    "days": 3.92,
     "ratio": 1.0134,
     "implied_daily_pct": 0.34,
-    "annualized_multiple": 3.457,
+    "annualized_multiple": 3.455,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -4763,7 +4514,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 0
    },
-   "cycles": 1061,
+   "cycles": 1062,
    "decisions": {
     "SKIP": 87
    },
@@ -4797,7 +4548,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "meta_allocator": {
    "mode": "PAPER",
@@ -4813,8 +4564,8 @@ const BOOTSTRAP = {
     {
      "symbol": "Prediction favorites",
      "side": "copy",
-     "value_usd": 44.26,
-     "upnl_usd": 0.07
+     "value_usd": 44.29,
+     "upnl_usd": 0.1
     }
    ],
    "label": "G. Meta allocator - 'Toolbelt' fund",
@@ -4826,12 +4577,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-07T20:53:29-05:00",
-   "last_update": "2026-10-12T18:10:05-05:00",
+   "last_update": "2026-10-12T18:15:05-05:00",
    "start_bankroll_usd": 100.0,
-   "equity": 85.91,
+   "equity": 85.94,
    "cash_usd": 0.36,
-   "net_pnl_usd": -14.09,
-   "net_pnl_pct": -14.09,
+   "net_pnl_usd": -14.06,
+   "net_pnl_pct": -14.06,
    "realized_pnl_usd": -14.13,
    "trades": 72,
    "wins": 22,
@@ -4853,7 +4604,7 @@ const BOOTSTRAP = {
      "symbol": "pm_favorites",
      "side": "mirror 52%",
      "entry": 44.19,
-     "last": 44.26
+     "last": 44.29
     }
    ],
    "extras": {
@@ -4862,15 +4613,15 @@ const BOOTSTRAP = {
     "last_rebalance": "2026-10-12T16:05:05-05:00",
     "rebalances": 125,
     "switch_costs_usd": 9.06699,
-    "eligible": "perps_10x +0.0568, pm_favorites +0.0578",
+    "eligible": "perps_10x +0.0568, pm_favorites +0.0585",
     "kill_switched": "memecoin_sniper, pm_longshots, options_lotto, perp_compounder",
     "subs_tracked": 10,
     "status": "allocating"
    },
    "pace": {
     "days": 4.89,
-    "ratio": 0.8591,
-    "implied_daily_pct": -3.059,
+    "ratio": 0.8594,
+    "implied_daily_pct": -3.051,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -4879,7 +4630,7 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 72
    },
-   "cycles": 1345,
+   "cycles": 1346,
    "decisions": {},
    "top_skip_reasons": {},
    "data_issues": {},
@@ -4902,7 +4653,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "perp_compounder": {
    "mode": "PAPER",
@@ -4912,8 +4663,8 @@ const BOOTSTRAP = {
     {
      "symbol": "BTC",
      "side": "SHORT 30x",
-     "value_usd": 364.97,
-     "upnl_usd": 81.43
+     "value_usd": 371.21,
+     "upnl_usd": 87.68
     }
    ],
    "label": "High-leverage perp compounder (X post style) - PAPER",
@@ -4925,12 +4676,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T21:41:21-05:00",
-   "last_update": "2026-10-12T18:14:05-05:00",
+   "last_update": "2026-10-12T18:16:05-05:00",
    "start_bankroll_usd": 664.14,
-   "equity": 639.34,
+   "equity": 645.58,
    "cash_usd": 278.58,
-   "net_pnl_usd": -24.8,
-   "net_pnl_pct": -3.73,
+   "net_pnl_usd": -18.56,
+   "net_pnl_pct": -2.79,
    "realized_pnl_usd": -97.77,
    "trades": 66,
    "wins": 21,
@@ -4945,7 +4696,7 @@ const BOOTSTRAP = {
      "symbol": "BTC",
      "side": "SHORT",
      "entry": 82824.31674000001,
-     "last": 82031.4,
+     "last": 81970.6,
      "stop": 84263.654439,
      "tp": 79420.237322,
      "liq": 85201.71956,
@@ -4966,9 +4717,9 @@ const BOOTSTRAP = {
    },
    "pace": {
     "days": 3.86,
-    "ratio": 0.9627,
-    "implied_daily_pct": -0.982,
-    "annualized_multiple": 0.027,
+    "ratio": 0.9721,
+    "implied_daily_pct": -0.732,
+    "annualized_multiple": 0.068,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
     "needed_multiple": 2188,
@@ -4976,20 +4727,20 @@ const BOOTSTRAP = {
     "early_noisy": false,
     "trades": 66
    },
-   "cycles": 7375,
+   "cycles": 7380,
    "decisions": {
-    "SKIP": 14681,
+    "SKIP": 14691,
     "ENTER": 67
    },
    "top_skip_reasons": {
-    "big_already_open": 3625,
+    "big_already_open": 3630,
     "board_flat": 3280,
     "no_5m_breakout": 1769,
     "board_lean_too_weak_for_big": 1660,
     "position_open": 1561,
     "coin_not_aligned_15m_and_1h": 1339,
     "v2_scalp_coin_excluded": 850,
-    "v3_scalps_off": 175
+    "v3_scalps_off": 180
    },
    "data_issues": {
     "www.okx.com": {
@@ -5018,7 +4769,7 @@ const BOOTSTRAP = {
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
    "liquidations": 0,
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "whale_copy": {
    "mode": "PAPER",
@@ -5034,7 +4785,7 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-08T22:32:45-05:00",
-   "last_update": "2026-10-12T18:14:23-05:00",
+   "last_update": "2026-10-12T18:16:39-05:00",
    "start_bankroll_usd": 664.14,
    "equity": 603.76,
    "cash_usd": 603.76,
@@ -5067,7 +4818,7 @@ const BOOTSTRAP = {
    "pace": {
     "days": 3.82,
     "ratio": 0.9091,
-    "implied_daily_pct": -2.464,
+    "implied_daily_pct": -2.463,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -5076,7 +4827,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 7
    },
-   "cycles": 5615,
+   "cycles": 5618,
    "decisions": {
     "SKIP": 273,
     "ENTER": 7
@@ -5127,7 +4878,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   },
   "kalshi_btc": {
    "mode": "PAPER",
@@ -5216,12 +4967,12 @@ const BOOTSTRAP = {
    "benched": false,
    "benched_note": null,
    "started": "2026-10-12T18:06:25-05:00",
-   "last_update": "2026-10-12T18:14:47-05:00",
+   "last_update": "2026-10-12T18:16:50-05:00",
    "start_bankroll_usd": 664.0,
-   "equity": 617.2,
+   "equity": 610.71,
    "cash_usd": 325.18,
-   "net_pnl_usd": -46.8,
-   "net_pnl_pct": -7.05,
+   "net_pnl_usd": -53.29,
+   "net_pnl_pct": -8.03,
    "realized_pnl_usd": 0,
    "trades": 0,
    "wins": 0,
@@ -5236,7 +4987,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T81999.99",
      "side": "no",
      "entry": 0.72,
-     "last": 0.55,
+     "last": 0.52,
      "qty": 44,
      "cost_usd": 32.31,
      "opened": "2026-10-12T18:06:28-05:00"
@@ -5246,7 +4997,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T81899.99",
      "side": "no",
      "entry": 0.64,
-     "last": 0.42,
+     "last": 0.4,
      "qty": 50,
      "cost_usd": 32.81,
      "opened": "2026-10-12T18:06:30-05:00"
@@ -5256,7 +5007,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82099.99",
      "side": "no",
      "entry": 0.78,
-     "last": 0.67,
+     "last": 0.65,
      "qty": 41,
      "cost_usd": 32.48,
      "opened": "2026-10-12T18:06:31-05:00"
@@ -5266,7 +5017,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82299.99",
      "side": "no",
      "entry": 0.87,
-     "last": 0.85,
+     "last": 0.82,
      "qty": 36,
      "cost_usd": 31.61,
      "opened": "2026-10-12T18:06:44-05:00"
@@ -5286,7 +5037,7 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1220-T82199.99",
      "side": "no",
      "entry": 0.82,
-     "last": 0.77,
+     "last": 0.75,
      "qty": 38,
      "cost_usd": 31.56,
      "opened": "2026-10-12T18:07:00-05:00"
@@ -5346,22 +5097,22 @@ const BOOTSTRAP = {
      "symbol": "KXBTCD-26OCT1317-T80749.99",
      "side": "no",
      "entry": 0.18,
-     "last": 0.18,
+     "last": 0.17,
      "qty": 151,
      "cost_usd": 28.75,
      "opened": "2026-10-12T18:09:06-05:00"
     }
    ],
    "extras": {
-    "markets_tracked": 536,
+    "markets_tracked": 537,
     "edge_threshold": 0.04,
-    "spot": 81931.24,
+    "spot": 81937.46,
     "spot_src": {
-     "coinbase": 81932.45,
-     "kraken": 81919.6,
-     "bitstamp": 81931.24
+     "coinbase": 81939.73,
+     "kraken": 81917.1,
+     "bitstamp": 81937.46
     },
-    "vol60_ann_pct": 54.5,
+    "vol60_ann_pct": 54.4,
     "vol240_ann_pct": 39.2,
     "blend_ann_pct": 47.4,
     "n_rets": 299,
@@ -5369,29 +5120,29 @@ const BOOTSTRAP = {
     "markets_by_series": {
      "KXBTCD": 268,
      "KXBTC": 268,
-     "KXBTC15M": 0
+     "KXBTC15M": 1
     },
     "n_edge_ge_thr": 16,
     "best_edge": {
-     "ticker": "KXBTCD-26OCT1317-T80749.99",
+     "ticker": "KXBTCD-26OCT1317-T80999.99",
      "series": "KXBTCD",
      "side": "no",
-     "fair": 0.2734,
-     "ask": 0.19,
-     "edge_net": 0.0726,
-     "depth": 2596.0,
-     "tte_s": 78315,
-     "spot": 81931.24,
-     "strike": 80749.99,
+     "fair": 0.3172,
+     "ask": 0.23,
+     "edge_net": 0.0748,
+     "depth": 1154.0,
+     "tte_s": 78192,
+     "spot": 81937.46,
+     "strike": 80999.99,
      "type": "greater",
      "cap": null
     },
-    "median_edge": -0.0234
+    "median_edge": -0.0229
    },
    "pace": {
     "days": 0.04,
-    "ratio": 0.9295,
-    "implied_daily_pct": -82.694,
+    "ratio": 0.9197,
+    "implied_daily_pct": -86.572,
     "annualized_multiple": 0.0,
     "needed_daily_pct": 2.13,
     "needed_trading_daily_pct": 3.1,
@@ -5400,7 +5151,7 @@ const BOOTSTRAP = {
     "early_noisy": true,
     "trades": 0
    },
-   "cycles": 33,
+   "cycles": 41,
    "decisions": {},
    "top_skip_reasons": {},
    "data_issues": {},
@@ -5423,7 +5174,7 @@ const BOOTSTRAP = {
    "journal": "[path]",
    "trades_csv": "[path]",
    "note": "PAPER ONLY - simulated fills on live public data; no wallet, no keys, no exchange orders",
-   "updated_at": "2026-10-12T18:14:51-05:00"
+   "updated_at": "2026-10-12T18:17:06-05:00"
   }
  },
  "reset": {
@@ -5667,7 +5418,7 @@ const BOOTSTRAP = {
  "updated_ct": "2026-10-12 17:28 CT",
  "wake_watchers": {
   "coinbase": {
-   "at": "2026-10-12T18:00:01-05:00",
+   "at": "2026-10-12T18:15:02-05:00",
    "summary": "v4 0 PASS; wakes=0"
   },
   "guard": {
@@ -5684,559 +5435,123 @@ const BOOTSTRAP = {
   }
  }
 };
-const PRODUCTS = []; // Coinbase spot products polled live = only what is currently held (see heldSpotProducts)
-const TICKER_URL = "https://api.exchange.coinbase.com/products/{p}/ticker";
+const PRODUCTS = [];
+let S = BOOTSTRAP;
+const BUFFER = 25000, GOAL = 1e6, DEADLINE = new Date("2027-10-07T15:00:00-05:00");
+const $ = id => document.getElementById(id);
+const n = v => (v == null || isNaN(v)) ? null : Number(v);
+const money = (v, d) => v == null ? "—" : (v < 0 ? "-" : "") + "$" + Math.abs(v).toLocaleString("en-US", {minimumFractionDigits: d ?? 2, maximumFractionDigits: d ?? 2});
+const sgn = v => v == null ? "—" : Math.abs(v) < 0.005 ? "$0.00" : (v >= 0 ? "+" : "-") + "$" + Math.abs(v).toFixed(2);
+const pct = v => v == null ? "" : Math.abs(v) < 0.005 ? "0.00%" : (v >= 0 ? "+" : "") + v.toFixed(2) + "%";
+const cls = v => v == null ? "mu" : v >= 0 ? "up" : "dn";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const put = (id, html, c) => { const e = $(id); e.innerHTML = html; if (c !== undefined) e.className = c; };
 
-let book = JSON.parse(JSON.stringify(BOOTSTRAP));
-let changes = Array.isArray(CHANGES_BOOTSTRAP) ? CHANGES_BOOTSTRAP.slice() : [];
-let liveMarks = {};          // product -> {price, at}
-let lastBookOk = null, lastChangesOk = null;
-const TZ = "America/Chicago";
-const MAX_CHANGES = 8;
-
-/* ---------- formatting ---------- */
-const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const num = (v) => (v == null || v === "" || !Number.isFinite(Number(v))) ? null : Number(v);
-function money(n, signed) {
-  if (n == null || !Number.isFinite(n)) return "—";
-  const r = Math.sign(n) * Math.round(Math.abs(n) * 100 + 1e-6) / 100;
-  const s = Math.abs(r).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  if (!signed) return (r < 0 ? "−$" : "$") + s;
-  return (r > 0 ? "+$" : r < 0 ? "−$" : "$") + s;
+function deposits(since) {
+  return ((S.reset || {}).deposits_since_reset || []).filter(d => !since || new Date(d.at) >= since).reduce((a, d) => a + (n(d.amount_usd) || 0), 0);
 }
-function pct(n) {
-  if (n == null || !Number.isFinite(n)) return "—";
-  const r = Math.round(n * 100) / 100;
-  const sign = r > 0 || (r === 0 && n > 0) ? "+" : r < 0 || (r === 0 && n < 0) ? "−" : "";
-  return sign + Math.abs(r).toFixed(2) + "%";
-}
-function cls(n) {
-  if (n == null || !Number.isFinite(n)) return "zero";
-  const r = Math.round(n * 100) / 100;
-  return r > 0 ? "pos" : r < 0 ? "neg" : "zero";
-}
-function ctTime(ts) {
-  const t = new Date(ts); if (Number.isNaN(t.getTime())) return "?";
-  return t.toLocaleTimeString("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit" });
-}
-function ctDay(ts) {
-  const t = new Date(ts); if (Number.isNaN(t.getTime())) return "?";
-  return t.toLocaleDateString("en-US", { timeZone: TZ, month: "short", day: "numeric" });
-}
-function sameCtDay(a, b) {
-  return new Date(a).toLocaleDateString("en-US", { timeZone: TZ }) === new Date(b).toLocaleDateString("en-US", { timeZone: TZ });
-}
-
-/* ---------- book accessors (read-only use of desk-state) ---------- */
-const rhSleeve = () => ((book.sleeves || {}).robinhood) || {};
-const cbSleeve = () => ((book.sleeves || {}).coinbase) || {};
-const resetInfo = () => book.reset || {};
-function resetAt() { return resetInfo().at || book.session_started_at || null; }
-function baseCb() { return num(resetInfo().baseline_coinbase_usd) ?? num(cbSleeve().starting_equity_usd) ?? num(book.starting_equity_usd) ?? 0; }
-function baseRh() { return num(resetInfo().baseline_robinhood_usd) ?? num(rhSleeve().starting_equity_usd) ?? 0; }
-function baseTotal() { return num(resetInfo().baseline_total_equity_usd) ?? (baseCb() + baseRh()); }
-/** reset.deposits_since_reset = [{venue, amount_usd, at}]: cash added after the reset. Folded silently into the bankroll
- *  (bankroll = reset baseline + deposits); every P&L figure is equity − bankroll, so added cash never shows as profit.
- *  Deposits are never displayed on the page. */
-function deposits(venue, fromTs, toTs) {
-  const list = Array.isArray(resetInfo().deposits_since_reset) ? resetInfo().deposits_since_reset : [];
-  let s = 0;
-  for (const d of list) {
-    if (venue && d.venue !== venue) continue;
-    const t = Date.parse(d.at);
-    if (fromTs != null && !(t > fromTs)) continue;
-    if (toTs != null && t > toTs) continue;
-    s += Number(d.amount_usd || 0);
-  }
-  return s;
-}
-
-/* ---------- Coinbase ---------- */
-function posSize(p) { return num(p.base) ?? num(p.size) ?? num(p.contracts) ?? num(p.qty) ?? 0; }
-function isOpen(p) {
-  const st = String(p.status || "").toUpperCase();
-  return posSize(p) !== 0 && st !== "FLAT" && st !== "CLOSED" && !p.exited;
-}
-function isFutures(p) {
-  return p.leverage != null || /^(long|short)$/i.test(String(p.side || "")) ||
-    /fut|perp/i.test(String(p.product_type || p.kind || p.instrument || "")) ||
-    /PERP|FUT/i.test(String(p.product || p.product_id || p.symbol || ""));
-}
-function cbProduct(p) { return p.product || p.product_id || (String(p.symbol || "").includes("-") ? p.symbol : p.symbol + "-USD"); }
-function cbOpen() { return (book.positions || []).filter(isOpen); }
-function heldSpotProducts() { return cbOpen().filter(p => !isFutures(p)).map(cbProduct); }
-function cbMark(p) {
-  const prod = cbProduct(p);
-  if (!isFutures(p) && liveMarks[prod]) return liveMarks[prod].price;
-  const m = book.marks || {};
-  return num(p.mark) ?? num(p.last_price) ?? num(m[prod]) ?? num(m[p.symbol]) ?? null;
-}
-function cbHolding(p) {
-  const fut = isFutures(p);
-  const size = Math.abs(posSize(p));
-  const entry = num(p.entry) ?? num(p.reset_mark) ?? num(p.avg_entry);
-  const mark = cbMark(p);
-  const lev = num(p.leverage);
-  const short = /short|sell/i.test(String(p.side || "")) || posSize(p) < 0;
-  const dir = short ? -1 : 1;
-  let pnl = null, pc = null;
-  const live = !fut && liveMarks[cbProduct(p)];
-  if (!live && num(p.unrealized_pnl_usd) != null) {
-    pnl = num(p.unrealized_pnl_usd); pc = num(p.unrealized_pnl_pct);
-  }
-  if (pnl == null && entry != null && mark != null) {
-    const mult = fut ? (num(p.contract_size) ?? 1) : 1;
-    pnl = (mark - entry) * size * mult * dir;
-  }
-  if (pc == null && entry && mark != null) pc = dir * (mark / entry - 1) * 100 * (fut && lev ? lev : 1);
-  return { sym: p.symbol || cbProduct(p), fut, short, lev, size, entry, mark, pnl, pc,
-           value: (!fut && mark != null) ? size * mark : null };
-}
-function cbEquity() {
-  const open = cbOpen();
-  const free = num(book.free_usd);
-  if (open.some(isFutures)) return num(book.equity_usd_est) ?? num(cbSleeve().live_equity_usd) ?? free ?? 0;
-  if (open.length && free != null) {
-    let v = free;
-    for (const p of open) { const h = cbHolding(p); if (h.value != null) v += h.value; }
-    return v;
-  }
-  return num(book.equity_usd_est) ?? num(cbSleeve().live_equity_usd) ?? free ?? 0;
-}
-
-/* ---------- Robinhood ---------- */
-function rhOpen() {
-  return (rhSleeve().positions || []).filter(p => (num(p.qty) ?? num(p.base) ?? 0) !== 0 &&
-    !/^(FLAT|CLOSED|SOLD)$/i.test(String(p.status || "")));
-}
-function rhHolding(p) {
-  const qty = num(p.qty) ?? num(p.base) ?? 0;
-  const entry = num(p.entry) ?? num(p.reset_mark);
-  const mark = num(p.last_price) ?? num(p.mark) ?? entry;
-  // prefer the feeder's own numbers (rh_marks.py) so the page matches desk-state to the cent
-  const pnl = num(p.unrealized_pnl_usd) ?? ((entry != null && mark != null) ? (mark - entry) * qty : null);
-  const pc = num(p.unrealized_pnl_pct) ?? ((entry && mark != null) ? (mark / entry - 1) * 100 : null);
-  return { sym: p.symbol, qty, entry, mark, pnl, pc, value: mark != null ? mark * qty : 0 };
-}
-function rhCash() { const rh = rhSleeve(); return num(rh.sleeve_cash_usd) ?? num(rh.earmarked_cash_usd) ?? num(rh.free_usd) ?? null; }  // sleeve only; locked PDT buffer excluded
-function rhEquity() {
-  const rh = rhSleeve(), cash = rhCash();
-  const live = num(rh.live_equity_usd);
-  if (cash == null) return live ?? baseRh();
-  const computed = cash + rhOpen().reduce((s, p) => s + rhHolding(p).value, 0);
-  // feeder's live_equity_usd is canonical; fall back to cash + positions if another writer changed the book since
-  return (live != null && Math.abs(live - computed) < 0.05) ? live : computed;
-}
-
-/* "RH prices as of HH:MM CT" stamp; amber/red when stale during US regular hours (same logic as before) */
-function rhPriceStamp() {
-  const asOf = book.rh_marks_as_of;
-  const src = book.rh_marks_source || "";
-  if (!asOf) return { text: "RH prices as of — (no live marks yet)", cls: "neg" };
-  const t = new Date(asOf);
-  if (Number.isNaN(t.getTime())) return { text: "RH prices as of ?", cls: "neg" };
-  const hhmm = t.toLocaleTimeString("en-US", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });
-  const nowCt = new Date(new Date().toLocaleString("en-US", { timeZone: TZ }));
-  const dow = nowCt.getDay(), mins = nowCt.getHours() * 60 + nowCt.getMinutes();
-  const rth = dow >= 1 && dow <= 5 && mins >= 510 && mins < 900;
-  const ageMin = Math.max(0, Math.round((Date.now() - t.getTime()) / 60000));
-  const day = sameCtDay(t, Date.now()) ? "" : " " + ctDay(t);
-  let c = "pos", tag = "";
-  if (rth && ageMin > 15) { c = "neg"; tag = ` · STALE ${ageMin}m`; }
-  else if (rth && ageMin > 3) { c = "neu"; tag = ` · ${ageMin}m old`; }
-  else if (!rth) { c = "neu"; tag = " · market closed"; }
-  const srcShort = src.replace(/^public (live|close): /, "$1 ").slice(0, 32);
-  return { text: `RH prices as of ${hhmm} CT${day}${tag}${srcShort ? " · " + srcShort : ""}`, cls: c };
-}
-function alertText(id) {
-  const s = String(id);
-  if (s === "spy_below_floor") return "SPY < 773.61 → XLE exit / hard block";
-  if (s === "vix_at_or_above_ceiling") return "VIX ≥ 18 → hard block";
-  const m = s.match(/^stop_proximity_(.+)$/);
-  if (m) return m[1] + " near its stop";
-  return s.replace(/_/g, " ");
-}
-
-/* ---------- equity history → rolling windows ---------- */
-function series(arr) {
-  return (Array.isArray(arr) ? arr : []).map(h => ({ ts: Date.parse(h.t), v: Number(h.equity) }))
-    .filter(h => Number.isFinite(h.ts) && Number.isFinite(h.v)).sort((a, b) => a.ts - b.ts);
-}
-function valueAt(s, ts) {           // step lookup: last point at or before ts; null if none
-  let v = null;
-  for (const h of s) { if (h.ts <= ts) v = h.v; else break; }
+function pathAt(t) {
+  const P = ((SIMPLE_EXTRAS.path || {}).pts) || []; let v = null;
+  for (const [ts, val] of P) { if (new Date(ts) <= t) v = val; else break; }
   return v;
 }
-function bankroll(venue) {
-  const rAt = Date.parse(resetAt()), now = Date.now();
-  const base = venue === "coinbase" ? baseCb() : venue === "robinhood" ? baseRh() : baseTotal();
-  return base + deposits(venue || null, Number.isFinite(rAt) ? rAt : null, now);
-}
-function windowPnl(days, eqNow) {
-  const now = Date.now(), start = now - days * 864e5;
-  const rAt = Date.parse(resetAt());
-  const tot = eqNow - baseTotal() - deposits(null, rAt, now);
-  if (!Number.isFinite(rAt) || start <= rAt) {
-    return { pnl: tot, pc: bankroll(null) ? tot / bankroll(null) * 100 : null, note: "since " + (Number.isFinite(rAt) ? ctDay(rAt) : "start") };
-  }
-  const cbS = series(book.equity_history), rhS = series(rhSleeve().equity_history);
-  let cb0 = valueAt(cbS, start), rh0 = valueAt(rhS, start), from = start, partial = false;
-  if (cb0 == null || rh0 == null) {   // history trimmed: use earliest common point and say so
-    const first = Math.max(cbS.length ? cbS[0].ts : now, rhS.length ? rhS[0].ts : now);
-    cb0 = valueAt(cbS, first); rh0 = valueAt(rhS, first); from = first; partial = true;
-    if (cb0 == null || rh0 == null) return { pnl: null, pc: null, note: "no history" };
-  }
-  const eq0 = cb0 + rh0;
-  const p = eqNow - eq0 - deposits(null, from, now);
-  return { pnl: p, pc: eq0 ? p / eq0 * 100 : null, note: partial ? "since " + ctDay(from) : "rolling " + days + " days" };
-}
-
-/* ---------- render ---------- */
-function setPnl(id, pnl, pc) {
-  const el = document.getElementById(id);
-  el.className = el.className.replace(/\b(pos|neg|zero)\b/g, "").trim() + " " + cls(pnl);
-  el.innerHTML = `${money(pnl, true)} <small>${pct(pc)}</small>`;
-}
-
-function usd(n){ return (n==null||!Number.isFinite(n)) ? "—" : "$" + n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function capCell(label, pct, eq){
-  const u = (pct==null||eq==null) ? "—" : usd(eq * Number(pct) / 100);
-  const p = (pct==null) ? "—" : (Number(pct) + "%");
-  return `<div class="cap-item"><div class="cl">${label}</div><div class="cv">${p} <span style="color:var(--dim)">(≈${u})</span></div></div>`;
-}
-function renderCaps(){
-  try{
-    const macro = String(((book.macro_regime||{}).regime)||"—").toUpperCase();
-    const cb = (book.sleeves||{}).coinbase || {};
-    const rh = (book.sleeves||{}).robinhood || {};
-    const cbCaps = cb.caps || {};
-    const rhCaps = rh.caps || {};
-    const eqCb = Number(cb.live_equity_usd != null ? cb.live_equity_usd : book.equity_usd_est) || 0;
-    const eqRh = Number(rh.live_equity_usd) || 0;
-    const spot = cbCaps.spot || {};
-    const fut = cbCaps.futures || {};
-
-    const cbGrid = document.getElementById("cbCapsGrid");
-    if (cbGrid){
-      const maj = spot.majors_risk_pct ?? cbCaps.majors_risk_pct ?? 3;
-      const majA = spot.majors_a_grade_risk_pct ?? cbCaps.majors_a_grade_risk_pct ?? 5;
-      const alt = spot.alts_risk_pct ?? cbCaps.alts_risk_pct ?? 2;
-      const open = spot.total_open_risk_pct ?? cbCaps.total_open_risk_pct ?? 15;
-      const nomM = spot.max_notional_majors_pct ?? cbCaps.max_notional_majors_pct ?? 50;
-      const nomA = spot.max_notional_alts_pct ?? cbCaps.max_notional_alts_pct ?? 25;
-      const maxP = spot.max_positions ?? cbCaps.max_positions ?? cbCaps.max_concurrent_positions ?? 4;
-      const maxE = spot.max_entries_per_day ?? cbCaps.max_entries_per_day ?? 8;
-      const dayFloor = Math.abs(Number(cbCaps.daily_stop_pct ?? -8));
-      cbGrid.innerHTML =
-        capCell("Majors risk", maj, eqCb) +
-        capCell("Majors A-grade", majA, eqCb) +
-        capCell("Alts risk", alt, eqCb) +
-        capCell("Open risk", open, eqCb) +
-        capCell("Notional majors", nomM, eqCb) +
-        capCell("Notional alts", nomA, eqCb) +
-        `<div class="cap-item"><div class="cl">Max positions</div><div class="cv">${maxP}</div></div>` +
-        `<div class="cap-item"><div class="cl">Max entries / day</div><div class="cv">${maxE}</div></div>` +
-        capCell("Sleeve daily floor", dayFloor, eqCb);
-    }
-    const cbNote = document.getElementById("cbCapsNote");
-    if (cbNote){
-      const fee = cbCaps.spot_long_fee_rules || {};
-      cbNote.textContent = (cbCaps.version || "CAPS v3") + " · equity " + usd(eqCb) +
-        " · fee rules " + (fee.risk_gate || "kept") +
-        " · regime " + macro + (macro === "RISK-OFF" ? " (no new longs)" : "");
-    }
-    const futNote = document.getElementById("cbFutNote");
-    if (futNote){
-      const en = fut.futures_enabled === true;
-      const r = fut.all_in_risk_pct ?? 3;
-      const rA = fut.all_in_risk_pct_a_grade ?? 5;
-      futNote.textContent = "Futures BTC/ETH: " + (en ? "ENABLED" : "GATED (futures_enabled=false)") +
-        " · ≤" + (fut.effective_leverage_max ?? 3) + "x · liq ≥3× stop · risk " + r + "% / A " + rA +
-        "% (≈" + usd(eqCb*r/100) + " / " + usd(eqCb*rA/100) + ") · max " + (fut.max_futures_positions ?? 2) +
-        " · shorts DEFENSE/RISK-OFF · longs NEUTRAL/RISK-ON · first trade needs Risk Gate PASS";
-    }
-    const pillCb = document.getElementById("cbCapsPill");
-    if (pillCb) pillCb.textContent = (cbCaps.label || cbCaps.version || "CAPS v3 Max Throughput").replace(/^CAPS v3 — /, "v3 ");
-
-    const rhGrid = document.getElementById("rhCapsGrid");
-    if (rhGrid){
-      const b = rhCaps.risk_per_idea_pct_b ?? 2;
-      const std = rhCaps.risk_per_idea_pct_standard ?? rhCaps.risk_per_idea_pct_default ?? 4;
-      const a = rhCaps.risk_per_idea_pct_a_grade ?? 6;
-      const open = rhCaps.total_open_risk_pct ?? 20;
-      const nom = rhCaps.max_notional_per_name_pct ?? 50;
-      const maxP = rhCaps.max_concurrent_positions ?? 5;
-      const maxE = rhCaps.max_entries_per_day ?? 4;
-      const dayFloor = Math.abs(Number(rhCaps.daily_stop_pct ?? -8));
-      rhGrid.innerHTML =
-        capCell("B-tier risk", b, eqRh) +
-        capCell("Standard risk", std, eqRh) +
-        capCell("A-grade risk", a, eqRh) +
-        capCell("Open risk", open, eqRh) +
-        capCell("Notional / name", nom, eqRh) +
-        `<div class="cap-item"><div class="cl">Max positions</div><div class="cv">${maxP} · used ${rhCaps.concurrent_used ?? "—"}</div></div>` +
-        `<div class="cap-item"><div class="cl">Max entries / day</div><div class="cv">${maxE}</div></div>` +
-        `<div class="cap-item"><div class="cl">PDT</div><div class="cv">2 day trades + 1 exit</div></div>` +
-        capCell("Sleeve daily floor", dayFloor, eqRh);
-    }
-    const rhNote = document.getElementById("rhCapsNote");
-    if (rhNote){
-      rhNote.textContent = (rhCaps.version || "CAPS v3") + " · equity " + usd(eqRh) +
-        " · no options/margin · lev long ETFs NEUTRAL/RISK-ON (max 1) · inverse DEFENSE/RISK-OFF (max 1)" +
-        " · standing PASS B/standard; explicit PASS A-grade/leveraged";
-    }
-    const reg = document.getElementById("regimeNote");
-    if (reg){
-      const deskDay = (book.risk_caps && book.risk_caps.desk_daily_stop_pct) || -10;
-      const deskWk = (book.risk_caps && book.risk_caps.desk_weekly_stop_pct) || -15;
-      reg.textContent = "Macro " + macro + " · desk daily " + deskDay + "% · weekly " + deskWk + "%→B-tier · mandate $1M/364d" +
-        (macro === "RISK-OFF" ? " · NO NEW LONGS (shorts/inverse only on failed retest)" : "");
-    }
-    const pillRh = document.getElementById("rhCapsPill");
-    if (pillRh) pillRh.textContent = (rhCaps.label || rhCaps.version || "CAPS v3 Max Throughput").replace(/^CAPS v3 — /, "v3 ");
-  }catch(e){ /* keep prior */ }
-}
-
-/* ---------- holdings table (one row per open holding; live marks) ---------- */
-function holdRowsCb() {
-  const rows = cbOpen().map(cbHolding).map(x => {
-    const dir = x.short ? -1 : 1;
-    const pnl = (x.entry != null && x.mark != null) ? (x.mark - x.entry) * x.size * dir : x.pnl;
-    const pc = (x.entry && x.mark != null) ? dir * (x.mark / x.entry - 1) * 100 : x.pc;
-    return { sym: x.sym, qty: x.size, entry: x.entry, mark: x.mark, pnl, pc };
-  });
-  const futs = [].concat(book.futures_positions || [], ((cbSleeve().futures || {}).positions) || []);
-  const seen = new Set();
-  for (const f of futs) {
-    const n = num(f.contracts) ?? 0, prod = f.product || f.product_id || f.coin;
-    if (!n || f.exited || /^(FLAT|CLOSED)$/i.test(String(f.status || "")) || seen.has(prod)) continue;
-    seen.add(prod);
-    const entry = num(f.entry), mark = num(f.mark) ?? num(f.last_price);
-    const dir = /short|sell/i.test(String(f.side || "")) ? -1 : 1, cs = num(f.contract_size) ?? 1;
-    rows.push({ sym: prod + (dir < 0 ? " S" : ""), qty: Math.abs(n), entry, mark,
-      pnl: (entry != null && mark != null) ? (mark - entry) * cs * Math.abs(n) * dir : null,
-      pc: (entry && mark != null) ? dir * (mark / entry - 1) * 100 : null });
-  }
-  return rows;
-}
-function holdRowsRh() {
-  return rhOpen().map(p => {
-    const qty = num(p.qty) ?? num(p.base) ?? 0;
-    const entry = num(p.original_entry) ?? num(p.entry);
-    const mark = num(p.last_price) ?? num(p.mark);
-    return { sym: p.symbol, qty, entry, mark,
-      pnl: (entry != null && mark != null) ? (mark - entry) * qty : null,
-      pc: (entry && mark != null) ? (mark / entry - 1) * 100 : null };
-  });
-}
-function holdTable(rows) {
-  if (!rows.length) return `<div class="noopen">No open positions</div>`;
-  const f = v => v == null ? "—" : (+v).toLocaleString("en-US", { maximumFractionDigits: 4 });
-  return `<table class="htab"><tr><th>Symbol</th><th>Qty</th><th>Entry</th><th>Now</th><th>P&L</th><th>%</th></tr>` +
-    rows.map(r => `<tr><td>${esc(r.sym)}</td><td>${+(+r.qty).toPrecision(6)}</td><td>${f(r.entry)}</td><td>${f(r.mark)}</td>` +
-      `<td class="${cls(r.pnl)}">${money(r.pnl, true)}</td><td class="${cls(r.pc)}">${pct(r.pc)}</td></tr>`).join("") + `</table>`;
-}
 function render() {
-  try {
-    const eqCb = cbEquity(), eqRh = rhEquity(), eq = eqCb + eqRh;
-    const rAt = resetAt();
-    const pnlCb = eqCb - baseCb() - deposits("coinbase", Date.parse(rAt), Date.now());
-    const pnlRh = eqRh - baseRh() - deposits("robinhood", Date.parse(rAt), Date.now());
-    const pnlTot = pnlCb + pnlRh;
-
-    // 1. summary
-    document.getElementById("sumTotLbl").textContent = "Total P&L · since " + (rAt ? ctDay(rAt) + " reset" : "start");
-    const tot = document.getElementById("sumTot");
-    tot.className = "sum-big " + cls(pnlTot); tot.textContent = money(pnlTot, true);
-    const totP = document.getElementById("sumTotPct");
-    totP.className = "sum-pct " + cls(pnlTot); totP.textContent = pct(bankroll(null) ? pnlTot / bankroll(null) * 100 : null);
-    const wk = windowPnl(7, eq), mo = windowPnl(30, eq);
-    setPnl("sumWk", wk.pnl, wk.pc); document.getElementById("sumWkNote").textContent = wk.note;
-    setPnl("sumMo", mo.pnl, mo.pc); document.getElementById("sumMoNote").textContent = mo.note;
-    document.getElementById("sumEq").textContent = money(eq);
-    document.getElementById("sumEqSub").innerHTML = `Coinbase <b>${money(eqCb)}</b> · Robinhood <b>${money(eqRh)}</b>`;
-
-    // 2a. Coinbase
-    let cb = holdTable(holdRowsCb());
-    if (num(book.free_usd) != null) cb += `<div class="cashline">Cash <b>${money(num(book.free_usd))}</b></div>`;
-    cb += `<div class="vtotal"><span class="veq"><span class="vname">Coinbase</span><b>${money(eqCb)}</b></span><span class="v ${cls(pnlCb)}">P&L ${money(pnlCb, true)}<small>${pct(bankroll("coinbase") ? pnlCb / bankroll("coinbase") * 100 : null)}</small></span></div>`;
-    cb += `<div class="vnote">P&L since reset · realized + open</div>`;
-    const cbAsOf = (book.last_pulse && book.last_pulse.at) || book.as_of;
-    if (cbAsOf) cb += `<div class="stamp dim">CB book as of ${ctTime(cbAsOf)} CT${sameCtDay(cbAsOf, Date.now()) ? "" : " " + ctDay(cbAsOf)}</div>`;
-    document.getElementById("cbBody").innerHTML = cb;
-
-    // 2b. Robinhood
-    let rh = holdTable(holdRowsRh());
-    if (rhCash() != null) rh += `<div class="cashline">Cash <b>${money(rhCash())}</b></div>`;
-    rh += `<div class="vtotal"><span class="veq"><span class="vname">Robinhood</span><b>${money(eqRh)}</b></span><span class="v ${cls(pnlRh)}">P&L ${money(pnlRh, true)}<small>${pct(bankroll("robinhood") ? pnlRh / bankroll("robinhood") * 100 : null)}</small></span></div>`;
-    rh += `<div class="vnote">P&L since reset · realized + open</div>`;
-    { const lb = num(rhSleeve().locked_buffer_usd); if (lb) rh += `<div class="vnote" style="color:var(--dim);font-size:0.68rem">Day-trade buffer ${money(lb)} (not traded)</div>`; }
-    const st = rhPriceStamp();
-    rh += `<div class="stamp ${st.cls}">${esc(st.text)}</div>`;
-    const al = book.rh_alerts || {};
-    if (Array.isArray(al.active) && al.active.length) {
-      rh += `<div class="alertline">⚠ ${esc(al.active.map(alertText).join(" · "))}</div>`;
-    }
-    document.getElementById("rhBody").innerHTML = rh;
-
-    // footer / live status
-    const ls = document.getElementById("liveStat");
-    if (lastBookOk) { ls.className = "live ok"; ls.textContent = "live · " + lastBookOk; }
-    else { ls.className = "live off"; ls.textContent = "offline copy · book " + (book.as_of ? ctTime(book.as_of) + " CT" : "?"); }
-  } catch (e) {
-    const ls = document.getElementById("liveStat");
-    if (ls) { ls.className = "live off"; ls.textContent = "render error: " + (e && e.message || e); }
+  const sl = S.sleeves || {}, cb = sl.coinbase || {}, rh = sl.robinhood || {};
+  const cbV = n(cb.live_equity_usd) ?? n(S.equity_usd_est);
+  let rhV = n(rh.live_equity_usd);
+  if (rhV != null && rhV > BUFFER) rhV -= BUFFER;              // never count the locked $25k buffer
+  const tot = (cbV || 0) + (rhV || 0);
+  const base = n((S.reset || {}).baseline_total_equity_usd) ?? n((S.portfolio || {}).starting_equity_usd);
+  const dep = deposits();
+  const invested = base + dep, pnl = tot - invested;            // deposits are not profit
+  put("tot", money(tot));
+  put("pnl", sgn(pnl) + ' <span style="font-size:14px">' + pct(100 * pnl / invested) + "</span>", cls(pnl));
+  // today: now vs last desk value before local midnight, minus deposits made today
+  const mid = new Date(); mid.setHours(0, 0, 0, 0);
+  const H = (SIMPLE_EXTRAS.hist || []).map(([t, v]) => [new Date(t), v]);
+  let open = null; for (const [t, v] of H) { if (t < mid) open = v; }
+  const td = open == null ? null : tot - open - deposits(mid);
+  put("today", td == null ? "—" : sgn(td), cls(td));
+  // progress + pace (pace_tracker trading-day path)
+  const frac = Math.max(0, Math.min(1, tot / GOAL));
+  $("barFill").style.width = Math.max(0.4, 100 * frac) + "%";
+  const now = new Date(), tgt = pathAt(now);
+  put("barTxt", (100 * frac).toFixed(2) + "% of $1M");
+  let st;
+  if (tgt == null) st = "Pace data unavailable.";
+  else {
+    const gap = tot - tgt;
+    st = gap >= 0 ? `✅ On pace: ${money(gap, 0)} ahead of the ${money(tgt, 0)} target.` : `⚠️ Behind pace: ${money(-gap, 0)} under today's ${money(tgt, 0)} target.`;
   }
-  renderCaps();
-  renderChanges();
+  put("status", st, tgt != null && tot >= tgt ? "status up" : "status dn");
+  chart(H.concat([[now, tot]]));
+  // Coinbase
+  put("cbVal", money(cbV));
+  const cbP = n(cb.pnl_usd); put("cbPnl", sgn(cbP) + " " + pct(n(cb.pnl_pct)), "mid " + cls(cbP));
+  const cbOpen = (S.positions || []).filter(p => (p.status || "").toUpperCase() !== "FLAT" && n(p.base) !== 0)
+    .concat((S.futures_positions || []).filter(Boolean));
+  put("cbHold", cbOpen.length ? cbOpen.map(p => {
+    const u = n(p.unrealized_pnl_usd) ?? (n(p.mark) != null && n(p.entry) ? (p.mark - p.entry) * (n(p.base) || n(p.qty) || 0) : null);
+    const up = n(p.unrealized_pnl_pct) ?? (u != null && p.entry ? 100 * (p.mark / p.entry - 1) : null);
+    return `<div class="hold"><b>${esc(p.symbol || p.product)}</b><span class="${cls(u)}">${sgn(u)} ${pct(up)}</span></div>`;
+  }).join("") : '<div class="flat">Flat</div>');
+  // Robinhood
+  put("rhVal", money(rhV));
+  const rhP = n(rh.pnl_usd); put("rhPnl", sgn(rhP) + " " + pct(n(rh.pnl_pct)), "mid " + cls(rhP));
+  const rp = (rh.positions || []).filter(p => n(p.qty));
+  put("rhHold", rp.length ? rp.map(p => `<div class="hold"><b>${esc(p.symbol)} <span class="mu" style="font-weight:500">${p.qty} sh</span></b><span><span class="${cls(n(p.unrealized_pnl_usd))}">${sgn(n(p.unrealized_pnl_usd))} ${pct(n(p.unrealized_pnl_pct))}</span>${p.stop != null ? ' <span class="mu" style="font-size:13px">stop $' + Number(p.stop).toFixed(2) + "</span>" : ""}</span></div>`).join("") : '<div class="flat">Flat</div>');
+  // Paper bots (current epoch)
+  const X = S.experiments || {}, EP = SIMPLE_EXTRAS.epochs || {}, NM = SIMPLE_EXTRAS.names || {};
+  const rows = Object.entries(X).map(([k, x]) => {
+    let p, q;
+    if (x.epoch) { p = n(x.net_pnl_usd); q = n(x.net_pnl_pct); }
+    else if (EP[k] && n(EP[k].sb)) { p = n(x.equity) - EP[k].sb; q = 100 * p / EP[k].sb; }
+    else { p = n(x.net_pnl_usd); q = n(x.net_pnl_pct); }
+    const fresh = x.last_update && (Date.now() - new Date(x.last_update)) < 20 * 60e3;
+    const on = x.status === "RUNNING" && !x.benched && fresh;
+    const name = (NM[k] || x.name || k).replace(/ \(BENCHED\)$/, "");
+    return {name, p, q, on};
+  }).sort((a, b) => (b.p ?? -1e9) - (a.p ?? -1e9));
+  put("xp", rows.map(r => `<div class="xp"><span class="dot ${r.on ? "" : "off"}" title="${r.on ? "running" : "paused"}"></span><span>${esc(r.name)}</span><span class="p ${cls(r.p)}">${sgn(r.p)}</span><span class="q ${cls(r.p)}">${pct(r.q)}</span></div>`).join("") || '<div class="flat">None</div>');
+  const asof = S.as_of ? new Date(S.as_of).toLocaleString("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Chicago"}) + " CT" : "—";
+  put("foot", "Updated " + asof + " · ● running ○ paused · refreshes every 5 min");
 }
-
-function parseChanges(text) {
-  const out = [];
-  for (const line of String(text || "").split("\n")) {
-    const s = line.trim(); if (!s) continue;
-    try { const r = JSON.parse(s); if (r && r.ts && r.summary) out.push(r); } catch (e) { /* skip bad line */ }
-  }
-  return out;
+function chart(H) {
+  const P = ((SIMPLE_EXTRAS.path || {}).pts || []).map(([t, v]) => [new Date(t), v]);
+  const svg = $("chart"); if (!H.length || !P.length) { svg.innerHTML = ""; return; }
+  const W = 340, Ht = 150, L = 34, R = 4, T = 6, B = 16;
+  const t0 = Math.min(H[0][0], P[0][0]), now = H[H.length - 1][0];
+  const t1 = Math.max(+now + 6 * 864e5, t0 + 21 * 864e5);       // window: start .. a bit past today
+  const Pv = P.filter(([t]) => t <= t1); const nx = P.find(([t]) => t > t1); if (nx) Pv.push(nx);
+  const all = H.map(x => x[1]).concat(Pv.map(x => x[1]));
+  const lo = Math.log10(Math.min(...all) * 0.97), hi = Math.log10(Math.max(...all) * 1.03);
+  const X = t => L + (W - L - R) * (t - t0) / (t1 - t0), Y = v => T + (Ht - T - B) * (1 - (Math.log10(v) - lo) / (hi - lo));
+  const line = (pts, c, w, step) => {
+    let d = "", py = null;
+    pts.forEach(([t, v], i) => { const x = Math.min(X(t), W - R).toFixed(1), y = Y(v).toFixed(1);
+      d += i ? (step ? `H${x}V${y}` : `L${x},${y}`) : `M${x},${y}`; });
+    return `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round"/>`;
+  };
+  let g = "";
+  const ticks = []; for (let e = Math.floor(lo * 4) / 4; e <= hi; e += 0.05) { const v = Math.pow(10, e); if (Math.log10(v) >= lo) ticks.push(v); }
+  const pick = ticks.filter((_, i) => i % Math.ceil(ticks.length / 3 || 1) === 0).slice(0, 4);
+  pick.forEach(v => { const y = Y(v).toFixed(1); g += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" stroke="#222b36"/><text x="0" y="${+y + 4}" fill="#8a96a6" font-size="10">$${Math.round(v).toLocaleString()}</text>`; });
+  const fmtd = t => new Date(t).toLocaleDateString("en-US", {month: "short", day: "numeric"});
+  g += `<text x="${L}" y="${Ht - 2}" fill="#8a96a6" font-size="10">${fmtd(t0)}</text><text x="${W - R}" y="${Ht - 2}" fill="#8a96a6" font-size="10" text-anchor="end">${fmtd(t1)}</text>`;
+  g += line(Pv, "#f59e0b", 1.6, true) + line(H, "#60a5fa", 2.2, false);
+  const [lt, lv] = H[H.length - 1]; g += `<circle cx="${X(lt).toFixed(1)}" cy="${Y(lv).toFixed(1)}" r="3.2" fill="#60a5fa"/>`;
+  svg.innerHTML = g;
 }
-const HIDDEN_CHANGE = /\bdeposit/i;   // deposits are folded into the bankroll silently; never listed on the page
-function visibleChanges() { return changes.filter(r => !HIDDEN_CHANGE.test(String(r.summary || ""))); }
-function renderChanges() {
-  const el = document.getElementById("changes");
-  const rows = visibleChanges().filter(r => Number.isFinite(Date.parse(r.ts)))
-    .sort((a, b) => Date.parse(b.ts) - Date.parse(a.ts)).slice(0, MAX_CHANGES);
-  if (!rows.length) { el.innerHTML = `<li><div class="txt" style="color:var(--dim)">No logged changes yet.</div></li>`; return; }
-  el.innerHTML = rows.map(r => {
-    const v = /^(coinbase|robinhood|paper|desk)$/.test(r.venue) ? r.venue : "desk";
-    return `<li><div class="when">${esc(ctDay(r.ts))}, ${esc(ctTime(r.ts))} CT<span class="vtag ${v}">${esc(v === "coinbase" ? "CB" : v === "robinhood" ? "RH" : v)}</span></div>` +
-           `<div class="txt">${esc(r.summary)} <span class="who">— ${esc(r.agent || "?")}</span></div></li>`;
-  }).join("");
-}
-function renderFoot() {
-  const f = document.getElementById("foot");
-  if (!f) return;
-  const total = visibleChanges().length;
-  f.textContent = `${Math.min(total, MAX_CHANGES)} of ${total} changes shown · strategy-changes.jsonl` +
-    (lastChangesOk ? " · read " + lastChangesOk : " · embedded copy");
-}
-
-/* ---------- polling ---------- */
-const nowStamp = () => new Date().toLocaleTimeString("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit", second: "2-digit" }) + " CT";
-async function pollBook() {
+async function poll() {
   try {
     const res = await Promise.reject(new Error("static"));
-    if (!res.ok) throw new Error("desk-state " + res.status);
-    const data = await res.json();
-    if (!data.sleeves) data.sleeves = JSON.parse(JSON.stringify(BOOTSTRAP.sleeves || {}));
-    book = data;
-    lastBookOk = nowStamp();
-  } catch (e) { lastBookOk = null; /* keep last good / bootstrap */ }
-  render();
+    if (!res.ok) throw new Error(res.status);
+    const d = await res.json(); if (d && d.sleeves) { S = d; render(); }
+  } catch (e) { /* static copy: keep embedded data */ }
 }
 async function pollChanges() {
-  try {
-    const res = await Promise.reject(new Error("static"));
-    if (!res.ok) throw new Error("changes " + res.status);
-    changes = parseChanges(await res.text());
-    lastChangesOk = nowStamp();
-  } catch (e) { /* keep embedded copy */ }
-  renderChanges(); renderFoot();
+  try { await Promise.reject(new Error("static")); } catch (e) {}
 }
-async function pollPrices() {   // only for Coinbase spot coins currently held; nothing to fetch when all cash
-  const prods = heldSpotProducts();
-  if (!prods.length) return;
-  await Promise.allSettled(prods.map(async (p) => {
-    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 7000);
-    try {
-      const res = await fetch(TICKER_URL.replace("{p}", p), { signal: ctrl.signal, cache: "no-store" });
-      if (!res.ok) return;
-      const d = await res.json(); const px = parseFloat(d.price);
-      if (Number.isFinite(px)) liveMarks[p] = { price: px, at: Date.now() };
-    } catch (e) { /* fall back to book marks */ } finally { clearTimeout(t); }
-  }));
-  render();
-}
-
-render(); renderFoot();
-pollBook().then(pollPrices);
-pollChanges();
-setInterval(pollBook, 10000);
-setInterval(pollChanges, 30000);
-setInterval(pollPrices, 15000);
+render(); poll(); setInterval(poll, 300000);
 </script>
-<script>
-/* PAPER EXPERIMENTS panel (simple cards) — self-contained; reads the global `book` (desk-state.json) the page already polls.
-   Each card: name, one-sentence description, start / equity / net P&L / win rate / max DD / trades, compact open positions. */
-(function () {
-  // fallback text if desk-state predates summary.py's name/description fields (summary.py SIMPLE_CARDS is the source)
-  const SIMPLE = {
-    memecoin_sniper: ["Meme coin sniper", "Snipes brand-new Solana meme coins that pass safety checks and sells fast."],
-    perps_10x: ["10x perps", "Trades BTC, ETH, SOL, SUI and AVAX futures at 10x leverage when a short-term trend breaks out."],
-    options_lotto: ["Options lotto", "Buys the best cheap SPY/QQQ/IWM option every 30 minutes and sells fast."],
-    crypto_momentum: ["Crypto momentum", "Buys Coinbase altcoins that break to a new 3-day high on heavy volume and rides the trend."],
-    pm_longshots: ["Prediction longshots", "Buys cheap 3–12¢ YES bets on Polymarket and Kalshi, hoping a few pay off big."],
-    pm_favorites: ["Prediction favorites", "Buys near-certain 90–97¢ bets that settle within 3 days for small, steady wins."],
-    stock_momentum: ["Stock momentum", "Buys the strongest US stocks when they break out to a 20-day high and holds about two weeks."],
-    meta_allocator: ["Toolbelt (best-of fund)", "Fund that copies whichever of the other bots is doing best."],
-    perp_compounder: ["High-leverage perps", "Bets half the account on 15–30x leveraged crypto trades in the direction the market is leaning."],
-    whale_copy: ["Whale copy-trader", "Mirrors whale wallets and buys memecoins right after they do."]
-  };
-  const esc = (v) => String(v == null ? "—" : v).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const isNum = (v) => v != null && v !== "" && !isNaN(Number(v));
-  const num = (v, d = 2) => !isNum(v) ? "—" : Number(v).toLocaleString("en-US", {minimumFractionDigits: d, maximumFractionDigits: d});
-  const usd = (v) => !isNum(v) ? "—" : (Number(v) < 0 ? "−$" : "$") + num(Math.abs(Number(v)));
-  const sgnUsd = (v) => !isNum(v) ? "—" : (Number(v) > 0 ? "+$" : Number(v) < 0 ? "−$" : "$") + num(Math.abs(Number(v)));
-  const sgnPct = (v) => !isNum(v) ? "—" : (Number(v) > 0 ? "+" : Number(v) < 0 ? "−" : "") + num(Math.abs(Number(v)), 1) + "%";
-  const cls = (v) => !isNum(v) ? "" : (Number(v) > 0 ? "pos" : Number(v) < 0 ? "neg" : "");
-  const tshort = (iso) => { if (!iso) return "—"; const m = String(iso).match(/T(\d\d:\d\d)/); return m ? m[1] + " CT" : "—"; };
-  function positions(x) {
-    if (Array.isArray(x.positions_simple)) return x.positions_simple;
-    return (Array.isArray(x.open_positions) ? x.open_positions : []).map((p) => ({symbol: p.symbol, side: p.side || null,
-      value_usd: p.cost_usd != null ? p.cost_usd : (p.margin_usd != null ? p.margin_usd : null), upnl_usd: null}));
-  }
-  function card(key, x) {
-    const fb = SIMPLE[key] || [];
-    const name = x.name || fb[0] || x.label || key;
-    const desc = x.description || fb[1] || "";
-    const pos = positions(x);
-    if (x.status === "NOT_STARTED") x = Object.assign({}, x, {start_bankroll_usd: null, equity: null, net_pnl_usd: null, net_pnl_pct: null, max_drawdown_pct: null});   // no state file yet
-    const posHtml = pos.length
-      ? "<ul>" + pos.map((p) => `<li><span class="ps" title="${esc(p.symbol)}">${esc(p.symbol)}${p.side ? " · " + esc(p.side) : ""}</span>` +
-          `<span class="pv">${usd(p.value_usd)}</span><span class="pu ${cls(p.upnl_usd)}">${isNum(p.upnl_usd) ? sgnUsd(p.upnl_usd) : ""}</span></li>`).join("") + "</ul>"
-      : '<span class="none">None</span>';
-    return `<div class="xp-card">
-      <h3>${esc(name)}</h3>
-      ${desc ? `<p class="xp-desc">${esc(desc)}</p>` : ""}
-      <div class="xp-kv">
-        <div>Start<b>${usd(x.start_bankroll_usd)}</b></div>
-        <div>Equity<b>${usd(x.equity)}</b></div>
-        <div>${x.epoch ? "P&amp;L (" + esc(x.epoch.version) + ")" : "Net P&amp;L"}<b class="xp-wrap ${cls(x.net_pnl_usd)}">${sgnUsd(x.net_pnl_usd)} (${sgnPct(x.net_pnl_pct)})</b></div>
-        <div>Win rate<b>${x.win_rate == null ? "—" : num(x.win_rate, 1) + "%"}</b></div>
-        <div>Max drawdown<b>${isNum(x.max_drawdown_pct) ? num(x.max_drawdown_pct, 1) + "%" : "—"}</b></div>
-        <div>Trades<b>${esc(x.trades == null ? 0 : x.trades)}</b></div>
-      </div>
-      ${x.epoch && x.epoch.prior ? `<p class="xp-desc" title="${esc(x.epoch.history)}">Prior ${esc(x.epoch.prior.version)}: ${sgnUsd(x.epoch.prior.pnl_usd)} (${sgnPct(x.epoch.prior.pnl_pct)}) · history: paper-epochs/COMPARE.md</p>` : ""}
-      <div class="xp-open">Open positions${pos.length ? " (" + pos.length + ")" : ":"}${posHtml}</div>
-    </div>`;
-  }
-  function renderExperiments() {
-    try {
-      const grid = document.getElementById("xpGrid");
-      if (!grid) return;
-      const ex = (typeof book !== "undefined" && book && book.experiments) ? book.experiments : null;
-      if (!ex || typeof ex !== "object" || !Object.keys(ex).length) {
-        grid.innerHTML = '<div class="empty-state">No experiments section in desk-state.json yet.</div>';
-        return;
-      }
-      grid.innerHTML = Object.keys(ex).map((k) => card(k, ex[k] || {})).join("");
-      const upd = Object.values(ex).map((x) => (x && x.updated_at) || "").sort().pop();
-      const u = document.getElementById("xpUpd");
-      if (u) u.textContent = "updated " + tshort(upd);
-    } catch (e) { /* never break the rest of the dashboard */ }
-  }
-  renderExperiments();
-  setInterval(renderExperiments, 10000);
-})();
-</script>
-</body>
-</html>
+</body></html>
