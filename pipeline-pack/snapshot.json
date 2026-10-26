@@ -1,0 +1,16 @@
+{
+  "as_of_ct": "2026-10-26 ~1:46 PM CT",
+  "goal": "≥10 free-month customers by Nov 9 2026 CT",
+  "pricing": "free first month, then $250/mo",
+  "from_gmail": "thepipelinepack@gmail.com",
+  "from_agent": "pipelinepack@mail.grokbot.com",
+  "sent_gmail_ok": 97,
+  "sent_gmail_total": 98,
+  "sent_wave2_ok": 15,
+  "approx_total_delivered": 112,
+  "bounces": 3,
+  "replies": 1,
+  "reply_notes": "Kim Talarczyk kim@demandrecruiting.com — price objection; Jordan reply in flight",
+  "free_month_customers": 0,
+  "paying_customers": 0
+}
