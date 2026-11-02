@@ -1,764 +1,135 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#0d1117">
-<link rel="icon" href="data:,">
-<title>Strategy Lab — Competition</title>
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<meta http-equiv="refresh" content="60"><link rel="icon" href="data:,">
+<title>Strategy Lab</title>
 <style>
-:root{
-  --bg:#0d1117;
-  --card:#161b22;
-  --bd:#30363d;
-  --line:#21262d;
-  --mu:#8b949e;
-  --fg:#e6edf3;
-  --soft:#c9d1d9;
-  --link:#58a6ff;
-  --up:#3fb950;
-  --dn:#f85149;
-  --gold:#e3b341;
-  --gold-dim:#d29922;
-  --silver:#c9d1d9;
-  --bronze:#d2996a;
-  --test:#58a6ff;
-  --hold:#d29922;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--fg);
-  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
-.shell{max-width:1080px;margin:0 auto;padding:18px 16px 32px}
-a{color:var(--link)}
-a:hover{text-decoration:none}
-a:focus-visible{outline:2px solid var(--link);outline-offset:2px;border-radius:2px}
-nav{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:13px;margin-bottom:16px}
-nav a{text-decoration:none}
-nav a:hover{text-decoration:underline}
-nav [aria-current="page"]{color:var(--mu)}
-h1{font-size:28px;line-height:1.15;letter-spacing:-.03em;margin:0 0 8px;font-weight:750}
-.deck{margin:0 0 16px;color:var(--soft);max-width:68ch}
-h2{font-size:18px;margin:0 0 6px;letter-spacing:-.02em;font-weight:700}
-h3{font-size:18px;line-height:1.25;margin:0;letter-spacing:-.02em}
-.lead{margin:0 0 12px;color:var(--mu);font-size:13px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
-.quiet{color:var(--mu);font-weight:500}
+:root{--bg:#0d1117;--card:#161b22;--bd:#30363d;--mu:#8b949e;--fg:#e6edf3;--up:#3fb950;--dn:#f85149;--cb:#3b82f6;--rh:#22c55e;--warn:#d29922}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:30px;margin:0}.sub{color:var(--mu);margin:2px 0 16px;font-size:14px}
+h2{font-size:20px;margin:0 0 12px;display:flex;align-items:center;gap:10px}h3{font-size:15px;color:var(--mu);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.05em}
+h4{margin:4px 0;font-size:17px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+.book.cb{border-top:4px solid var(--cb)}.book.rh{border-top:4px solid var(--rh)}.hero{border-top:4px solid #a78bfa}
+.dot{width:14px;height:14px;border-radius:50%;display:inline-block}.dot.cb{background:var(--cb)}.dot.rh{background:var(--rh)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpis div{background:#0d1117;border:1px solid var(--bd);border-radius:10px;padding:12px}
+.kpis b{display:block;font-size:26px;line-height:1.15}.kpis span{color:var(--mu);font-size:13px}
+.up{color:var(--up)}.dn{color:var(--dn)}.small{color:var(--mu);font-size:13px}
+.say{font-size:17px;margin:14px 0 0}
+.flat{background:#0d1117;border:1px dashed var(--bd);border-radius:10px;padding:12px;margin:0}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:560px}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mu);font-size:13px;font-weight:600}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.slot{background:#0d1117;border:1px solid var(--bd);border-radius:10px;padding:12px}.slot p{margin:6px 0;font-size:14px}
+.slot-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}.rank{font-weight:800;font-size:16px}.share{color:var(--mu)}
+.live-line{border-top:1px solid var(--bd);padding-top:6px}
+.pill{border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700}.pill.on{background:#12361f;color:var(--up)}.pill.wait{background:#21262d;color:var(--mu)}.pill.due{background:#3b2e0a;color:var(--warn)}.pill.off{background:#3d1214;color:var(--dn)}
+ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
+</style></head><body><div class="wrap">
+<h1>Strategy Lab</h1>
+<p class="sub">One page for the whole desk · updated Mon Nov 2, 11:15 AM CT · refreshes every minute</p>
 
-.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px 18px;margin:10px 0 0}
-.read div{min-width:0}
-.read dt{font-weight:700;font-size:13px}
-.read dd{margin:3px 0 0;color:var(--mu);font-size:13px}
-
-.podium{display:grid;gap:12px}
-.place{display:flex;flex-direction:column;gap:0;margin:0}
-.place-1{border-color:#6b5420;box-shadow:inset 0 3px 0 var(--gold)}
-.place-2{border-color:#484f58;box-shadow:inset 0 3px 0 var(--silver)}
-.place-3{border-color:#6b4a2a;box-shadow:inset 0 3px 0 var(--bronze)}
-.place-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.rankline{display:flex;align-items:center;gap:8px;margin:0}
-.badge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#0d1117;flex:none}
-.b1{background:var(--gold)}
-.b2{background:var(--silver)}
-.b3{background:var(--bronze)}
-.rankword{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.place-1 .rankword{color:var(--gold)}
-.place-2 .rankword{color:var(--silver)}
-.place-3 .rankword{color:var(--bronze)}
-.goal{margin:0;text-align:right}
-.goal b{display:block;font-size:22px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:1}
-.goal span{font-size:11px;color:var(--mu)}
-.place h3{margin-top:10px}
-.pid{margin:3px 0 0;color:var(--mu);font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}
-.pill{display:inline-block;margin-top:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.02em;border:1px solid var(--up);color:var(--up);vertical-align:middle}
-.pill.live{background:#238636;border-color:#238636;color:#fff}
-.pill.paper{color:var(--link);border-color:var(--link);margin-top:0;margin-left:6px}
-.proj-k{margin:14px 0 2px;font-size:12px;color:var(--mu)}
-.proj{margin:0;font-size:42px;font-weight:800;letter-spacing:-.04em;color:var(--up);line-height:.95;font-variant-numeric:tabular-nums}
-.proj span{font-size:16px;font-weight:650;color:var(--mu);letter-spacing:0;margin-left:1px}
-.proj-note{margin:4px 0 0;color:var(--soft);font-size:13px}
-.money{margin-top:10px;background:var(--bg);border:1px solid #238636;border-left:3px solid var(--up);border-radius:12px;padding:10px 12px}
-.money-k{margin:0;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);font-weight:700}
-.money-v{margin:3px 0 0;font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--up);line-height:1.25}
-.fee{margin:8px 0 0;color:var(--gold-dim);font-size:13px}
-.fee b{color:#f0c14a;font-variant-numeric:tabular-nums}
-.facts{margin:12px 0 0}
-.facts div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:13px}
-.facts dt{color:var(--mu);font-weight:500}
-.facts dd{margin:0;font-weight:650;text-align:right;font-variant-numeric:tabular-nums}
-.facts div.stack{display:block}
-.facts div.stack dd{text-align:left;margin-top:2px}
-.dn{color:var(--dn)}
-.how{margin:12px 0 0;color:var(--soft);font-size:13.5px;line-height:1.45}
-.how b,.why b,.size b{color:var(--fg)}
-
-.legend{display:flex;flex-wrap:wrap;gap:8px 16px;list-style:none;padding:0;margin:10px 0 12px;color:var(--soft);font-size:13px}
-.legend li{display:flex;align-items:center;gap:6px}
-.swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
-.swatch.test,.bar.test{background:var(--test)}
-.swatch.proj,.bar.proj{background:var(--up)}
-.swatch.hold,.bar.hold{background:var(--hold)}
-.swipe{display:none;margin:0 0 8px;color:var(--mu);font-size:12px}
-.rowchart{display:none}
-.rg{margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.rg:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
-.rg-name{margin:0 0 6px;font-size:14px;font-weight:750}
-.rg-name span{color:var(--mu);font-weight:600}
-.rrow{display:grid;grid-template-columns:5.4rem 1fr 3.5rem;gap:8px;align-items:center;margin:4px 0}
-.rn{font-size:12px;color:var(--mu)}
-.rrow.is-proj .rn{color:var(--fg);font-weight:700}
-.track{display:block;height:10px;background:#010409;border-radius:6px;overflow:hidden}
-.rrow.is-proj .track{height:14px}
-.fill{display:block;height:100%;border-radius:6px}
-.fill.test{background:var(--test)}
-.fill.proj{background:var(--up)}
-.fill.hold{background:var(--hold)}
-.rv{font-size:13px;font-weight:750;text-align:right;font-variant-numeric:tabular-nums}
-.rv.test{color:var(--test)}
-.rv.proj{color:var(--up)}
-.rv.hold{color:var(--hold)}
-.chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px 4px}
-.colchart{display:grid;grid-template-columns:42px minmax(540px,1fr);column-gap:8px;min-width:590px}
-.yaxis{position:sticky;left:0;z-index:2;height:200px;margin-top:18px;background:var(--card)}
-.yaxis span{position:absolute;right:0;transform:translateY(-50%);font-size:11px;color:var(--mu);font-variant-numeric:tabular-nums}
-.yaxis{position:relative}
-.yaxis span:nth-child(1){top:0}
-.yaxis span:nth-child(2){top:25%}
-.yaxis span:nth-child(3){top:50%}
-.yaxis span:nth-child(4){top:75%}
-.yaxis span:nth-child(5){top:100%}
-.plot{position:relative;padding-top:18px}
-.gridlines{position:absolute;left:0;right:0;top:18px;height:200px;pointer-events:none}
-.gridlines i{position:absolute;left:0;right:0;border-top:1px solid var(--line)}
-.gridlines i:nth-child(1){top:0;border-top-color:#30363d}
-.gridlines i:nth-child(2){top:25%}
-.gridlines i:nth-child(3){top:50%}
-.gridlines i:nth-child(4){top:75%}
-.gridlines i:nth-child(5){top:100%;border-top-color:#30363d}
-.groups{position:relative;z-index:1;display:grid;grid-template-columns:repeat(5,1fr);height:200px}
-.cgroup{display:flex;align-items:flex-end;justify-content:center;gap:4px;height:100%}
-.bar{width:22px;height:calc(var(--v) * 1px);border-radius:4px 4px 0 0;position:relative}
-.bar.proj{width:28px}
-.bar span{position:absolute;top:4px;left:0;right:0;text-align:center;font-size:10px;font-weight:800;line-height:1;color:#0d1117;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.xnames{grid-column:2;display:grid;grid-template-columns:repeat(5,1fr);margin-top:8px}
-.xnames p{margin:0;text-align:center;font-size:12px;font-weight:750;line-height:1.25}
-.xnames span{display:block;font-weight:600;color:var(--mu);font-size:11px}
-figcaption{margin-top:10px;color:var(--mu);font-size:12px}
-
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;min-width:860px;border-collapse:collapse;font-size:13px}
-th,td{padding:9px 10px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-th{color:var(--mu);font-size:12px;font-weight:650;border-bottom:1px solid var(--bd)}
-td{border-top:1px solid var(--line);color:var(--soft)}
-th.l,td.l{text-align:left}
-td.strategy{white-space:normal;min-width:190px;color:var(--fg);font-weight:650}
-td.trade{white-space:normal;min-width:8.5rem;max-width:11rem}
-.tag{font-weight:800}
-.t1{color:var(--gold)}
-.t2{color:var(--silver)}
-.t3{color:var(--bronze)}
-.t4,.t5{color:var(--mu)}
-.id{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:var(--mu);font-weight:500;margin-left:4px}
-.hl{background:rgba(63,185,80,.1);color:var(--up);font-weight:750}
-th.hl{color:var(--up)}
-.table-wrap th:first-child,.table-wrap td:first-child{position:sticky;left:0;background:var(--card);z-index:1;box-shadow:8px 0 8px -8px #000}
-.table-wrap thead th:first-child{z-index:2}
-.note{margin:12px 0 0;color:var(--soft);font-size:13.5px}
-
-.live{border-color:#238636}
-.live-grid{display:grid;gap:8px 28px}
-.kicker{margin:0;color:var(--up);font-size:12px;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
-.size{margin:8px 0 0;color:var(--soft);font-size:14px}
-.why{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.45);color:var(--soft);font-size:14px}
-.gloss dt{font-weight:700;margin-top:12px}
-.gloss dt:first-child{margin-top:0}
-.gloss dd{margin:2px 0 0;color:var(--soft)}
-footer{color:var(--mu);font-size:12px;line-height:1.55;padding-top:4px}
-footer p{margin:0 0 8px}
-footer .links{text-align:center}
-@media (min-width:800px){
-  .live-grid{grid-template-columns:minmax(260px,320px) 1fr;align-items:start}
-}
-@media (min-width:960px){
-  h1{font-size:34px}
-  .podium{grid-template-columns:repeat(3,1fr);align-items:stretch}
-  .shell{padding-top:28px}
-}
-@media (max-width:859px){
-  .swipe{display:block}
-}
-@media (max-width:680px){
-  .chart-scroll,.chart-swipe{display:none}
-  .rowchart{display:block}
-  td.strategy{min-width:148px}
-  td.trade{max-width:8.2rem}
-}
-@media (max-width:420px){
-  h1{font-size:26px}
-  .proj{font-size:36px}
-  .money-v{font-size:18px}
-}
-
-:root{--cb:#58a6ff;--cb-strong:#1f6feb;--cb-bg:rgba(56,139,253,.10);--cb-bd:#1f6feb;
---rh:#3fb950;--rh-strong:#238636;--rh-bg:rgba(46,160,67,.10);--rh-bd:#2ea043}
-.rowchart{display:block!important;margin:0}
-.swatch.test,.fill.test{background:#6e7681}.rv.test{color:#8b949e}
-.jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.jump a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:750;font-size:13px;text-decoration:none;border:1px solid}
-.jump a.cb{color:#fff;background:var(--cb-strong);border-color:var(--cb)}
-.jump a.rh{color:#fff;background:var(--rh-strong);border-color:var(--rh)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:10px}
-.kpi{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;min-width:0}
-.kpi b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
-.kpi .k{display:block;margin-top:4px;font-size:13px;font-weight:700;color:var(--fg)}
-.kpi .s{display:block;margin-top:2px;font-size:12px;color:var(--mu)}
-.kpi.big{grid-column:1/-1}
-.kpi.big b{font-size:40px}
-.kpi.cb{border-color:var(--cb-bd);border-left:4px solid var(--cb);background:var(--cb-bg)}
-.kpi.cb b{color:var(--cb)}
-.kpi.rh{border-color:var(--rh-bd);border-left:4px solid var(--rh);background:var(--rh-bg)}
-.kpi.rh b{color:var(--rh)}
-.book{--ac:var(--cb);--acs:var(--cb-strong);--acbg:var(--cb-bg);--acbd:var(--cb-bd);margin:22px 0 18px;padding:14px 12px 4px;border-radius:16px;border:1px solid var(--acbd);border-left:6px solid var(--ac);background:linear-gradient(180deg,var(--acbg),transparent 320px)}
-.book.rh{--ac:var(--rh);--acs:var(--rh-strong);--acbg:var(--rh-bg);--acbd:var(--rh-bd)}
-.banner{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 6px}
-.banner h2{margin:0;font-size:22px;color:var(--ac)}
-.chip{display:inline-block;padding:4px 10px;border-radius:8px;background:var(--acs);color:#fff;font-size:12px;font-weight:800;letter-spacing:.08em}
-.bk{display:inline-block;padding:1px 7px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff}
-.bk.cb{background:var(--cb-strong)}.bk.rh{background:var(--rh-strong)}
-.book .card{border-color:var(--acbd)}
-.book .place{border-top:3px solid var(--ac)}
-.book .proj{color:var(--ac)}
-.book .money{border-color:var(--acbd);border-left:3px solid var(--ac)}
-.book .money-v{color:var(--ac)}
-.book .pill.st{border-color:var(--ac);color:var(--ac)}
-.book .fill.proj,.book .swatch.proj{background:var(--ac)}
-.book .rv.proj{color:var(--ac)}
-.book .hl{background:var(--acbg);color:var(--ac)}
-.book th.hl{color:var(--ac)}
-.pill.nx{color:var(--mu);border-color:var(--bd);margin-top:0;margin-left:6px}
-h3.sub{margin:0 0 4px;font-size:16px}
-.lead b{color:var(--soft)}
-.live .proj{color:var(--cb)}
-.live .money{border-color:var(--cb-bd);border-left-color:var(--cb)}
-.live .money-v{color:var(--cb)}
-.rv.proj{font-size:13px;letter-spacing:0;line-height:1.2;margin:0}
-@media (max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:10px}.book{padding:12px 8px 2px;border-left-width:5px}.kpi b{font-size:22px}.kpi.big b{font-size:32px}}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<nav aria-label="Desk">
-  <a href="./">Salary Desk</a>
-  <a href="./cb.html">Coinbase book</a>
-  <span aria-current="page">Strategy Lab</span>
-</nav>
-<h1>Strategy Lab — Competition</h1>
-<p class="deck">Two races, one per account: <b style="color:var(--cb)">Coinbase in blue</b> and <b style="color:var(--rh)">Robinhood in green</b>. Each is ranked by goal chance. The large number on each card is the projected actual return: the test result cut down for real fees and slippage.</p>
-<p class="jump"><a class="cb" href="#coinbase">Coinbase top 3 ↓</a><a class="rh" href="#robinhood">Robinhood top 3 ↓</a></p>
-</header>
-
-<main>
-<section class="card" id="lab-stats" aria-labelledby="stats-title">
-  <h2 id="stats-title">Lab totals</h2>
-  <p class="lead">Everything the lab has tested so far, across both accounts. Most ideas fail — that is the point of testing this many.</p>
+<section class="card hero">
+  <h2>Live trading — the big picture</h2>
   <div class="kpis">
-    <div class="kpi big"><b>547,161</b><span class="k">Total strategies tested</span><span class="s">every test ever run, both accounts</span></div>
-    <div class="kpi cb"><b>160,376</b><span class="k">Coinbase tests</span><span class="s">crypto strategies</span></div>
-    <div class="kpi rh"><b>386,785</b><span class="k">Robinhood tests</span><span class="s">stock-fund strategies</span></div>
-    <div class="kpi "><b>36,713</b><span class="k">Beat just holding in the test</span><span class="s">CB 5,221 · RH 31,492</span></div>
-    <div class="kpi "><b>31,352</b><span class="k">On the watch list</span><span class="s">CB 3,742 · RH 27,610</span></div>
-    <div class="kpi "><b>39</b><span class="k">Cleared the consistency bar</span><span class="s">CB 18 · RH 21 — the pool both podiums are picked from</span></div>
-    <div class="kpi "><b>#174</b><span class="k">Newest research round done</span><span class="s">this board covers rounds 81–174</span></div>
-    <div class="kpi "><b>Top 3</b><span class="k">Live book</span><span class="s">podium on both accounts, 50/30/20</span></div>
+    <div><b>$3,655.41</b><span>Desk value (Coinbase + Robinhood)</span></div>
+    <div><b class="dn">−$2.21</b><span>Lab P&amp;L since live</span></div>
+    <div><b>1</b><span>Trades open now</span></div>
+    <div><b>1</b><span>Trades closed (0 wins)</span></div>
   </div>
+  <p class="say">Since the Lab's top-3 strategies went live on Oct 29, 2026 (8:52 PM CT), the desk is <b class="dn">down $2.21</b> from Lab trades. 1 trade open right now: Bitcoin on Coinbase (−$0.99).</p>
+  <p class="small">Lab P&amp;L = closed trades after fees + open trades at today's price. Deposits are not counted as profit. Robinhood excludes Mike's personal holdings.</p>
 </section>
 
-<!-- LIVE_RESULTS_START -->
-<section class="card" id="live-results" aria-labelledby="lr-title">
-  <h2 id="lr-title">Live results <span class="quiet">— the podium is the live book (50% / 30% / 20%)</span></h2>
-  <p class="lead">Real-money results of the top-3 strategies on each account since the switch on Oct 29, 2026. Robinhood excludes WTBN (personal holding). Updated Mon Nov 2, 10:35 AM CT.</p>
-  <h3><span class="bk cb">Coinbase</span> book $560.88 · 1 closed trades · 1 open · P&amp;L $-1.22</h3>
-  <div class="table-wrap"><table style="min-width:640px">
-   <thead><tr><th>Slot</th><th>Strategy</th><th>Size</th><th>Live trades</th><th>Total P&amp;L</th><th>Now</th></tr></thead><tbody>
-    <tr><td>1 · 50%</td><td>84223 → BTC</td><td>$280</td><td>0 closed · 0 open</td><td>0.00% ($0.00)</td><td><span class="pill nx">Not live yet · waiting for signal</span></td></tr>
-    <tr><td>2 · 30%</td><td>76560 → BTC</td><td>$168</td><td>0 closed · 1 open</td><td>0.00% ($0.00)</td><td><span class="pill live">Live · in trade</span> since Fri Oct 30, 6:53 PM CT @ 77140.0 · stop 69451.0</td></tr>
-    <tr><td>3 · 20%</td><td>109084 → ETH</td><td>$112</td><td>1 closed · 0 open</td><td>-0.55% ($-1.22)</td><td><span class="pill nx">Not live yet · waiting for signal</span></td></tr>
-   </tbody></table></div>
-  <h3><span class="bk rh">Robinhood</span> book $3,094.93 · 0 closed trades · 0 open · P&amp;L $+0.00</h3>
-  <div class="table-wrap"><table style="min-width:640px">
-   <thead><tr><th>Slot</th><th>Strategy</th><th>Size</th><th>Live trades</th><th>Total P&amp;L</th><th>Now</th></tr></thead><tbody>
-    <tr><td>1 · 50%</td><td>254240 → QLD</td><td>$1,547</td><td>0 closed · 0 open</td><td>0.00% ($0.00)</td><td><span class="pill nx">Not live yet · waiting for signal</span></td></tr>
-    <tr><td>2 · 30%</td><td>238756 → AGQ</td><td>$928</td><td>0 closed · 0 open</td><td>0.00% ($0.00)</td><td><span class="pill nx">Not live yet · waiting for signal</span></td></tr>
-    <tr><td>3 · 20%</td><td>143818 → AGQ</td><td>$619</td><td>0 closed · 0 open</td><td>0.00% ($0.00)</td><td><span class="pill nx">Not live yet · waiting for signal</span></td></tr>
-   </tbody></table></div>
-  <p class="note">Trades enter and exit only at each strategy's scheduled close, with a real stop order on every position. Not live yet = 0 trades, 0%. Coinbase 1st and 2nd both buy Bitcoin; Robinhood 2nd and 3rd both buy AGQ (silver).</p>
-</section>
-<!-- LIVE_RESULTS_END -->
-
-<section class="book cb" id="coinbase" aria-labelledby="cb-title">
-  <div class="banner">
-    <span class="chip">COINBASE</span>
-    <h2 id="cb-title">Coinbase podium</h2>
+<section class="card">
+  <h2>Lab testing</h2>
+  <div class="kpis">
+    <div><b>559,430</b><span>Strategies tested</span></div>
+    <div><b style="color:var(--cb)">165,327</b><span>Coinbase (crypto)</span></div>
+    <div><b style="color:var(--rh)">394,103</b><span>Robinhood (stock funds)</span></div>
+    <div><b>32,019</b><span>Passed first checks</span></div>
   </div>
-  <p class="lead">Crypto (Bitcoin / Ether). 18 Coinbase strategies cleared the consistency bar; these are the top three by goal chance. Projected = test × 0.55 for real Coinbase fees. <b>Coinbase goal: grow $569 to $1M by Oct 7, 2027.</b></p>
-  <div class="podium">
-    <article class="card place place-1">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b1" aria-hidden="true">1</span> <span class="rankword">1st</span> <span class="bk cb">Coinbase</span></p>
-        <p class="goal"><b>89%</b><span>goal chance</span></p>
-      </div>
-      <h3>Silver–Gold tilt → Bitcoin</h3>
-      <p class="pid">CB-novel-84223</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">107%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $207 in a year</p>
-      </div>
-      <p class="fee">If every order paid the higher fee: <b>47%/yr</b></p>
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>Bitcoin with a 1.5x boost</dd></div>
-        <div><dt>Account</dt><dd>Coinbase</dd></div>
-        <div><dt>Test return</dt><dd>194%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>104%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-36%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>2.12</dd></div>
-        <div><dt>Trades in test</dt><dd>67</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+19%/yr and +4%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys Bitcoin when silver closes weak in its daily range compared with gold, holds about 4 days, and exits early if a trailing safety stop is hit.</p>
-    </article>
-
-    <article class="card place place-2">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b2" aria-hidden="true">2</span> <span class="rankword">2nd</span> <span class="bk cb">Coinbase</span></p>
-        <p class="goal"><b>87%</b><span>goal chance</span></p>
-      </div>
-      <h3>Tech-vs-Health calm → Bitcoin</h3>
-      <p class="pid">CB-novel-76560</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">108%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $208 in a year</p>
-      </div>
-      <p class="fee">If every order paid the higher fee: <b>47%/yr</b></p>
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>Bitcoin with a 2x boost</dd></div>
-        <div><dt>Account</dt><dd>Coinbase</dd></div>
-        <div><dt>Test return</dt><dd>197%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>104%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-36%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>1.84</dd></div>
-        <div><dt>Trades in test</dt><dd>34</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+76%/yr and +46%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys Bitcoin when tech stocks&#x27; daily price swings calm down compared with health-care stocks, holds about 4 days, with a trailing safety stop.</p>
-    </article>
-
-    <article class="card place place-3">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b3" aria-hidden="true">3</span> <span class="rankword">3rd</span> <span class="bk cb">Coinbase</span></p>
-        <p class="goal"><b>78%</b><span>goal chance</span></p>
-      </div>
-      <h3>Lopsided-market pattern → Ether</h3>
-      <p class="pid">CB-novel-109084</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">56%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $156 in a year</p>
-      </div>
-      <p class="fee">If every order paid the higher fee: <b>24%/yr</b></p>
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>Ether with a 2x boost</dd></div>
-        <div><dt>Account</dt><dd>Coinbase</dd></div>
-        <div><dt>Test return</dt><dd>101%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>21%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-68%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>1.20</dd></div>
-        <div><dt>Trades in test</dt><dd>53</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+48%/yr and +16%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys Ether when yesterday&#x27;s trading across a basket of stocks looked lopsided (a few names stuck in their prior-day range far more than the rest), holds about 4 days, with a safety stop.</p>
-    </article>
-  </div>
-
-  <div class="card" aria-labelledby="cb-chart-title">
-    <h3 id="cb-chart-title" class="sub">Coinbase: test vs projected vs just holding</h3>
-    <ul class="legend">
-      <li><i class="swatch test" aria-hidden="true"></i> Test return</li>
-      <li><i class="swatch proj" aria-hidden="true"></i> Projected actual</li>
-      <li><i class="swatch hold" aria-hidden="true"></i> Just holding</li>
-    </ul>
-    <figure class="rowchart">
-      <div class="rg">
-        <p class="rg-name">1st <span>Silver–Gold</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:97.2%"></span></span><span class="rv test">194%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:53.4%"></span></span><span class="rv proj">107%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:52.2%"></span></span><span class="rv hold">104%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">2nd <span>Tech-Health</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:98.3%"></span></span><span class="rv test">197%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:54.1%"></span></span><span class="rv proj">108%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:52.2%"></span></span><span class="rv hold">104%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">3rd <span>Lopsided</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:50.5%"></span></span><span class="rv test">101%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:27.8%"></span></span><span class="rv proj">56%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:10.3%"></span></span><span class="rv hold">21%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">4th <span>Gap-fill mismatch</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:52.0%"></span></span><span class="rv test">104%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:28.6%"></span></span><span class="rv proj">57%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:10.3%"></span></span><span class="rv hold">21%</span></div>
-      </div>
-      <figcaption>Percent per year; full bar = 200%. Projected is an estimate from the test period, not a promise.</figcaption>
-    </figure>
-  </div>
-
-  <div class="card" aria-labelledby="cb-tab-title">
-    <h3 id="cb-tab-title" class="sub">Coinbase standings</h3>
-    <p class="swipe">Swipe sideways to see every column.</p>
-    <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th class="l" scope="col">Strategy</th>
-          <th class="l" scope="col" title="What it buys">Trades</th>
-          <th class="hl" scope="col">Projected /yr</th>
-          <th scope="col">Test /yr</th>
-          <th scope="col">Holding /yr</th>
-          <th scope="col">Worst drop</th>
-          <th scope="col">Goal chance</th>
-          <th scope="col" title="Number of trades in the test"># Trades</th>
-          <th class="l" scope="col">Account</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="l strategy"><span class="tag t1">1st</span> · Silver–Gold tilt <span class="id">84223</span></td>
-          <td class="l trade">Bitcoin 1.5x</td>
-          <td class="hl">107%</td>
-          <td>194%</td>
-          <td>104%</td>
-          <td class="dn">-36%</td>
-          <td>89%</td>
-          <td>67</td>
-          <td class="l">Coinbase</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t2">2nd</span> · Tech-vs-Health calm <span class="id">76560</span></td>
-          <td class="l trade">Bitcoin 2x</td>
-          <td class="hl">108%</td>
-          <td>197%</td>
-          <td>104%</td>
-          <td class="dn">-36%</td>
-          <td>87%</td>
-          <td>34</td>
-          <td class="l">Coinbase</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t3">3rd</span> · Lopsided-market pattern <span class="id">109084</span></td>
-          <td class="l trade">Ether 2x</td>
-          <td class="hl">56%</td>
-          <td>101%</td>
-          <td>21%</td>
-          <td class="dn">-68%</td>
-          <td>78%</td>
-          <td>53</td>
-          <td class="l">Coinbase</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t4">4th</span> · Gap-fill mismatch <span class="id">99306</span> <span class="pill nx">Next up</span></td>
-          <td class="l trade">Ether 2x</td>
-          <td class="hl">57%</td>
-          <td>104%</td>
-          <td>21%</td>
-          <td class="dn">-34%</td>
-          <td>74%</td>
-          <td>41</td>
-          <td class="l">Coinbase</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-    <p class="note">4th buys Ether 2x when, across a basket of stocks, today's big movers look unusually unlike yesterday's gap-fillers. Research only for now.</p>
-  </div>
+  <p class="say">The Lab back-tests new trading ideas every night. Only the best 3 per account trade real money; a better one replaces a top-3 slot only when that slot is not in a trade.</p>
+  <p class="small">Last test added Mon Nov 2, 9:54 AM CT.</p>
 </section>
 
-<section class="book rh" id="robinhood" aria-labelledby="rh-title">
-  <div class="banner">
-    <span class="chip">ROBINHOOD</span>
-    <h2 id="rh-title">Robinhood podium</h2>
+<section class="card book cb">
+  <h2><span class="dot cb"></span>Coinbase</h2>
+  <div class="kpis">
+    <div><b>$560.48</b><span>Book value</span></div>
+    <div><b>$226.81</b><span>Cash</span></div>
+    <div><b>1</b><span>Active trade</span></div>
+    <div><b class="dn">−$2.21</b><span>Lab P&amp;L since live</span></div>
   </div>
-  <p class="lead">Stock funds. 21 Robinhood strategies cleared the consistency bar; these are the top three by goal chance (one per idea, at most two on the same fund). Projected = test × 0.90 (stock-fund costs are much lower). <b>Robinhood goal: about +1% a week (≈68%/yr).</b></p>
-  <div class="podium">
-    <article class="card place place-1">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b1" aria-hidden="true">1</span> <span class="rankword">1st</span> <span class="bk rh">Robinhood</span></p>
-        <p class="goal"><b>75%</b><span>goal chance</span></p>
-      </div>
-      <h3>Regional-bank gap signal → QLD</h3>
-      <p class="pid">RH-novel-254240</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">79%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $179 in a year</p>
-      </div>
-      
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>QLD (2x Nasdaq fund)</dd></div>
-        <div><dt>Account</dt><dd>Robinhood</dd></div>
-        <div><dt>Test return</dt><dd>88%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>52%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-20%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>2.12</dd></div>
-        <div><dt>Trades in test</dt><dd>42</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+13%/yr and +19%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys QLD, a fund that moves about 2x the Nasdaq-100, when regional banks open with bigger overnight jumps than the big banks, and holds about 3 days.</p>
-    </article>
-
-    <article class="card place place-2">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b2" aria-hidden="true">2</span> <span class="rankword">2nd</span> <span class="bk rh">Robinhood</span></p>
-        <p class="goal"><b>69%</b><span>goal chance</span></p>
-      </div>
-      <h3>Real-estate vs utilities close → AGQ</h3>
-      <p class="pid">RH-novel-238756</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">77%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $177 in a year</p>
-      </div>
-      
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>AGQ (2x silver fund)</dd></div>
-        <div><dt>Account</dt><dd>Robinhood</dd></div>
-        <div><dt>Test return</dt><dd>86%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>18%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-25%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>1.66</dd></div>
-        <div><dt>Trades in test</dt><dd>90</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+9%/yr and +8%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys AGQ, a fund that moves about 2x silver, when real-estate stocks finish noticeably stronger in their daily range than utility stocks compared with the day before. Holds about 2 days, with an 8% safety stop.</p>
-    </article>
-
-    <article class="card place place-3">
-      <div class="place-head">
-        <p class="rankline"><span class="badge b3" aria-hidden="true">3</span> <span class="rankword">3rd</span> <span class="bk rh">Robinhood</span></p>
-        <p class="goal"><b>64%</b><span>goal chance</span></p>
-      </div>
-      <h3>Junk-bond lag → AGQ</h3>
-      <p class="pid">RH-novel-143818</p>
-      <p><span class="pill st">Live book</span></p>
-      <p class="proj-k">Projected actual return</p>
-      <p class="proj">63%<span>/yr</span></p>
-      <div class="money">
-        <p class="money-k">On $100</p>
-        <p class="money-v">$100 → about $163 in a year</p>
-      </div>
-      
-      <dl class="facts">
-        <div><dt>Trades</dt><dd>AGQ (2x silver fund)</dd></div>
-        <div><dt>Account</dt><dd>Robinhood</dd></div>
-        <div><dt>Test return</dt><dd>70%/yr</dd></div>
-        <div><dt>Just holding instead</dt><dd>18%/yr</dd></div>
-        <div><dt>Worst drop in test</dt><dd class="dn">-27%</dd></div>
-        <div><dt>Risk-adjusted score</dt><dd>1.39</dd></div>
-        <div><dt>Trades in test</dt><dd>52</dd></div>
-        <div class="stack"><dt>Older history (2016–19, 2020–22)</dt><dd>+8%/yr and +4%/yr</dd></div>
-      </dl>
-      <p class="how"><b>How.</b> Buys AGQ (about 2x silver) when junk bonds lag safer corporate bonds by more than the stock market explains, and holds about 3 days.</p>
-    </article>
+  <h3>Active trades</h3>
+  <div class="tw"><table><thead><tr><th>Holding</th><th>Entry</th><th>Now</th><th>Open P&amp;L</th><th>Safety stop</th></tr></thead><tbody><tr><td><b>Bitcoin</b><br><span class="small">#2 Tech vs health-care → Bitcoin</span></td>
+<td>Bought Oct 30<br><span class="small">@ $77,140.00</span></td>
+<td>Now $77,295.60<br><span class="small">worth $333.67</span></td>
+<td class="dn"><b>−$0.99</b><br><span class="small">+0.2%</span></td>
+<td>Stop $69,451.00<br><span class="small">set ✓</span></td></tr></tbody></table></div>
+  <h3>Top 3 strategies</h3>
+  <div class="slots"><div class="slot">
+  <div class="slot-top"><span class="rank">#1</span><span class="share">50% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Silver vs gold → Bitcoin</h4>
+  <p>Buys Bitcoin (1.5x size) when silver closes weak compared with gold. Holds about 4 days. Safety stop follows the price up.</p>
+  <p class="live-line">Live so far: 0 closed trades · No open trade</p>
+  <p class="small">In testing: about <b>+194%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#2</span><span class="share">30% of book</span><span class="pill on">In a trade</span></div>
+  <h4>Tech vs health-care → Bitcoin</h4>
+  <p>Buys Bitcoin (2x size) when tech stocks&#x27; daily swings calm down compared with health-care stocks. Holds about 4 days. Safety stop follows the price up.</p>
+  <p class="live-line">Live so far: 0 closed trades · Open now: <b class="dn">−$0.99</b> (+0.2% on the coin/fund)</p>
+  <p class="small">In testing: about <b>+197%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#3</span><span class="share">20% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Lopsided market → Ether</h4>
+  <p>Buys Ether (2x size) after a lopsided day across a basket of stocks. Holds about 4 days, with a safety stop.</p>
+  <p class="live-line">Live so far: 1 closed trade · <b class="dn">−$1.22</b> · No open trade</p>
+  <p class="small">In testing: about <b>+101%/yr</b> vs +21%/yr for just holding Ether. Worst drop in test -68%.</p>
+</div></div>
+  <p class="small">Crypto, trades once a day at 6:00 PM CT. Each strategy gets 50% / 30% / 20% of the Coinbase book. #1 and #2 both buy Bitcoin, so when both are on, Bitcoin exposure stacks.</p>
+</section>
+<section class="card book rh">
+  <h2><span class="dot rh"></span>Robinhood</h2>
+  <div class="kpis">
+    <div><b>$3,094.93</b><span>Book value</span></div>
+    <div><b>$3,094.93</b><span>Cash</span></div>
+    <div><b>0</b><span>Active trades</span></div>
+    <div><b class="">+$0.00</b><span>Lab P&amp;L since live</span></div>
   </div>
-
-  <div class="card" aria-labelledby="rh-chart-title">
-    <h3 id="rh-chart-title" class="sub">Robinhood: test vs projected vs just holding</h3>
-    <ul class="legend">
-      <li><i class="swatch test" aria-hidden="true"></i> Test return</li>
-      <li><i class="swatch proj" aria-hidden="true"></i> Projected actual</li>
-      <li><i class="swatch hold" aria-hidden="true"></i> Just holding</li>
-    </ul>
-    <figure class="rowchart">
-      <div class="rg">
-        <p class="rg-name">1st <span>Bank gap</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:87.7%"></span></span><span class="rv test">88%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:79.0%"></span></span><span class="rv proj">79%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:52.3%"></span></span><span class="rv hold">52%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">2nd <span>Real-estate</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:86.1%"></span></span><span class="rv test">86%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:77.5%"></span></span><span class="rv proj">77%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:17.9%"></span></span><span class="rv hold">18%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">3rd <span>Junk-bond</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:70.5%"></span></span><span class="rv test">70%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:63.4%"></span></span><span class="rv proj">63%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:17.9%"></span></span><span class="rv hold">18%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">4th <span>Tech-vs-market range</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:67.5%"></span></span><span class="rv test">68%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:60.8%"></span></span><span class="rv proj">61%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:39.6%"></span></span><span class="rv hold">40%</span></div>
-      </div>
-      <div class="rg">
-        <p class="rg-name">5th <span>Basket-shock lopsidedness</span></p>
-        <div class="rrow"><span class="rn">Test return</span><span class="track"><span class="fill test" style="width:63.2%"></span></span><span class="rv test">63%</span></div>
-        <div class="rrow is-proj"><span class="rn">Projected</span><span class="track"><span class="fill proj" style="width:56.9%"></span></span><span class="rv proj">57%</span></div>
-        <div class="rrow"><span class="rn">Just holding</span><span class="track"><span class="fill hold" style="width:39.6%"></span></span><span class="rv hold">40%</span></div>
-      </div>
-      <figcaption>Percent per year; full bar = 100%. Projected is an estimate from the test period, not a promise.</figcaption>
-    </figure>
-  </div>
-
-  <div class="card" aria-labelledby="rh-tab-title">
-    <h3 id="rh-tab-title" class="sub">Robinhood standings</h3>
-    <p class="swipe">Swipe sideways to see every column.</p>
-    <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th class="l" scope="col">Strategy</th>
-          <th class="l" scope="col" title="What it buys">Trades</th>
-          <th class="hl" scope="col">Projected /yr</th>
-          <th scope="col">Test /yr</th>
-          <th scope="col">Holding /yr</th>
-          <th scope="col">Worst drop</th>
-          <th scope="col">Goal chance</th>
-          <th scope="col" title="Number of trades in the test"># Trades</th>
-          <th class="l" scope="col">Account</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="l strategy"><span class="tag t1">1st</span> · Regional-bank gap signal <span class="id">254240</span></td>
-          <td class="l trade">QLD (2x Nasdaq fund)</td>
-          <td class="hl">79%</td>
-          <td>88%</td>
-          <td>52%</td>
-          <td class="dn">-20%</td>
-          <td>75%</td>
-          <td>42</td>
-          <td class="l">Robinhood</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t2">2nd</span> · Real-estate vs utilities close <span class="id">238756</span></td>
-          <td class="l trade">AGQ (2x silver fund)</td>
-          <td class="hl">77%</td>
-          <td>86%</td>
-          <td>18%</td>
-          <td class="dn">-25%</td>
-          <td>69%</td>
-          <td>90</td>
-          <td class="l">Robinhood</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t3">3rd</span> · Junk-bond lag <span class="id">143818</span></td>
-          <td class="l trade">AGQ (2x silver fund)</td>
-          <td class="hl">63%</td>
-          <td>70%</td>
-          <td>18%</td>
-          <td class="dn">-27%</td>
-          <td>64%</td>
-          <td>52</td>
-          <td class="l">Robinhood</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t4">4th</span> · Tech-vs-market range <span class="id">170320</span> <span class="pill nx">Next up</span></td>
-          <td class="l trade">SMH (chip-stock fund)</td>
-          <td class="hl">61%</td>
-          <td>68%</td>
-          <td>40%</td>
-          <td class="dn">-15%</td>
-          <td>57%</td>
-          <td>51</td>
-          <td class="l">Robinhood</td>
-        </tr>
-        <tr>
-          <td class="l strategy"><span class="tag t4">5th</span> · Basket-shock lopsidedness <span class="id">280738</span> <span class="pill nx">Next up</span></td>
-          <td class="l trade">SMH (chip-stock fund)</td>
-          <td class="hl">57%</td>
-          <td>63%</td>
-          <td>40%</td>
-          <td class="dn">-17%</td>
-          <td>56%</td>
-          <td>50</td>
-          <td class="l">Robinhood</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-    <p class="note">4th buys the chip-stock fund SMH when the Nasdaq's daily price range shrinks compared with the S&P 500's, holding about 2 days. 5th buys SMH after a lopsided day of sudden swings across a basket of stocks, holding about 3 days. Both are research only — no paper or live money yet. Note: 2nd and 3rd both trade AGQ (silver), but they fire on different days most of the time.</p>
-  </div>
+  <h3>Active trades</h3>
+  <p class="flat">Flat — no open trades. Next chance to enter: <b>Mon Nov 2, 3:00 PM CT</b>.</p>
+  <h3>Top 3 strategies</h3>
+  <div class="slots"><div class="slot">
+  <div class="slot-top"><span class="rank">#1</span><span class="share">50% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Bank gap → QLD</h4>
+  <p>Buys QLD (moves about 2x the Nasdaq-100) when regional banks open with bigger overnight jumps than big banks. Holds about 3 days, with a 16% safety stop.</p>
+  <p class="live-line">Live so far: 0 closed trades · No open trade</p>
+  <p class="small">In testing: about <b>+88%/yr</b> vs +52%/yr for just holding QLD. Worst drop in test -20%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#2</span><span class="share">30% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Real estate vs utilities → AGQ</h4>
+  <p>Buys AGQ (moves about 2x silver) when real-estate stocks finish stronger than utility stocks versus the day before. Holds about 2 days, 8% trailing stop.</p>
+  <p class="live-line">Live so far: 0 closed trades · No open trade</p>
+  <p class="small">In testing: about <b>+86%/yr</b> vs +18%/yr for just holding AGQ. Worst drop in test -25%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#3</span><span class="share">20% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Junk-bond lag → AGQ</h4>
+  <p>Buys AGQ (about 2x silver) when junk bonds lag safer corporate bonds more than the stock market explains. Holds about 3 days, with a 16% safety stop.</p>
+  <p class="live-line">Live so far: 0 closed trades · No open trade</p>
+  <p class="small">In testing: about <b>+70%/yr</b> vs +18%/yr for just holding AGQ. Worst drop in test -27%.</p>
+</div></div>
+  <p class="small">Stock funds, trades near the 3:00 PM CT close on weekdays. Each strategy gets 50% / 30% / 20% of the desk cash. Mike's personal holdings are never traded or counted here.</p>
 </section>
 
-<section class="card" id="live-sleeve" aria-labelledby="live-title">
-  <h2 id="live-title">Retired: old 20% Lab sleeve <span class="quiet">(CB-novel-66760)</span></h2>
-  <p class="note">Retired Oct 29, 2026 — replaced by the full top-3 live book above. It never opened a trade (0 trades, $0 P&amp;L).</p>
+<section class="card">
+  <h2>What happens next</h2>
+  <ul>
+    <li><b>Coinbase:</b> next check Mon Nov 2, 6:00 PM CT. Anything that fires buys then; open trades exit on schedule or at their stop.</li>
+    <li><b>Robinhood:</b> next check Mon Nov 2, 3:00 PM CT.</li>
+    <li>Every live trade has a real stop order at the broker. After any exit, the book is re-split 50/30/20.</li>
+  </ul>
+  <p class="small">“Waiting for signal” = the strategy's condition isn't met yet; that's normal. Test results are from past data, not a promise.</p>
 </section>
-
-<section class="card" id="glossary" aria-labelledby="glossary-title">
-  <h2 id="glossary-title">Quick glossary</h2>
-  <dl class="gloss">
-    <dt>Projected actual return</dt>
-    <dd>Coinbase test × 0.55 (matching live strategy fee check 282%→158%). Robinhood × 0.90. Coinbase higher-fee line × 0.24.</dd>
-    <dt>Test return</dt>
-    <dd>Yearly growth Jan 2023 – Mar 2025, held-back data.</dd>
-    <dt>Goal chance</dt>
-    <dd>Share of simulated replays that reached the account's growth goal (Coinbase: $569 → $1M by Oct 2027; Robinhood: about +1% a week).</dd>
-    <dt>Consistency bar</dt>
-    <dd>Made money in both halves of the older data (2016–2019 and 2020–2022) and does not use 3x funds.</dd>
-    <dt>Worst drop</dt>
-    <dd>Biggest peak-to-trough fall in the test.</dd>
-    <dt>Risk-adjusted score</dt>
-    <dd>Return per unit of bumpiness; above 1 good, above 2 strong.</dd>
-    <dt>Watch list</dt>
-    <dd>Passed the lab's tests and is being tracked, but no money (paper or real) is on it yet.</dd>
-  </dl>
-</section>
-
-<section class="card" id="how-to-read" aria-labelledby="how-title">
-  <h2 id="how-title">How to read this board</h2>
-  <dl class="read">
-    <div><dt>Goal chance</dt><dd>How often the strategy reached its account's growth goal across many simulated replays of its test results.</dd></div>
-    <div><dt>Test return</dt><dd>Yearly growth in the test period.</dd></div>
-    <div><dt>Projected actual return</dt><dd>Test return cut down for real fees/slippage.</dd></div>
-    <div><dt>Worst drop</dt><dd>Biggest fall from a high during the test.</dd></div>
-    <div><dt>Vs holding</dt><dd>Buy-and-hold of the same coin/fund.</dd></div>
-  </dl>
-</section>
-
-
-</main>
-
-<footer>
-  <p>Board rebuilt Oct 29, 2026, 8:43 PM CT. Rankings from the Oct 29, 2026, 10:03 AM CT board (rounds 81–174); lab totals count 547,161 tests, last logged Oct 29, 2026, 11:42 AM CT. Test window Jan 1, 2023 – Mar 31, 2025; results after Apr 1, 2025 are locked away and not scored yet. Only strategies that made money in both halves of 2016–2022 and avoid 3x funds qualify. Past tests do not guarantee future results.</p>
-  <p class="links"><a href="./">Salary Desk</a> · <a href="./cb.html">Coinbase book</a></p>
-</footer>
-</div>
-</body>
-</html>
+</div></body></html>
