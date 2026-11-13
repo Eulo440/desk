@@ -3,6 +3,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
 <meta http-equiv="refresh" content="60"><link rel="icon" href="data:,">
 <title>Strategy Lab</title>
+<script>document.documentElement.className+=(location.hash||"").replace(/^#/,"").toLowerCase()==="cb"||(location.hash||"").replace(/^#/,"").toLowerCase()==="coinbase"?" tab-cb":" tab-rh";</script>
 <style>
 :root{--bg:#0d1117;--card:#161b22;--bd:#30363d;--mu:#8b949e;--fg:#e6edf3;--up:#3fb950;--dn:#f85149;--cb:#3b82f6;--rh:#22c55e;--warn:#d29922}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -11,7 +12,7 @@ h1{font-size:30px;margin:0}.sub{color:var(--mu);margin:2px 0 16px;font-size:14px
 h2{font-size:20px;margin:0 0 12px;display:flex;align-items:center;gap:10px}h3{font-size:15px;color:var(--mu);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.05em}
 h4{margin:4px 0;font-size:17px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
-.book.cb{border-top:4px solid var(--cb)}.book.rh{border-top:4px solid var(--rh)}.hero{border-top:4px solid #a78bfa}
+.book.cb{border-top:4px solid var(--cb)}.book.rh{border-top:4px solid var(--rh)}
 .dot{width:14px;height:14px;border-radius:50%;display:inline-block}.dot.cb{background:var(--cb)}.dot.rh{background:var(--rh)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
 .kpis div{background:#0d1117;border:1px solid var(--bd);border-radius:10px;padding:12px}
@@ -26,66 +27,21 @@ h4{margin:4px 0;font-size:17px}
 .live-line{border-top:1px solid var(--bd);padding-top:6px}
 .pill{border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700}.pill.on{background:#12361f;color:var(--up)}.pill.wait{background:#21262d;color:var(--mu)}.pill.due{background:#3b2e0a;color:var(--warn)}.pill.off{background:#3d1214;color:var(--dn)}.pill.paper{background:#0f2744;color:#58a6ff}.slot.retired{opacity:.85}
 ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
+.tabs{display:flex;gap:0;margin:12px 0 16px;border-bottom:2px solid var(--bd)}
+.tab{flex:1;text-align:center;padding:14px 16px;color:var(--mu);font-size:18px;font-weight:700;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab:hover{color:var(--fg)}
+.tab.rh.active,.tab.rh:focus{color:var(--rh);border-bottom-color:var(--rh)}
+.tab.cb.active,.tab.cb:focus{color:var(--cb);border-bottom-color:var(--cb)}
+.pane{display:none}.pane.active{display:block}
+html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
 </style></head><body><div class="wrap">
 <h1>Strategy Lab</h1>
-<p class="sub">One page for the whole desk · updated Thu Nov 12, 9:19 PM CT · refreshes every minute</p>
-
-<section class="card hero">
-  <h2>Live trading — the big picture</h2>
-  <div class="kpis">
-    <div><b>$3,645.44</b><span>Desk value (Coinbase + Robinhood)</span></div>
-    <div><b class="up">+$92.47</b><span>Lab P&amp;L since live</span></div>
-    <div><b>1</b><span>Trades open now</span></div>
-    <div><b>7</b><span>Trades closed (2 wins)</span></div>
-  </div>
-  <p class="say">Since the Lab's top-3 strategies went live on Oct 29, 2026 (8:52 PM CT), the desk is <b class="up">up $92.47</b> from Lab trades. 1 trade open right now: QLD on Robinhood (+$169.05).</p>
-  <p class="small">Lab P&amp;L = closed trades after fees + open trades at today's price. Deposits are not counted as profit. Robinhood excludes Mike's personal holdings.</p>
-</section>
-
-<section class="card">
-  <h2>Lab testing</h2>
-  <div class="kpis">
-    <div><b>1,089,333</b><span>Strategies tested</span></div>
-    <div><b style="color:var(--cb)">446,556</b><span>Coinbase (crypto)</span></div>
-    <div><b style="color:var(--rh)">642,777</b><span>Robinhood (stock funds)</span></div>
-    <div><b>54,424</b><span>Passed first checks</span></div>
-  </div>
-  <p class="say">The Lab back-tests new trading ideas every night. Only the best 3 per account trade real money; a better one replaces a top-3 slot only when that slot is not in a trade.</p>
-  <p class="small">Last test added Thu Nov 12, 1:39 PM CT.</p>
-</section>
-
-<section class="card book cb">
-  <h2><span class="dot cb"></span>Coinbase</h2>
-  <div class="kpis">
-    <div><b>$393.16</b><span>Book value</span></div>
-    <div><b>$393.16</b><span>Cash</span></div>
-    <div><b>0</b><span>Active trades</span></div>
-    <div><b class="dn">−$45.98</b><span>Lab P&amp;L since live</span></div>
-  </div>
-  <h3>Active trades</h3>
-  <p class="flat">Flat — no open trades. Next chance to enter: <b>Fri Nov 13, 6:00 PM CT</b>.</p>
-  <h3>Top 3 strategies</h3>
-  <div class="slots"><div class="slot">
-  <div class="slot-top"><span class="rank">#1</span><span class="share">50% of book</span><span class="pill wait">Waiting for signal</span></div>
-  <h4>Silver vs gold → Bitcoin</h4>
-  <p>Buys Bitcoin (1.5x size) when silver closes weak compared with gold. Holds about 4 days. Safety stop follows the price up.</p>
-  <p class="live-line">Live so far: 1 closed trade · <b class="dn">−$39.01</b> · No open trade</p>
-  <p class="small">In testing: about <b>+194%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="rank">#2</span><span class="share">30% of book</span><span class="pill wait">Waiting for signal</span></div>
-  <h4>Tech vs health-care → Bitcoin</h4>
-  <p>Buys Bitcoin (2x size) when tech stocks&#x27; daily swings calm down compared with health-care stocks. Holds about 4 days. Safety stop follows the price up.</p>
-  <p class="live-line">Live so far: 1 closed trade · <b class="up">+$13.18</b> · No open trade</p>
-  <p class="small">In testing: about <b>+197%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="rank">#3</span><span class="share">20% of book</span><span class="pill due">Entry due 6:00 PM CT</span></div>
-  <h4>Lopsided market → Ether</h4>
-  <p>Buys Ether (2x size) after a lopsided day across a basket of stocks. Holds about 4 days, with a safety stop.</p>
-  <p class="live-line">Live so far: 2 closed trades · <b class="dn">−$20.15</b> · No open trade</p>
-  <p class="small">In testing: about <b>+101%/yr</b> vs +21%/yr for just holding Ether. Worst drop in test -68%.</p>
-</div></div>
-  <p class="small">Crypto, trades once a day at 6:00 PM CT. Each strategy gets 50% / 30% / 20% of the Coinbase book. #1 and #2 both buy Bitcoin, so when both are on, Bitcoin exposure stacks.</p>
-</section>
+<p class="sub">Robinhood and Coinbase, viewed separately · updated Thu Nov 12, 9:20 PM CT · refreshes every minute</p>
+<nav class="tabs" role="tablist" aria-label="Account">
+  <a class="tab rh active" id="tab-rh" role="tab" data-tab="rh" href="#rh" aria-controls="pane-rh" aria-selected="true">Robinhood</a>
+  <a class="tab cb" id="tab-cb" role="tab" data-tab="cb" href="#cb" aria-controls="pane-cb" aria-selected="false">Coinbase</a>
+</nav>
+<div class="pane active" id="pane-rh" role="tabpanel" aria-labelledby="tab-rh">
 <section class="card book rh">
   <h2><span class="dot rh"></span>Robinhood</h2>
   <div class="kpis">
@@ -93,7 +49,10 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
     <div><b>$1,544.98</b><span>Cash</span></div>
     <div><b>1</b><span>Active trade</span></div>
     <div><b class="up">+$138.45</b><span>Lab P&amp;L since live</span></div>
+    <div><b>3</b><span>Trades closed (1 win)</span></div>
   </div>
+  <p class="say">Since the Lab's top-3 strategies went live on Oct 29, 2026 (8:52 PM CT), this book is <b class="up">up $138.45</b> from Lab trades. 1 trade open right now: QLD (+$169.05).</p>
+  <p class="small">Lab P&amp;L = closed trades after fees + open trades at today's price. Deposits are not counted as profit. Robinhood excludes Mike's personal holdings.</p>
   <h3>Active trades</h3>
   <div class="tw"><table><thead><tr><th>Holding</th><th>Entry</th><th>Now</th><th>Open P&amp;L</th><th>Safety stop</th></tr></thead><tbody><tr><td><b>QLD</b><br><span class="small">#1 Bank gap → QLD</span></td>
 <td>Bought Nov 5<br><span class="small">@ $73.25</span></td>
@@ -121,16 +80,14 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
   <p class="small">In testing: about <b>+70%/yr</b> vs +18%/yr for just holding AGQ. Worst drop in test -27%.</p>
 </div></div>
   <p class="small">Stock funds, trades near the 3:00 PM CT close on weekdays. Each strategy gets 50% / 30% / 20% of the desk cash. Mike's personal holdings are never traded or counted here.</p>
-</section>
-
-<section class="card">
+</section><section class="card">
   <h2>Paper / experiments</h2>
-  <p class="say">Forward paper only — no live orders. Showing only green (positive P&amp;L) sleeves competing for a podium spot. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
+  <p class="say">Forward paper only — no live orders. Showing the current 3 best green (positive P&amp;L) sleeves on this venue that are not already on the live podium. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
   <div class="slots"><div class="slot">
   <div class="slot-top"><span class="pill paper">Paper</span></div>
-  <h4>Paper: low Tesla Wikipedia edits -&gt; TNA (Hunt Nov 4) <span class="small">· HUNT-20261104-4413</span></h4>
-  <p>When the Wikipedia &#x27;Tesla, Inc.&#x27; page&#x27;s 7-day edit count is unusually low (z &lt; -1), holds TNA (3x small caps); 20% trailing stop. Paper sleeve, $1,000.</p>
-  <p class="live-line">Equity <b>$1,125.27</b> · P&amp;L <b class="up">+$125.27</b> (+12.5%) · 1 trade · start $1,000.00</p>
+  <h4>Fwd test: bonds-lead-Nasdaq (IEF -&gt; TQQQ, novel)</h4>
+  <p>Novel lead/lag signal: when the 7-10y Treasury ETF IEF is up more than 0.3% over 2 days at the close, holds TQQQ for the next 3 sessions; 15% trailing stop. Forward paper test, $1,000.</p>
+  <p class="live-line">Equity <b>$1,223.53</b> · P&amp;L <b class="up">+$223.53</b> (+22.4%) · 3 trades · start $1,000.00</p>
 </div><div class="slot">
   <div class="slot-top"><span class="pill paper">Paper</span></div>
   <h4>Paper: Stock-market Wikipedia edit spike -&gt; SOXL (Hunt Nov 4) <span class="small">· HUNT-20261104-4495</span></h4>
@@ -138,30 +95,117 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
   <p class="live-line">Equity <b>$1,164.62</b> · P&amp;L <b class="up">+$164.62</b> (+16.5%) · 0 trades · start $1,000.00</p>
 </div><div class="slot">
   <div class="slot-top"><span class="pill paper">Paper</span></div>
-  <h4>Fwd test: bonds-lead-Nasdaq (IEF -&gt; TQQQ, novel)</h4>
-  <p>Novel lead/lag signal: when the 7-10y Treasury ETF IEF is up more than 0.3% over 2 days at the close, holds TQQQ for the next 3 sessions; 15% trailing stop. Forward paper test, $1,000.</p>
-  <p class="live-line">Equity <b>$1,223.53</b> · P&amp;L <b class="up">+$223.53</b> (+22.4%) · 3 trades · start $1,000.00</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="pill paper">Paper</span></div>
   <h4>Paper: volume-weighted sector breadth -&gt; TQQQ (novel #3)</h4>
   <p>When sector breadth weighted by abnormal volume is strongly negative (IS z &lt; -1), buys TQQQ at the next close for 5 sessions; 24% protective stop. Paper sleeve, $1,000.</p>
   <p class="live-line">Equity <b>$1,144.65</b> · P&amp;L <b class="up">+$144.65</b> (+14.5%) · 0 trades · start $1,000.00</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="pill paper">Paper</span></div>
-  <h4>Paper: silver-vs-gold range overlap -&gt; FAS (Oct 30 replacement)</h4>
-  <p>When silver&#x27;s day-over-day price-range overlap is unusually low versus gold&#x27;s (IS z &lt; -1), buys FAS (3x financials) at the next close for 3 sessions; 24% protective stop. Paper sleeve, $1,000.</p>
-  <p class="live-line">Equity <b>$1,012.64</b> · P&amp;L <b class="up">+$12.64</b> (+1.3%) · 1 trade · start $1,000.00</p>
 </div></div>
   <p class="small">Source: desk-state experiments + lab/novel/paper_h1104/BOOK.json. Negatives/retired archived offline. Live top-3 books untouched.</p>
-</section>
-
-<section class="card">
+</section><section class="card">
+  <h2>Lab testing</h2>
+  <div class="kpis">
+    <div><b style="color:var(--rh)">642,777</b><span>Strategies tested</span></div>
+    <div><b>32,104</b><span>Passed first checks</span></div>
+  </div>
+  <p class="say">The Lab back-tests new stock-fund trading ideas every night. Only the best 3 trade real money on this account; a better one replaces a top-3 slot only when that slot is not in a trade.</p>
+  <p class="small">Last test added Thu Nov 12, 1:39 PM CT.</p>
+</section><section class="card">
   <h2>What happens next</h2>
   <ul>
-    <li><b>Coinbase:</b> next check Fri Nov 13, 6:00 PM CT. Anything that fires buys then; open trades exit on schedule or at their stop.</li>
-    <li><b>Robinhood:</b> next check Fri Nov 13, 3:00 PM CT.</li>
+    <li>Next check Fri Nov 13, 3:00 PM CT.</li>
     <li>Every live trade has a real stop order at the broker. After any exit, the book is re-split 50/30/20.</li>
   </ul>
   <p class="small">“Waiting for signal” = the strategy's condition isn't met yet; that's normal. Test results are from past data, not a promise.</p>
 </section>
-</div></body></html>
+</div>
+<div class="pane" id="pane-cb" role="tabpanel" aria-labelledby="tab-cb" hidden>
+<section class="card book cb">
+  <h2><span class="dot cb"></span>Coinbase</h2>
+  <div class="kpis">
+    <div><b>$393.16</b><span>Book value</span></div>
+    <div><b>$393.16</b><span>Cash</span></div>
+    <div><b>0</b><span>Active trades</span></div>
+    <div><b class="dn">−$45.98</b><span>Lab P&amp;L since live</span></div>
+    <div><b>4</b><span>Trades closed (1 win)</span></div>
+  </div>
+  <p class="say">Since the Lab's top-3 strategies went live on Oct 29, 2026 (8:52 PM CT), this book is <b class="dn">down $45.98</b> from Lab trades. No trades open right now — every strategy is waiting for its signal.</p>
+  <p class="small">Lab P&amp;L = closed trades after fees + open trades at today's price. Deposits are not counted as profit.</p>
+  <h3>Active trades</h3>
+  <p class="flat">Flat — no open trades. Next chance to enter: <b>Fri Nov 13, 6:00 PM CT</b>.</p>
+  <h3>Top 3 strategies</h3>
+  <div class="slots"><div class="slot">
+  <div class="slot-top"><span class="rank">#1</span><span class="share">50% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Silver vs gold → Bitcoin</h4>
+  <p>Buys Bitcoin (1.5x size) when silver closes weak compared with gold. Holds about 4 days. Safety stop follows the price up.</p>
+  <p class="live-line">Live so far: 1 closed trade · <b class="dn">−$39.01</b> · No open trade</p>
+  <p class="small">In testing: about <b>+194%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#2</span><span class="share">30% of book</span><span class="pill wait">Waiting for signal</span></div>
+  <h4>Tech vs health-care → Bitcoin</h4>
+  <p>Buys Bitcoin (2x size) when tech stocks&#x27; daily swings calm down compared with health-care stocks. Holds about 4 days. Safety stop follows the price up.</p>
+  <p class="live-line">Live so far: 1 closed trade · <b class="up">+$13.18</b> · No open trade</p>
+  <p class="small">In testing: about <b>+197%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="rank">#3</span><span class="share">20% of book</span><span class="pill due">Entry due 6:00 PM CT</span></div>
+  <h4>Lopsided market → Ether</h4>
+  <p>Buys Ether (2x size) after a lopsided day across a basket of stocks. Holds about 4 days, with a safety stop.</p>
+  <p class="live-line">Live so far: 2 closed trades · <b class="dn">−$20.15</b> · No open trade</p>
+  <p class="small">In testing: about <b>+101%/yr</b> vs +21%/yr for just holding Ether. Worst drop in test -68%.</p>
+</div></div>
+  <p class="small">Crypto, trades once a day at 6:00 PM CT. Each strategy gets 50% / 30% / 20% of the Coinbase book. #1 and #2 both buy Bitcoin, so when both are on, Bitcoin exposure stacks.</p>
+</section><section class="card">
+  <h2>Paper / experiments</h2>
+  <p class="say">Forward paper only — no live orders. Showing the current 3 best green (positive P&amp;L) sleeves on this venue that are not already on the live podium. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
+  <p class="flat">No paper strategies currently competing for podium</p>
+  <p class="small">Source: desk-state experiments + lab/novel/paper_h1104/BOOK.json. Negatives/retired archived offline. Live top-3 books untouched.</p>
+</section><section class="card">
+  <h2>Lab testing</h2>
+  <div class="kpis">
+    <div><b style="color:var(--cb)">446,556</b><span>Strategies tested</span></div>
+    <div><b>22,320</b><span>Passed first checks</span></div>
+  </div>
+  <p class="say">The Lab back-tests new crypto trading ideas every night. Only the best 3 trade real money on this account; a better one replaces a top-3 slot only when that slot is not in a trade.</p>
+  <p class="small">Last test added Thu Nov 12, 1:39 PM CT.</p>
+</section><section class="card">
+  <h2>What happens next</h2>
+  <ul>
+    <li>Next check Fri Nov 13, 6:00 PM CT. Anything that fires buys then; open trades exit on schedule or at their stop.</li>
+    <li>Every live trade has a real stop order at the broker. After any exit, the book is re-split 50/30/20.</li>
+  </ul>
+  <p class="small">“Waiting for signal” = the strategy's condition isn't met yet; that's normal. Test results are from past data, not a promise.</p>
+</section>
+</div>
+</div>
+<script>
+(function(){
+  function idFromHash(h){
+    h = String(h || "").replace(/^#/, "").toLowerCase();
+    if (h === "cb" || h === "coinbase") return "cb";
+    return "rh";
+  }
+  function show(id){
+    id = (id === "cb") ? "cb" : "rh";
+    document.documentElement.classList.remove("tab-rh", "tab-cb");
+    document.documentElement.classList.add("tab-" + id);
+    document.querySelectorAll(".tab").forEach(function(t){
+      var on = t.getAttribute("data-tab") === id;
+      t.classList.toggle("active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    document.querySelectorAll(".pane").forEach(function(p){
+      var on = p.id === "pane-" + id;
+      p.hidden = !on;
+      p.classList.toggle("active", on);
+    });
+    var want = "#" + id;
+    if (location.hash !== want) {
+      if (history.replaceState) history.replaceState(null, "", want);
+      else location.hash = want;
+    }
+  }
+  function sync(){ show(idFromHash(location.hash)); }
+  window.addEventListener("hashchange", sync);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", sync);
+  else sync();
+})();
+</script>
+</body></html>
