@@ -36,7 +36,7 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
 html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
 </style></head><body><div class="wrap">
 <h1>Strategy Lab</h1>
-<p class="sub">Robinhood and Coinbase, viewed separately · updated Wed Nov 18, 4:24 PM CT · refreshes every minute</p>
+<p class="sub">Robinhood and Coinbase, viewed separately · updated Wed Nov 18, 4:25 PM CT · refreshes every minute</p>
 <nav class="tabs" role="tablist" aria-label="Account">
   <a class="tab rh active" id="tab-rh" role="tab" data-tab="rh" href="#rh" aria-controls="pane-rh" aria-selected="true">Robinhood</a>
   <a class="tab cb" id="tab-cb" role="tab" data-tab="cb" href="#cb" aria-controls="pane-cb" aria-selected="false">Coinbase</a>
@@ -91,12 +91,17 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
   <div class="slot-top"><span class="pill paper">Paper</span></div>
   <h4>Fwd test: bonds-lead-Nasdaq (IEF -&gt; TQQQ, novel)</h4>
   <p>Novel lead/lag signal: when the 7-10y Treasury ETF IEF is up more than 0.3% over 2 days at the close, holds TQQQ for the next 3 sessions; 15% trailing stop. Forward paper test, $1,000.</p>
-  <p class="live-line">Equity <b>$1,222.06</b> · P&amp;L <b class="up">+$222.06</b> (+22.2%) · 3 trades · start $1,000.00</p>
+  <p class="live-line">Equity <b>$1,236.92</b> · P&amp;L <b class="up">+$236.92</b> (+23.7%) · 3 trades · start $1,000.00</p>
 </div><div class="slot">
   <div class="slot-top"><span class="pill paper">Paper</span></div>
   <h4>Paper: low Tesla Wikipedia edits -&gt; TNA (Hunt Nov 4) <span class="small">· HUNT-20261104-4413</span></h4>
   <p>When the Wikipedia &#x27;Tesla, Inc.&#x27; page&#x27;s 7-day edit count is unusually low (z &lt; -1), holds TNA (3x small caps); 20% trailing stop. Paper sleeve, $1,000.</p>
   <p class="live-line">Equity <b>$1,125.27</b> · P&amp;L <b class="up">+$125.27</b> (+12.5%) · 1 trade · start $1,000.00</p>
+</div><div class="slot">
+  <div class="slot-top"><span class="pill paper">Paper</span></div>
+  <h4>Paper: volume-weighted sector breadth -&gt; TQQQ (novel #3)</h4>
+  <p>When sector breadth weighted by abnormal volume is strongly negative (IS z &lt; -1), buys TQQQ at the next close for 5 sessions; 24% protective stop. Paper sleeve, $1,000.</p>
+  <p class="live-line">Equity <b>$1,002.43</b> · P&amp;L <b class="up">+$2.43</b> (+0.2%) · 0 trades · start $1,000.00</p>
 </div></div>
   <p class="small">Source: desk-state experiments + lab/novel/paper_h1104/BOOK.json. Negatives/retired archived offline. Live top-3 books untouched.</p>
 </section><section class="card">
@@ -130,7 +135,7 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
   <p class="flat">Flat. Scanning Coinbase every minute for the next fast mover.</p>
   <h3>Trades</h3>
   <p class="flat">No day trades closed yet.</p>
-  <p class="small">Watching now: PUMP +0.5%/15m, HYPE +0.4%/15m, BTC +0.2%/15m, BNB +0.1%/15m, UNI +0.1%/15m (scan 4:23 PM CT). P&amp;L is after fees. The old Coinbase top-3 was retired Nov 18 (5 trades, −$69.37 total).</p>
+  <p class="small">Watching now: PUMP +0.4%/15m, HYPE +0.4%/15m, BTC +0.3%/15m, LINK +0.2%/15m, VVV +0.1%/15m (scan 4:24 PM CT). P&amp;L is after fees. The old Coinbase top-3 was retired Nov 18 (5 trades, −$69.37 total).</p>
 </section><section class="card">
   <h2>Paper / experiments</h2>
   <p class="say">Forward paper only — no live orders. Showing the current 3 best green (positive P&amp;L) sleeves on this venue that are not already on the live podium. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
