@@ -36,7 +36,7 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
 html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
 </style></head><body><div class="wrap">
 <h1>Strategy Lab</h1>
-<p class="sub">Robinhood and Coinbase, viewed separately · updated Wed Nov 18, 4:01 PM CT · refreshes every minute</p>
+<p class="sub">Robinhood and Coinbase, viewed separately · updated Wed Nov 18, 4:02 PM CT · refreshes every minute</p>
 <nav class="tabs" role="tablist" aria-label="Account">
   <a class="tab rh active" id="tab-rh" role="tab" data-tab="rh" href="#rh" aria-controls="pane-rh" aria-selected="true">Robinhood</a>
   <a class="tab cb" id="tab-cb" role="tab" data-tab="cb" href="#cb" aria-controls="pane-cb" aria-selected="false">Coinbase</a>
@@ -118,39 +118,19 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
 </div>
 <div class="pane" id="pane-cb" role="tabpanel" aria-labelledby="tab-cb" hidden>
 <section class="card book cb">
-  <h2><span class="dot cb"></span>Coinbase</h2>
+  <h2><span class="dot cb"></span>Coinbase: CB All-in Day Trader</h2>
   <div class="kpis">
-    <div><b>$127.56</b><span>Book value</span></div>
-    <div><b>$127.56</b><span>Cash</span></div>
-    <div><b>0</b><span>Active trades</span></div>
-    <div><b class="dn">−$69.37</b><span>Lab P&amp;L since live</span></div>
-    <div><b>5</b><span>Trades closed (1 win)</span></div>
+    <div><b style="color:var(--cb)">$493.33</b><span>Book value</span></div>
+    <div><b class="">+$0.00</b><span>Day-trader P&amp;L (+0.0%)</span></div>
+    <div><b>0</b><span>Open position</span></div>
+    <div><b>0</b><span>Trades closed (0 wins)</span></div>
   </div>
-  <p class="say">Since the Lab's top-3 strategies went live on Oct 29, 2026 (8:52 PM CT), this book is <b class="dn">down $69.37</b> from Lab trades. No trades open right now — every strategy is waiting for its signal.</p>
-  <p class="small">Lab P&amp;L = closed trades after fees + open trades at today's price. Deposits are not counted as profit.</p>
-  <h3>Active trades</h3>
-  <p class="flat">Flat — no open trades. Next chance to enter: <b>Wed Nov 18, 6:00 PM CT</b>.</p>
-  <h3>Top 3 strategies</h3>
-  <div class="slots"><div class="slot">
-  <div class="slot-top"><span class="rank">#1</span><span class="share">50% of book</span><span class="pill wait">Waiting for signal</span></div>
-  <h4>Silver vs gold → Bitcoin</h4>
-  <p>Buys Bitcoin (1.5x size) when silver closes weak compared with gold. Holds about 4 days. Safety stop follows the price up.</p>
-  <p class="live-line">Live so far: 2 closed trades · <b class="dn">−$62.40</b> · No open trade</p>
-  <p class="small">In testing: about <b>+194%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="rank">#2</span><span class="share">30% of book</span><span class="pill wait">Waiting for signal</span></div>
-  <h4>Tech vs health-care → Bitcoin</h4>
-  <p>Buys Bitcoin (2x size) when tech stocks&#x27; daily swings calm down compared with health-care stocks. Holds about 4 days. Safety stop follows the price up.</p>
-  <p class="live-line">Live so far: 1 closed trade · <b class="up">+$13.18</b> · No open trade</p>
-  <p class="small">In testing: about <b>+197%/yr</b> vs +104%/yr for just holding Bitcoin. Worst drop in test -36%.</p>
-</div><div class="slot">
-  <div class="slot-top"><span class="rank">#3</span><span class="share">20% of book</span><span class="pill wait">Waiting for signal</span></div>
-  <h4>Lopsided market → Ether</h4>
-  <p>Buys Ether (2x size) after a lopsided day across a basket of stocks. Holds about 4 days, with a safety stop.</p>
-  <p class="live-line">Live so far: 2 closed trades · <b class="dn">−$20.15</b> · No open trade</p>
-  <p class="small">In testing: about <b>+101%/yr</b> vs +21%/yr for just holding Ether. Worst drop in test -68%.</p>
-</div></div>
-  <p class="small">Crypto, trades once a day at 6:00 PM CT. Each strategy gets 50% / 30% / 20% of the Coinbase book. #1 and #2 both buy Bitcoin, so when both are on, Bitcoin exposure stacks.</p>
+  <p class="say">High risk, high reward: the whole Coinbase book goes into one fast-moving coin at a time (breakouts with a volume surge on movers, memes and new listings; Bitcoin or Ether only when nothing qualifies). Every trade has a real stop at Coinbase, a target about 4x the risk, a trailing stop to lock in gains and a time limit. Trading pauses for the day after a 15% loss. Started live Wed Nov 18, 4:00 PM CT with $493.33.</p>
+  <h3>Current position</h3>
+  <p class="flat">Flat. Scanning Coinbase every minute for the next fast mover.</p>
+  <h3>Trades</h3>
+  <p class="flat">No day trades closed yet.</p>
+  <p class="small">Watching now: PEARL +3.7%/15m, PUMP +0.3%/15m, MON +0.3%/15m, BNB +0.0%/15m, BTC +0.0%/15m (scan 4:01 PM CT). P&amp;L is after fees. The old Coinbase top-3 was retired Nov 18 (5 trades, −$69.37 total).</p>
 </section><section class="card">
   <h2>Paper / experiments</h2>
   <p class="say">Forward paper only — no live orders. Showing the current 3 best green (positive P&amp;L) sleeves on this venue that are not already on the live podium. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
@@ -162,15 +142,8 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
     <div><b style="color:var(--cb)">470,953</b><span>Strategies tested</span></div>
     <div><b>23,125</b><span>Passed first checks</span></div>
   </div>
-  <p class="say">The Lab back-tests new crypto trading ideas every night. Only the best 3 trade real money on this account; a better one replaces a top-3 slot only when that slot is not in a trade.</p>
+  <p class="say">The Lab back-tests new crypto trading ideas every night. Real money on Coinbase now runs the All-in Day Trader above; Lab research continues in the background.</p>
   <p class="small">Last test added Wed Nov 18, 1:17 PM CT.</p>
-</section><section class="card">
-  <h2>What happens next</h2>
-  <ul>
-    <li>Next check Wed Nov 18, 6:00 PM CT. Anything that fires buys then; open trades exit on schedule or at their stop.</li>
-    <li>Every live trade has a real stop order at the broker. After any exit, the book is re-split 50/30/20.</li>
-  </ul>
-  <p class="small">“Waiting for signal” = the strategy's condition isn't met yet; that's normal. Test results are from past data, not a promise.</p>
 </section>
 </div>
 </div>
