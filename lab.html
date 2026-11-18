@@ -34,6 +34,39 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}a{color:#58a6ff}
 .tab.cb.active,.tab.cb:focus{color:var(--cb);border-bottom-color:var(--cb)}
 .pane{display:none}.pane.active{display:block}
 html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
+
+.moon{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 85% -10%,#1e3a8a 0%,#0b1630 45%,#070b16 100%);border:1px solid #1d4ed8;border-radius:18px;padding:20px 18px;margin-bottom:16px}
+.moon>*{position:relative}.moon .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,#fff8,transparent),radial-gradient(1px 1px at 70% 20%,#fff6,transparent),radial-gradient(1.5px 1.5px at 40% 80%,#93c5fd88,transparent),radial-gradient(1px 1px at 90% 60%,#fff5,transparent),radial-gradient(1px 1px at 10% 70%,#fff4,transparent);background-size:220px 220px;animation:drift 60s linear infinite;opacity:.8}
+@keyframes drift{to{background-position:0 -440px}}
+.mh{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.kick{font-size:12px;letter-spacing:.2em;color:#93c5fd;font-weight:700}
+.mt{font-size:46px;line-height:1;margin:4px 0 2px;font-weight:900;letter-spacing:.06em;background:linear-gradient(90deg,#60a5fa,#a5f3fc,#3b82f6);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.bk{text-align:right}.bk span{display:block;font-size:13px;color:var(--mu)}.bk b{font-size:34px;color:#fff;font-variant-numeric:tabular-nums}
+.track{position:relative;height:14px;border-radius:999px;background:#0f1d3a;border:1px solid #1e3a8a;margin:34px 6px 34px}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#1d4ed8,#38bdf8);box-shadow:0 0 14px #3b82f6aa;min-width:8px}
+.rocket{position:absolute;top:-24px;transform:translateX(-50%) rotate(45deg);font-size:28px;animation:bob 2.2s ease-in-out infinite;filter:drop-shadow(0 0 6px #60a5fa)}
+@keyframes bob{50%{margin-top:-5px}}
+.ms{position:absolute;top:-4px;transform:translateX(-50%)}.ms i{display:block;width:2px;height:22px;background:#334e85;margin:0 auto}.ms span{display:block;font-size:12px;color:var(--mu);margin-top:2px;white-space:nowrap}.ms.hit i{background:#38bdf8}.ms.hit span{color:#38bdf8}
+.ms:last-child{transform:translateX(-100%)}.ms:last-child i{margin-right:0}
+.mstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.mstats div{background:#0b1430cc;border:1px solid #1e3a8a;border-radius:12px;padding:10px;text-align:center}.mstats b{display:block;font-size:22px;color:#fff}.mstats b.up{color:var(--up)}.mstats b.dn{color:var(--dn)}.mstats span{font-size:12px;color:var(--mu)}
+.live{border-radius:16px;padding:16px;background:#0a1226;border:1px solid #2563eb;margin:4px 0 6px}
+.live.upg{box-shadow:0 0 0 1px #3fb95055,0 0 24px #3fb95033}.live.dng{box-shadow:0 0 0 1px #f8514955,0 0 24px #f8514933}
+.lv-top{font-size:12px;letter-spacing:.12em;color:#93c5fd;font-weight:700;display:flex;align-items:center;gap:8px}
+.pulse{width:10px;height:10px;border-radius:50%;background:#38bdf8;box-shadow:0 0 0 0 #38bdf8;animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px #38bdf800}100%{box-shadow:0 0 0 0 #38bdf800}}
+.lv-main{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin:8px 0}.tok{font-size:34px;font-weight:900}.pct{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums}
+.lv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lv-grid div{background:#0d1117;border:1px solid var(--bd);border-radius:10px;padding:8px}.lv-grid span{display:block;font-size:12px;color:var(--mu)}.lv-grid b{font-variant-numeric:tabular-nums}
+.live.idle p{margin:8px 0 0}.radar{float:right;width:46px;height:46px;border-radius:50%;border:1px solid #2563eb;background:conic-gradient(from 0deg,#38bdf866,transparent 25%);animation:spin 2.5s linear infinite;margin-left:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.wins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.win{background:#0b1430;border:1px solid #1e3a8a;border-radius:12px;padding:10px}.win b{display:block;font-size:18px}.win span{font-size:24px;font-weight:900}.win small{display:block;color:var(--mu);font-size:12px}.win.dim{opacity:.6}
+.feed{list-style:none;padding:0;margin:0}.feed li{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:8px 10px;border-bottom:1px solid #1e2a44;animation:fadein .6s ease-out}
+.feed li small{grid-column:1/-1;color:var(--mu);font-size:12px;margin-top:-6px}.feed li em{font-style:normal;font-weight:800}.feed li.w{border-left:3px solid var(--up)}.feed li.l{border-left:3px solid var(--dn)}
+.vchip{font-size:11px;border:1px solid #1e3a8a;color:#93c5fd;border-radius:999px;padding:1px 7px}.amt{font-size:13px}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}}
+@media(max-width:560px){.mt{font-size:36px}.bk{text-align:left}.mstats{grid-template-columns:repeat(2,1fr)}.lv-grid{grid-template-columns:repeat(2,1fr)}.wins{grid-template-columns:1fr}.pct{font-size:36px}}
+@media(prefers-reduced-motion:reduce){.moon *{animation:none!important}}
+
 </style></head><body><div class="wrap">
 <h1>Strategy Lab</h1>
 <p class="sub">Robinhood and Coinbase, viewed separately · updated Wed Nov 18, 5:55 PM CT · refreshes every minute</p>
@@ -122,20 +155,21 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
 </section>
 </div>
 <div class="pane" id="pane-cb" role="tabpanel" aria-labelledby="tab-cb" hidden>
-<section class="card book cb">
-  <h2><span class="dot cb"></span>Coinbase: CB All-in Day Trader</h2>
-  <div class="kpis">
-    <div><b style="color:var(--cb)">$493.33</b><span>Book value</span></div>
-    <div><b class="">+$0.00</b><span>Day-trader P&amp;L (+0.0%)</span></div>
-    <div><b>0</b><span>Open position</span></div>
-    <div><b>0</b><span>Trades closed (0 wins)</span></div>
-  </div>
-  <p class="say">High risk, high reward: the whole Coinbase book goes into one fast-moving coin at a time (breakouts with a volume surge on movers, memes and new listings; Bitcoin or Ether only when nothing qualifies). Every trade has a real stop at Coinbase, a target about 4x the risk, a trailing stop to lock in gains and a time limit. Trading pauses for the day after a 15% loss. Started live Wed Nov 18, 4:00 PM CT with $493.33.</p>
-  <h3>Current position</h3>
-  <p class="flat">Flat. Scanning Coinbase every minute for the next fast mover. Paused: funds moved to Solana trader.</p>
-  <h3>Trades</h3>
-  <p class="flat">No day trades closed yet.</p>
-  <p class="small">Watching now: PUMP +2.4%/15m, PROS +2.2%/15m, ZRO +2.1%/15m, VVV +1.4%/15m, NEAR +1.4%/15m (scan 5:48 PM CT). P&amp;L is after fees. The old Coinbase top-3 was retired Nov 18 (5 trades, −$69.37 total).</p>
+<section class="moon">
+  <div class="stars"></div>
+  <div class="mh"><div><div class="kick">COINBASE → SOLANA</div><h2 class="mt">MOONSHOT</h2><p class="small">$1,000,000 or bust · all-in, fast in and out on fresh Solana memes</p></div>
+  <div class="bk"><span>Book</span><b data-count="493.36" data-money="1">$493.36</b><span class="dn">−$69.37 since moonshot start</span></div></div>
+  <div class="track"><div class="fill" style="width:17.33%"></div><div class="rocket" style="left:17.33%">🚀</div><div class="ms" style="left:25.00%"><i></i><span>$1K</span></div><div class="ms" style="left:50.00%"><i></i><span>$10K</span></div><div class="ms" style="left:75.00%"><i></i><span>$100K</span></div><div class="ms" style="left:100.00%"><i></i><span>$1M</span></div></div>
+  <div class="mstats"><div><b>2,027×</b><span>to $1M</span></div><div><b>2.0×</b><span>to $1,000</span></div>
+  <div><b>1/5</b><span>wins</span></div><div><b class="dn">3 L</b><span>loss streak</span></div></div>
+  <div class="live idle"><div class="lv-top"><span class="pulse"></span>PRACTICE MODE · WAITING FOR FUNDS</div><div class="radar"></div><p>Waiting for funds: the Solana wallet is scanning in practice mode until it holds $20+. Book in transit from Coinbase: $493.36.</p><p class="small">Last scan 5:55:02 PM CT: 93 tokens checked, 0 with a momentum burst.</p></div>
+  <h3>Biggest wins</h3><div class="wins"><div class="win"><b>BTC</b><span class="up">+4.0%</span><small>+$13.18 · CB top-3 · Nov 4</small></div></div>
+  <h3>Trade feed</h3><ul class='feed'><li class="l"><b>BTC</b><span class="vchip">CB top-3</span><em class="dn">-6.0%</em><span class="amt dn">−$23.39</span><small>Nov 18 3:56 PM</small></li><li class="l"><b>ETH</b><span class="vchip">CB top-3</span><em class="dn">-13.4%</em><span class="amt dn">−$18.93</span><small>Nov 12 9:03 PM</small></li><li class="l"><b>BTC</b><span class="vchip">CB top-3</span><em class="dn">-9.1%</em><span class="amt dn">−$39.01</span><small>Nov 10 5:53 PM</small></li><li class="w"><b>BTC</b><span class="vchip">CB top-3</span><em class="up">+4.0%</em><span class="amt up">+$13.18</span><small>Nov 4 5:53 PM</small></li><li class="l"><b>ETH</b><span class="vchip">CB top-3</span><em class="dn">-0.6%</em><span class="amt dn">−$1.22</span><small>Oct 31 6:50 PM</small></li></ul>
+  <h3>Engine</h3>
+  <p class="small"><b>Solana meme trader</b> · DRY · wallet <a href="https://solscan.io/account/9QT4fceDtbM9euf5BdeuoBTdA3fC3d1w8B7AkCq4Vf4f" target="_blank" rel="noopener">9QT4…Vf4f</a> (0.00 USDC + 0.000 SOL) · P&amp;L +$0.00 on 0 trades.<br>
+  Rules: all-in on the strongest 5-minute breakout with a volume surge and more buyers than sellers; liquidity $50K+, mint and freeze locked, RugCheck clean, sellable on Jupiter with &lt;3% impact. Bot stop −12%, sell half at +30% and more at +60%, trail 15% after +20%, out by 75 min if it stalls, 4 h max, stop for the day at −25%.<br>
+  Watching now: no momentum bursts this minute (scan 5:55 PM CT).</p>
+  <p class="small"><b>Coinbase day trader</b> · PAUSED: funds moved to Solana trader · 0 trades, +$0.00. <b>Coinbase top-3</b> · retired Nov 18 · 5 trades, −$69.37.</p>
 </section><section class="card">
   <h2>Paper / experiments</h2>
   <p class="say">Forward paper only — no live orders. Showing the current 3 best green (positive P&amp;L) sleeves on this venue that are not already on the live podium. Flat/negative paper bots keep testing in the background and stay off this list. All paper bankrolls use a $1,000 start for comparable sizing.</p>
@@ -183,6 +217,17 @@ html.tab-rh #pane-rh,html.tab-cb #pane-cb{display:block}
   window.addEventListener("hashchange", sync);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", sync);
   else sync();
+})();
+</script>
+<script>
+(function(){
+  function fmt(s){s=Math.max(0,Math.floor(s));var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+"h ":"")+m+"m "+(x<10?"0":"")+x+"s";}
+  function tick(){document.querySelectorAll(".clock[data-since]").forEach(function(e){e.textContent=fmt((Date.now()-Date.parse(e.dataset.since))/1000);});}
+  tick();setInterval(tick,1000);
+  document.querySelectorAll(".moon [data-count]").forEach(function(e){var to=parseFloat(e.dataset.count),money=e.dataset.money,t0=null;
+    function f(v){return money?"$"+v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):(v>=0?"+":"")+v.toFixed(2)+"%";}
+    function step(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/900);e.textContent=f(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);});
 })();
 </script>
 </body></html>
